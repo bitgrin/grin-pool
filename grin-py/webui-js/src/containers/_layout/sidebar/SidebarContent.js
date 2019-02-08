@@ -29,7 +29,7 @@ class SidebarContent extends PureComponent {
         <li className='sidebar__link'>
           <span className={`sidebar__link-icon lnr lnr-code`}/>
           <p className='sidebar__link-title'>
-            <a href={'https://github.com/grin-pool/grin-pool'} style={{ color: 'inherit' }}>GitHub</a>
+            <a href={'https://github.com/bitgrin/grin-pool'} style={{ color: 'inherit' }}>GitHub</a>
           </p>
         </li>
       </div>
