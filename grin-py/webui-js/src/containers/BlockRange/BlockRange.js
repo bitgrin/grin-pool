@@ -51,7 +51,7 @@ export class BlockRange extends Component {
         const rowColor = colors[`C${block.edge_bits}`]
         rows.push(
           <tr key={block.height}>
-            <td><a style={{ color: rowColor || C29_COLOR }} href={`https://floonet.grinexplorer.net/block/${block.height}`} rel='noopener noreferrer' target='_blank' >{block.height}</a></td>
+            <td><a style={{ color: rowColor || C29_COLOR }} href={`https://explorer.bitgrin.io/block/${block.height}`} rel='noopener noreferrer' target='_blank' >{block.height}</a></td>
             <td>{block.nonce}</td>
             <td>{block.hash}</td>
             {block.edge_bits && <td style={{ color: rowColor }}>C{block.edge_bits}</td>}
