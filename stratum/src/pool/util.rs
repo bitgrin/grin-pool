@@ -28,7 +28,7 @@
 
   <meta name="viewport" content="width=device-width">
   
-  <title>grin-pool/proto.rs at e422e94ec92425835ddff79ea3ac00b7b0ca9fef · grin-pool/grin-pool</title>
+  <title>grin-pool/util.rs at e422e94ec92425835ddff79ea3ac00b7b0ca9fef · grin-pool/grin-pool</title>
     <meta name="description" content="Grin Mining Pool. Contribute to grin-pool/grin-pool development by creating an account on GitHub.">
     <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
   <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
@@ -38,10 +38,10 @@
     <meta property="og:image" content="https://avatars3.githubusercontent.com/u/39641344?s=400&amp;v=4" /><meta property="og:site_name" content="GitHub" /><meta property="og:type" content="object" /><meta property="og:title" content="grin-pool/grin-pool" /><meta property="og:url" content="https://github.com/grin-pool/grin-pool" /><meta property="og:description" content="Grin Mining Pool. Contribute to grin-pool/grin-pool development by creating an account on GitHub." />
 
   <link rel="assets" href="https://github.githubassets.com/">
-  <link rel="web-socket" href="wss://live.github.com/_sockets/VjI6MzcxNjQwMzk4OjIwN2QyNWJhZjg5ZTliZDQ1NDMzYjk0YjU1NjJlOWU2N2E5ZTAyYWU5NjFiMjNlODM5NzhiZTgxNmMyODQ3ODY=--4793920b246cb7585ede93a9ed70d5743114ccbb">
+  <link rel="web-socket" href="wss://live.github.com/_sockets/VjI6MzcxNjQwMzk4OjA5ZjIwMmVhYzk2ZDdiMDZiYmQ4MDc1ODk4MDExZjQ5MTBkNTY3ZWYzMTZlMDc1MjhmYTNjMDNkMDEwOTg5OWY=--0e138a52667b3b70bd5354e5f3f72cff7a53bb4d">
   <meta name="pjax-timeout" content="1000">
   <link rel="sudo-modal" href="/sessions/sudo_modal">
-  <meta name="request-id" content="DF97:2E5CA:180D6C4:241A5D7:5C5DE4DB" data-pjax-transient>
+  <meta name="request-id" content="DF97:2E5CA:180D247:2418DA3:5C5DE4A6" data-pjax-transient>
 
 
   
@@ -52,7 +52,7 @@
     <meta name="google-site-verification" content="ZzhVyEFwb7w3e0-uOTltm8Jsck2F5StVihD0exw2fsA">
     <meta name="google-site-verification" content="GXs5KoUUkNCoaAZn7wPN-t01Pywp9M3sEjnt_3_ZWPc">
 
-  <meta name="octolytics-host" content="collector.githubapp.com" /><meta name="octolytics-app-id" content="github" /><meta name="octolytics-event-url" content="https://collector.githubapp.com/github-external/browser_event" /><meta name="octolytics-dimension-request_id" content="DF97:2E5CA:180D6C4:241A5D7:5C5DE4DB" /><meta name="octolytics-dimension-region_edge" content="ams" /><meta name="octolytics-dimension-region_render" content="iad" /><meta name="octolytics-actor-id" content="47373416" /><meta name="octolytics-actor-login" content="motelddir" /><meta name="octolytics-actor-hash" content="8937bd41117596503f049683f239e8e589c54278dc453cbc5e6785d1ed636c8d" />
+  <meta name="octolytics-host" content="collector.githubapp.com" /><meta name="octolytics-app-id" content="github" /><meta name="octolytics-event-url" content="https://collector.githubapp.com/github-external/browser_event" /><meta name="octolytics-dimension-request_id" content="DF97:2E5CA:180D247:2418DA3:5C5DE4A6" /><meta name="octolytics-dimension-region_edge" content="ams" /><meta name="octolytics-dimension-region_render" content="iad" /><meta name="octolytics-actor-id" content="47373416" /><meta name="octolytics-actor-login" content="motelddir" /><meta name="octolytics-actor-hash" content="8937bd41117596503f049683f239e8e589c54278dc453cbc5e6785d1ed636c8d" />
 <meta name="analytics-location" content="/&lt;user-name&gt;/&lt;repo-name&gt;/blob/show" data-pjax-transient="true" />
 
 
@@ -70,7 +70,7 @@
     <meta name="user-login" content="motelddir">
 
       <meta name="expected-hostname" content="github.com">
-    <meta name="js-proxy-site-detection-payload" content="ZDQ4NzE4N2E2NTJiNjRkMGYxMDYxMTQ5NTZmNWI3NTlkYTczZWIxMzQyMjc5YTVlNTQ4YzAzY2M2MDZkZmVkNXx7InJlbW90ZV9hZGRyZXNzIjoiODkuMS4yMDguMjI0IiwicmVxdWVzdF9pZCI6IkRGOTc6MkU1Q0E6MTgwRDZDNDoyNDFBNUQ3OjVDNURFNERCIiwidGltZXN0YW1wIjoxNTQ5NjU3MzE0LCJob3N0IjoiZ2l0aHViLmNvbSJ9">
+    <meta name="js-proxy-site-detection-payload" content="Y2RjYzY5ODQ4YTZiZjFmNGNhMTUwY2Q1NGNlMGQyYTk0YTlkNjBkZmQzZDE4YzQwMzdkOTQwNDAyMjAzZjU1Mnx7InJlbW90ZV9hZGRyZXNzIjoiODkuMS4yMDguMjI0IiwicmVxdWVzdF9pZCI6IkRGOTc6MkU1Q0E6MTgwRDI0NzoyNDE4REEzOjVDNURFNEE2IiwidGltZXN0YW1wIjoxNTQ5NjU3Mjk1LCJob3N0IjoiZ2l0aHViLmNvbSJ9">
 
     <meta name="enabled-features" content="UNIVERSE_BANNER,MARKETPLACE_PLAN_RESTRICTION_EDITOR,NOTIFY_ON_BLOCK,RELATED_ISSUES,MARKETPLACE_BROWSING_V2,MARKETPLACE_INSIGHTS_V2,LAZY_JAVASCRIPT">
 
@@ -86,7 +86,7 @@
   <meta name="octolytics-dimension-user_id" content="39641344" /><meta name="octolytics-dimension-user_login" content="grin-pool" /><meta name="octolytics-dimension-repository_id" content="134929212" /><meta name="octolytics-dimension-repository_nwo" content="grin-pool/grin-pool" /><meta name="octolytics-dimension-repository_public" content="true" /><meta name="octolytics-dimension-repository_is_fork" content="false" /><meta name="octolytics-dimension-repository_network_root_id" content="134929212" /><meta name="octolytics-dimension-repository_network_root_nwo" content="grin-pool/grin-pool" /><meta name="octolytics-dimension-repository_explore_github_marketplace_ci_cta_shown" content="false" />
 
 
-    <link rel="canonical" href="https://github.com/grin-pool/grin-pool/blob/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/proto.rs" data-pjax-transient>
+    <link rel="canonical" href="https://github.com/grin-pool/grin-pool/blob/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/util.rs" data-pjax-transient>
 
 
   <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
@@ -154,7 +154,7 @@
           aria-autocomplete="list"
           aria-controls="jump-to-results"
           aria-label="Search or jump to…"
-          data-jump-to-suggestions-path="/_graphql/GetSuggestedNavigationDestinations#csrf-token=eCGpwQ9ptRzDV1LnfSoSQO3QocjjShF31CofUAuSECy17QbvGFON1Zsj3xtPO2IwaYJPG2+fCXs+sjoj2V7o8A=="
+          data-jump-to-suggestions-path="/_graphql/GetSuggestedNavigationDestinations#csrf-token=TXPdi/rKR2voMERVk6idY1i7Br1SGUVc52KzCyEQsciAv3Kl7fB/orBEyamhue0T3Onobt7MXVAN+pZ489xJFA=="
           spellcheck="false"
           autocomplete="off"
           >
@@ -384,7 +384,7 @@
       </div>
     </summary>
     <details-dialog class="details-dialog rounded-1 anim-fade-in fast Box Box--overlay" role="dialog" tabindex="-1">
-      <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="position-relative flex-auto js-user-status-form" action="/users/status?compact=1&amp;link_mentions=0&amp;truncate=1" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="put" /><input type="hidden" name="authenticity_token" value="olKVhlQlTKwG7fNBe4opW0AEnVv4fZtqAg4YCvw0WKYdxJCPbrS2zBBbFAjN2Gsq1NV5pTcOFhPPY04JEmxUxQ==" />
+      <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="position-relative flex-auto js-user-status-form" action="/users/status?compact=1&amp;link_mentions=0&amp;truncate=1" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="put" /><input type="hidden" name="authenticity_token" value="2uwcPweGH7STCoeiSYuF9Y6uw9iStn9GWGVVYynBJRNlehk2PRfl1IW8YOv/2ceEGn8nJl3F8j+VCANgx5kpcA==" />
         <div class="Box-header bg-gray border-bottom p-3">
           <button class="Box-btn-octicon js-toggle-user-status-edit btn-octicon float-right" type="reset" aria-label="Close dialog" data-close-dialog>
             <svg class="octicon octicon-x" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"/></svg>
@@ -500,7 +500,7 @@
         <div role="none" class="dropdown-divider"></div>
         <a role="menuitem" class="dropdown-item" href="https://help.github.com" data-ga-click="Header, go to help, text:help">Help</a>
         <a role="menuitem" class="dropdown-item" href="/settings/profile" data-ga-click="Header, go to settings, icon:settings">Settings</a>
-        <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="logout-form" action="/logout" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="sCJisFWy7v8jHmiP6B9q5yHGxkCGzP3QBGKUamcYeGiBZcZoVALTtIryyJmiUocrGe64ZfECKjON4ssrbLqU3A==" />
+        <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="logout-form" action="/logout" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="tWyH0lfQE5jE89WuRabRgETbczWvvwz6PsGMAP06wiKEKyMKVmAu020fdbgP6zxMfPMNENhx2xm3QdNB9pgulg==" />
           
           <button type="submit" class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout" role="menuitem">
             Sign out
@@ -512,7 +512,7 @@
 
 
 
-        <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="sr-only right-0" action="/logout" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="Yh/rW3Hd4jHHP23C+hvfVyK4/bOxdoyYYT0GYyA0GFpTWE+DcG3fem7TzdSwVjKbGpCDlsa4W3vovVkiK5b07g==" />
+        <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="sr-only right-0" action="/logout" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="JpgAB2TIJQbcczB7XEM8F7/D0gI96BPYPdaX5tRvF8MX36TfZXgYTXWfkG0WDtHbh+usJ0omxDu0Vsin3837dw==" />
           <button type="submit" class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout">
             Sign out
           </button>
@@ -553,7 +553,7 @@
       <ul class="pagehead-actions">
 
   <li>
-        <!-- '"` --><!-- </textarea></xmp> --></option></form><form data-remote="true" class="js-social-form js-social-container" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="LWN7iFc0dIs/yQwQDBfR4FH9GVUU8acP1lSM/RRIrGEnDRKcx6z2Y6etrWdhGxtGoqayTWpdZPejJCHeARmsog==" />      <input type="hidden" name="repository_id" id="repository_id" value="134929212" class="form-control" />
+        <!-- '"` --><!-- </textarea></xmp> --></option></form><form data-remote="true" class="js-social-form js-social-container" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="Wx9xJpPmuw5mu3OMZyZ2BI0d0SQUuo+kH6jbTpkhwhpRcRgyA3455v7f0vsKKryifkZ6PGoWTFxq2HZtjHDC2Q==" />      <input type="hidden" name="repository_id" id="repository_id" value="134929212" class="form-control" />
 
       <details class="details-reset details-overlay select-menu float-left">
         <summary class="btn btn-sm btn-with-count select-menu-button" data-ga-click="Repository, click Watch settings, action:blob#show">
@@ -627,7 +627,7 @@
 
   <li>
       <div class="js-toggler-container js-social-container starring-container ">
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="starred js-social-form" action="/grin-pool/grin-pool/unstar" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="uhLxncP1UDtkiDxMmyue8c9ny802+g8W2X9rZg4jGxgnSA1AtPRMzWBkx177Gg6YFec92nnvtds9S2dyrnBaYw==" />
+    <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="starred js-social-form" action="/grin-pool/grin-pool/unstar" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="9c1bHsmMXC7GCSrx/yGkx6LW28N/VyA16hrQbtq/J15ol6fDvo1A2MLl0eOfEDSueFYt1DBCmvgOLtx6euxmJQ==" />
       <input type="hidden" name="context" value="repository"></input>
       <button
         type="submit"
@@ -642,7 +642,7 @@
           96
         </a>
 </form>
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="unstarred js-social-form" action="/grin-pool/grin-pool/star" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="/U5epRgvM8lt0v7EAwSKUXM7SV3AnQgTDYE/m4jzaQIdIQ8LS3KNCBeJvwAVvOxVEebFzYx9LpbApyaS4nhKXA==" />
+    <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="unstarred js-social-form" action="/grin-pool/grin-pool/star" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="LrYtUpHqA3gxqkr+Yp07NhfIJRn7IvxuU+50XJAUgt/O2Xz8wre9uUvxCzp0JV0ydRWpibfC2uueyG1V+p+hgQ==" />
       <input type="hidden" name="context" value="repository"></input>
       <button
         type="submit"
@@ -661,7 +661,7 @@
   </li>
 
   <li>
-          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="btn-with-count" action="/grin-pool/grin-pool/fork" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="OZOfJmgr7a2Fz7ZSO8WqZz+wl/Hu6u0qXpxP7whaJdnj0Zk92n1cAHsc8N1jRUe/jjb062IkSdwG/wH2Gixv/A==" />
+          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="btn-with-count" action="/grin-pool/grin-pool/fork" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="BVHegs+3mHcboEWtJMewxiDKJXLaedNU73lXJkS0fETfE9iZfeEp2uVzAyJ8R10ekUxGaFa3d6K3Ghk/VsI2YQ==" />
             <button
                 type="submit"
                 class="btn btn-sm btn-with-count"
@@ -747,9 +747,9 @@
 
 
   
-    <a class="d-none js-permalink-shortcut" data-hotkey="y" href="/grin-pool/grin-pool/blob/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/proto.rs">Permalink</a>
+    <a class="d-none js-permalink-shortcut" data-hotkey="y" href="/grin-pool/grin-pool/blob/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/util.rs">Permalink</a>
 
-    <!-- blob contrib key: blob_contributors:v21:55200c62c11dd9c8ee978e8fec42a910 -->
+    <!-- blob contrib key: blob_contributors:v21:7e8e7c46dba1b0409d2d137bf8a660ff -->
 
     
 
@@ -764,7 +764,7 @@
     <span class="css-truncate-target">e422e94ec9</span>
   </summary>
 
-  <details-menu class="select-menu-modal position-absolute" style="z-index: 99;" src="/grin-pool/grin-pool/ref-list/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/proto.rs?source_action=show&amp;source_controller=blob" preload>
+  <details-menu class="select-menu-modal position-absolute" style="z-index: 99;" src="/grin-pool/grin-pool/ref-list/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/util.rs?source_action=show&amp;source_controller=blob" preload>
     <include-fragment class="select-menu-loading-overlay anim-pulse">
       <svg height="32" class="octicon octicon-octoface" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M14.7 5.34c.13-.32.55-1.59-.13-3.31 0 0-1.05-.33-3.44 1.3-1-.28-2.07-.32-3.13-.32s-2.13.04-3.13.32c-2.39-1.64-3.44-1.3-3.44-1.3-.68 1.72-.26 2.99-.13 3.31C.49 6.21 0 7.33 0 8.69 0 13.84 3.33 15 7.98 15S16 13.84 16 8.69c0-1.36-.49-2.48-1.3-3.35zM8 14.02c-3.3 0-5.98-.15-5.98-3.35 0-.76.38-1.48 1.02-2.07 1.07-.98 2.9-.46 4.96-.46 2.07 0 3.88-.52 4.96.46.65.59 1.02 1.3 1.02 2.07 0 3.19-2.68 3.35-5.98 3.35zM5.49 9.01c-.66 0-1.2.8-1.2 1.78s.54 1.79 1.2 1.79c.66 0 1.2-.8 1.2-1.79s-.54-1.78-1.2-1.78zm5.02 0c-.66 0-1.2.79-1.2 1.78s.54 1.79 1.2 1.79c.66 0 1.2-.8 1.2-1.79s-.53-1.78-1.2-1.78z"/></svg>
     </include-fragment>
@@ -783,12 +783,12 @@
         </clipboard-copy>
       </div>
       <div id="blob-path" class="breadcrumb">
-        <span class="repo-root js-repo-root"><span class="js-path-segment"><a data-pjax="true" rel="nofollow" href="/grin-pool/grin-pool/tree/e422e94ec92425835ddff79ea3ac00b7b0ca9fef"><span>grin-pool</span></a></span></span><span class="separator">/</span><span class="js-path-segment"><a data-pjax="true" rel="nofollow" href="/grin-pool/grin-pool/tree/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum"><span>stratum</span></a></span><span class="separator">/</span><span class="js-path-segment"><a data-pjax="true" rel="nofollow" href="/grin-pool/grin-pool/tree/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src"><span>src</span></a></span><span class="separator">/</span><span class="js-path-segment"><a data-pjax="true" rel="nofollow" href="/grin-pool/grin-pool/tree/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool"><span>pool</span></a></span><span class="separator">/</span><strong class="final-path">proto.rs</strong>
+        <span class="repo-root js-repo-root"><span class="js-path-segment"><a data-pjax="true" rel="nofollow" href="/grin-pool/grin-pool/tree/e422e94ec92425835ddff79ea3ac00b7b0ca9fef"><span>grin-pool</span></a></span></span><span class="separator">/</span><span class="js-path-segment"><a data-pjax="true" rel="nofollow" href="/grin-pool/grin-pool/tree/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum"><span>stratum</span></a></span><span class="separator">/</span><span class="js-path-segment"><a data-pjax="true" rel="nofollow" href="/grin-pool/grin-pool/tree/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src"><span>src</span></a></span><span class="separator">/</span><span class="js-path-segment"><a data-pjax="true" rel="nofollow" href="/grin-pool/grin-pool/tree/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool"><span>pool</span></a></span><span class="separator">/</span><strong class="final-path">util.rs</strong>
       </div>
     </div>
 
 
-    <include-fragment src="/grin-pool/grin-pool/contributors/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/proto.rs" class="commit-tease commit-loader">
+    <include-fragment src="/grin-pool/grin-pool/contributors/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/util.rs" class="commit-tease commit-loader">
       <div>
         Fetching contributors&hellip;
       </div>
@@ -809,9 +809,9 @@
 
 
     <div class="BtnGroup">
-      <a id="raw-url" class="btn btn-sm BtnGroup-item" href="/grin-pool/grin-pool/raw/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/proto.rs">Raw</a>
-        <a class="btn btn-sm js-update-url-with-hash BtnGroup-item" data-hotkey="b" href="/grin-pool/grin-pool/blame/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/proto.rs">Blame</a>
-      <a rel="nofollow" class="btn btn-sm BtnGroup-item" href="/grin-pool/grin-pool/commits/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/proto.rs">History</a>
+      <a id="raw-url" class="btn btn-sm BtnGroup-item" href="/grin-pool/grin-pool/raw/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/util.rs">Raw</a>
+        <a class="btn btn-sm js-update-url-with-hash BtnGroup-item" data-hotkey="b" href="/grin-pool/grin-pool/blame/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/util.rs">Blame</a>
+      <a rel="nofollow" class="btn btn-sm BtnGroup-item" href="/grin-pool/grin-pool/commits/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/util.rs">History</a>
     </div>
 
 
@@ -833,9 +833,9 @@
   </div>
 
   <div class="file-info">
-      267 lines (243 sloc)
+      90 lines (75 sloc)
       <span class="file-info-divider"></span>
-    7.21 KB
+    2.52 KB
   </div>
 </div>
 
@@ -846,127 +846,129 @@
 <table class="highlight tab-size js-file-line-container" data-tab-size="8">
       <tr>
         <td id="L1" class="blob-num js-line-number" data-line-number="1"></td>
-        <td id="LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// Copyright 2018 Blade M. Doyle</span></td>
+        <td id="LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// Copyright 2017 The Grin Developers</span></td>
       </tr>
       <tr>
         <td id="L2" class="blob-num js-line-number" data-line-number="2"></td>
-        <td id="LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span></td>
+        <td id="LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//</span></td>
       </tr>
       <tr>
         <td id="L3" class="blob-num js-line-number" data-line-number="3"></td>
-        <td id="LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// you may not use this file except in compliance with the License.</span></td>
+        <td id="LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span></td>
       </tr>
       <tr>
         <td id="L4" class="blob-num js-line-number" data-line-number="4"></td>
-        <td id="LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// You may obtain a copy of the License at</span></td>
+        <td id="LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// you may not use this file except in compliance with the License.</span></td>
       </tr>
       <tr>
         <td id="L5" class="blob-num js-line-number" data-line-number="5"></td>
-        <td id="LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//</span></td>
+        <td id="LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// You may obtain a copy of the License at</span></td>
       </tr>
       <tr>
         <td id="L6" class="blob-num js-line-number" data-line-number="6"></td>
-        <td id="LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//     http://www.apache.org/licenses/LICENSE-2.0</span></td>
+        <td id="LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//</span></td>
       </tr>
       <tr>
         <td id="L7" class="blob-num js-line-number" data-line-number="7"></td>
-        <td id="LC7" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//</span></td>
+        <td id="LC7" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//     http://www.apache.org/licenses/LICENSE-2.0</span></td>
       </tr>
       <tr>
         <td id="L8" class="blob-num js-line-number" data-line-number="8"></td>
-        <td id="LC8" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// Unless required by applicable law or agreed to in writing, software</span></td>
+        <td id="LC8" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//</span></td>
       </tr>
       <tr>
         <td id="L9" class="blob-num js-line-number" data-line-number="9"></td>
-        <td id="LC9" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span></td>
+        <td id="LC9" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// Unless required by applicable law or agreed to in writing, software</span></td>
       </tr>
       <tr>
         <td id="L10" class="blob-num js-line-number" data-line-number="10"></td>
-        <td id="LC10" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></td>
+        <td id="LC10" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span></td>
       </tr>
       <tr>
         <td id="L11" class="blob-num js-line-number" data-line-number="11"></td>
-        <td id="LC11" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// See the License for the specific language governing permissions and</span></td>
+        <td id="LC11" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></td>
       </tr>
       <tr>
         <td id="L12" class="blob-num js-line-number" data-line-number="12"></td>
-        <td id="LC12" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// limitations under the License.</span></td>
+        <td id="LC12" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// See the License for the specific language governing permissions and</span></td>
       </tr>
       <tr>
         <td id="L13" class="blob-num js-line-number" data-line-number="13"></td>
-        <td id="LC13" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC13" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// limitations under the License.</span></td>
       </tr>
       <tr>
         <td id="L14" class="blob-num js-line-number" data-line-number="14"></td>
-        <td id="LC14" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//! Mining Stratum Server JSON RPC Protocol</span></td>
+        <td id="LC14" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L15" class="blob-num js-line-number" data-line-number="15"></td>
-        <td id="LC15" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//!</span></td>
+        <td id="LC15" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//! header manipulation utility functions</span></td>
       </tr>
       <tr>
         <td id="L16" class="blob-num js-line-number" data-line-number="16"></td>
-        <td id="LC16" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//! Offers methods to send / recv messages with the stratum</span></td>
+        <td id="LC16" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L17" class="blob-num js-line-number" data-line-number="17"></td>
-        <td id="LC17" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//! workers and servers via JSON RPC.</span></td>
+        <td id="LC17" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> byteorder<span class="pl-k">::</span>{BigEndian, ByteOrder};</td>
       </tr>
       <tr>
         <td id="L18" class="blob-num js-line-number" data-line-number="18"></td>
-        <td id="LC18" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC18" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> rand<span class="pl-k">::</span>{<span class="pl-c1">self</span>, Rng};</td>
       </tr>
       <tr>
         <td id="L19" class="blob-num js-line-number" data-line-number="19"></td>
-        <td id="LC19" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> bufstream<span class="pl-k">::</span>BufStream;</td>
+        <td id="LC19" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L20" class="blob-num js-line-number" data-line-number="20"></td>
-        <td id="LC20" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> serde_json;</td>
+        <td id="LC20" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L21" class="blob-num js-line-number" data-line-number="21"></td>
-        <td id="LC21" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> serde_json<span class="pl-k">::</span>Value;</td>
+        <td id="LC21" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> std<span class="pl-k">::</span>fmt<span class="pl-k">::</span>Write;</td>
       </tr>
       <tr>
         <td id="L22" class="blob-num js-line-number" data-line-number="22"></td>
-        <td id="LC22" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> std<span class="pl-k">::</span>io<span class="pl-k">::</span>BufRead;</td>
+        <td id="LC22" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> std<span class="pl-k">::</span>num;</td>
       </tr>
       <tr>
         <td id="L23" class="blob-num js-line-number" data-line-number="23"></td>
-        <td id="LC23" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> std<span class="pl-k">::</span>io<span class="pl-k">::</span>{ErrorKind, Write};</td>
+        <td id="LC23" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L24" class="blob-num js-line-number" data-line-number="24"></td>
-        <td id="LC24" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> std<span class="pl-k">::</span>net<span class="pl-k">::</span>TcpStream;</td>
+        <td id="LC24" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">header_data</span>(pre_nonce: <span class="pl-k">&amp;</span><span class="pl-k">str</span>, post_nonce: <span class="pl-k">&amp;</span><span class="pl-k">str</span>, nonce: <span class="pl-k">u64</span>) -&gt; (<span class="pl-k">Vec</span>&lt;<span class="pl-k">u8</span>&gt;, <span class="pl-k">u32</span>) {</td>
       </tr>
       <tr>
         <td id="L25" class="blob-num js-line-number" data-line-number="25"></td>
-        <td id="LC25" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC25" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">// Turn input strings into vectors</span></td>
       </tr>
       <tr>
         <td id="L26" class="blob-num js-line-number" data-line-number="26"></td>
-        <td id="LC26" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> pool<span class="pl-k">::</span>logger<span class="pl-k">::</span>LOGGER;</td>
+        <td id="LC26" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">let</span> <span class="pl-k">mut</span> pre_vec <span class="pl-k">=</span> <span class="pl-en">from_hex_string</span>(pre_nonce);</td>
       </tr>
       <tr>
         <td id="L27" class="blob-num js-line-number" data-line-number="27"></td>
-        <td id="LC27" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC27" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">let</span> <span class="pl-k">mut</span> post_vec <span class="pl-k">=</span> <span class="pl-en">from_hex_string</span>(post_nonce);</td>
       </tr>
       <tr>
         <td id="L28" class="blob-num js-line-number" data-line-number="28"></td>
-        <td id="LC28" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// ----------------------------------------</span></td>
+        <td id="LC28" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L29" class="blob-num js-line-number" data-line-number="29"></td>
-        <td id="LC29" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// RPC Messages</span></td>
+        <td id="LC29" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">let</span> sec_scaling_bytes <span class="pl-k">=</span> <span class="pl-k">&amp;</span>pre_vec.<span class="pl-en">clone</span>()[pre_vec.<span class="pl-en">len</span>()<span class="pl-k">-</span><span class="pl-c1">4</span>..pre_vec.<span class="pl-en">len</span>()];</td>
       </tr>
       <tr>
         <td id="L30" class="blob-num js-line-number" data-line-number="30"></td>
-        <td id="LC30" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//</span></td>
+        <td id="LC30" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">let</span> sec_scaling <span class="pl-k">=</span> BigEndian<span class="pl-k">::</span><span class="pl-en">read_u32</span>(<span class="pl-k">&amp;</span>sec_scaling_bytes);</td>
       </tr>
       <tr>
         <td id="L31" class="blob-num js-line-number" data-line-number="31"></td>
@@ -975,961 +977,242 @@
       </tr>
       <tr>
         <td id="L32" class="blob-num js-line-number" data-line-number="32"></td>
-        <td id="LC32" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// XXX TODO: Revisit all uses of &quot;pub&quot; in the protocol structs?</span></td>
+        <td id="LC32" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">let</span> <span class="pl-k">mut</span> nonce_bytes <span class="pl-k">=</span> [<span class="pl-c1">0</span>; <span class="pl-c1">8</span>];</td>
       </tr>
       <tr>
         <td id="L33" class="blob-num js-line-number" data-line-number="33"></td>
-        <td id="LC33" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC33" class="blob-code blob-code-inner js-file-line">	BigEndian<span class="pl-k">::</span><span class="pl-en">write_u64</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> nonce_bytes, nonce);</td>
       </tr>
       <tr>
         <td id="L34" class="blob-num js-line-number" data-line-number="34"></td>
-        <td id="LC34" class="blob-code blob-code-inner js-file-line">#[derive(Serialize, Deserialize, Debug)]</td>
+        <td id="LC34" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">let</span> <span class="pl-k">mut</span> nonce_vec <span class="pl-k">=</span> nonce_bytes.<span class="pl-en">to_vec</span>();</td>
       </tr>
       <tr>
         <td id="L35" class="blob-num js-line-number" data-line-number="35"></td>
-        <td id="LC35" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">struct</span> <span class="pl-en">RpcRequest</span> {</td>
+        <td id="LC35" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L36" class="blob-num js-line-number" data-line-number="36"></td>
-        <td id="LC36" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> id: <span class="pl-k">String</span>,</td>
+        <td id="LC36" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">// Generate new header</span></td>
       </tr>
       <tr>
         <td id="L37" class="blob-num js-line-number" data-line-number="37"></td>
-        <td id="LC37" class="blob-code blob-code-inner js-file-line">    jsonrpc: <span class="pl-k">String</span>,</td>
+        <td id="LC37" class="blob-code blob-code-inner js-file-line">	pre_vec.<span class="pl-en">append</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> nonce_vec);</td>
       </tr>
       <tr>
         <td id="L38" class="blob-num js-line-number" data-line-number="38"></td>
-        <td id="LC38" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> method: <span class="pl-k">String</span>,</td>
+        <td id="LC38" class="blob-code blob-code-inner js-file-line">	pre_vec.<span class="pl-en">append</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> post_vec);</td>
       </tr>
       <tr>
         <td id="L39" class="blob-num js-line-number" data-line-number="39"></td>
-        <td id="LC39" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> params: <span class="pl-k">Option</span><span class="pl-k">&lt;</span>Value<span class="pl-k">&gt;</span>,</td>
+        <td id="LC39" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L40" class="blob-num js-line-number" data-line-number="40"></td>
-        <td id="LC40" class="blob-code blob-code-inner js-file-line">}</td>
+        <td id="LC40" class="blob-code blob-code-inner js-file-line">	(pre_vec, sec_scaling)</td>
       </tr>
       <tr>
         <td id="L41" class="blob-num js-line-number" data-line-number="41"></td>
-        <td id="LC41" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC41" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L42" class="blob-num js-line-number" data-line-number="42"></td>
-        <td id="LC42" class="blob-code blob-code-inner js-file-line">#[derive(Serialize, Deserialize, Debug)]</td>
+        <td id="LC42" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L43" class="blob-num js-line-number" data-line-number="43"></td>
-        <td id="LC43" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">struct</span> <span class="pl-en">RpcResponse</span> {</td>
+        <td id="LC43" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">get_next_header_data</span>(pre_nonce: <span class="pl-k">&amp;</span><span class="pl-k">str</span>, post_nonce: <span class="pl-k">&amp;</span><span class="pl-k">str</span>) -&gt; (<span class="pl-k">u64</span>, <span class="pl-k">Vec</span>&lt;<span class="pl-k">u8</span>&gt;, <span class="pl-k">u32</span>) {</td>
       </tr>
       <tr>
         <td id="L44" class="blob-num js-line-number" data-line-number="44"></td>
-        <td id="LC44" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> id: <span class="pl-k">String</span>,</td>
+        <td id="LC44" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">let</span> nonce: <span class="pl-k">u64</span> <span class="pl-k">=</span> rand<span class="pl-k">::</span>OsRng<span class="pl-k">::</span><span class="pl-en">new</span>().<span class="pl-en">unwrap</span>().<span class="pl-en">gen</span>();</td>
       </tr>
       <tr>
         <td id="L45" class="blob-num js-line-number" data-line-number="45"></td>
-        <td id="LC45" class="blob-code blob-code-inner js-file-line">    jsonrpc: <span class="pl-k">String</span>,</td>
+        <td id="LC45" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">let</span> (hd, sec_scaling) <span class="pl-k">=</span> <span class="pl-en">header_data</span>(pre_nonce, post_nonce, nonce);</td>
       </tr>
       <tr>
         <td id="L46" class="blob-num js-line-number" data-line-number="46"></td>
-        <td id="LC46" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> method: <span class="pl-k">String</span>,</td>
+        <td id="LC46" class="blob-code blob-code-inner js-file-line">	(nonce, hd, sec_scaling)</td>
       </tr>
       <tr>
         <td id="L47" class="blob-num js-line-number" data-line-number="47"></td>
-        <td id="LC47" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> result: <span class="pl-k">Option</span><span class="pl-k">&lt;</span>Value<span class="pl-k">&gt;</span>,</td>
+        <td id="LC47" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L48" class="blob-num js-line-number" data-line-number="48"></td>
-        <td id="LC48" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> error: <span class="pl-k">Option</span><span class="pl-k">&lt;</span>Value<span class="pl-k">&gt;</span>,</td>
+        <td id="LC48" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L49" class="blob-num js-line-number" data-line-number="49"></td>
-        <td id="LC49" class="blob-code blob-code-inner js-file-line">}</td>
+        <td id="LC49" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// Helper to convert a hex string</span></td>
       </tr>
       <tr>
         <td id="L50" class="blob-num js-line-number" data-line-number="50"></td>
-        <td id="LC50" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC50" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">from_hex_string</span>(in_str: <span class="pl-k">&amp;</span><span class="pl-k">str</span>) -&gt; <span class="pl-k">Vec</span>&lt;<span class="pl-k">u8</span>&gt; {</td>
       </tr>
       <tr>
         <td id="L51" class="blob-num js-line-number" data-line-number="51"></td>
-        <td id="LC51" class="blob-code blob-code-inner js-file-line">#[derive(Serialize, Deserialize, Debug, Clone)]</td>
+        <td id="LC51" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">let</span> <span class="pl-k">mut</span> bytes <span class="pl-k">=</span> <span class="pl-k">Vec</span><span class="pl-k">::</span><span class="pl-en">new</span>();</td>
       </tr>
       <tr>
         <td id="L52" class="blob-num js-line-number" data-line-number="52"></td>
-        <td id="LC52" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">struct</span> <span class="pl-en">RpcError</span> {</td>
+        <td id="LC52" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">for</span> i <span class="pl-k">in</span> <span class="pl-c1">0</span>..(in_str.<span class="pl-en">len</span>() <span class="pl-k">/</span> <span class="pl-c1">2</span>) {</td>
       </tr>
       <tr>
         <td id="L53" class="blob-num js-line-number" data-line-number="53"></td>
-        <td id="LC53" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> code: <span class="pl-k">i32</span>,</td>
+        <td id="LC53" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> res <span class="pl-k">=</span> <span class="pl-k">u8</span><span class="pl-k">::</span><span class="pl-en">from_str_radix</span>(<span class="pl-k">&amp;</span>in_str[<span class="pl-c1">2</span> <span class="pl-k">*</span> i..<span class="pl-c1">2</span> <span class="pl-k">*</span> i <span class="pl-k">+</span> <span class="pl-c1">2</span>], <span class="pl-c1">16</span>);</td>
       </tr>
       <tr>
         <td id="L54" class="blob-num js-line-number" data-line-number="54"></td>
-        <td id="LC54" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> message: <span class="pl-k">String</span>,</td>
+        <td id="LC54" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">match</span> res {</td>
       </tr>
       <tr>
         <td id="L55" class="blob-num js-line-number" data-line-number="55"></td>
-        <td id="LC55" class="blob-code blob-code-inner js-file-line">}</td>
+        <td id="LC55" class="blob-code blob-code-inner js-file-line">			<span class="pl-c1">Ok</span>(v) <span class="pl-k">=&gt;</span> bytes.<span class="pl-en">push</span>(v),</td>
       </tr>
       <tr>
         <td id="L56" class="blob-num js-line-number" data-line-number="56"></td>
-        <td id="LC56" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC56" class="blob-code blob-code-inner js-file-line">			<span class="pl-c1">Err</span>(e) <span class="pl-k">=&gt;</span> <span class="pl-c1">println!</span>(<span class="pl-s">&quot;Problem with hex: {}&quot;</span>, e),</td>
       </tr>
       <tr>
         <td id="L57" class="blob-num js-line-number" data-line-number="57"></td>
-        <td id="LC57" class="blob-code blob-code-inner js-file-line">#[derive(Serialize, Deserialize, Debug, Clone)]</td>
+        <td id="LC57" class="blob-code blob-code-inner js-file-line">		}</td>
       </tr>
       <tr>
         <td id="L58" class="blob-num js-line-number" data-line-number="58"></td>
-        <td id="LC58" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">struct</span> <span class="pl-en">LoginParams</span> {</td>
+        <td id="LC58" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L59" class="blob-num js-line-number" data-line-number="59"></td>
-        <td id="LC59" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> login: <span class="pl-k">String</span>,</td>
+        <td id="LC59" class="blob-code blob-code-inner js-file-line">	bytes</td>
       </tr>
       <tr>
         <td id="L60" class="blob-num js-line-number" data-line-number="60"></td>
-        <td id="LC60" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> pass: <span class="pl-k">String</span>,</td>
+        <td id="LC60" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L61" class="blob-num js-line-number" data-line-number="61"></td>
-        <td id="LC61" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> agent: <span class="pl-k">String</span>,</td>
+        <td id="LC61" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L62" class="blob-num js-line-number" data-line-number="62"></td>
-        <td id="LC62" class="blob-code blob-code-inner js-file-line">}</td>
+        <td id="LC62" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// From grin-miner util</span></td>
       </tr>
       <tr>
         <td id="L63" class="blob-num js-line-number" data-line-number="63"></td>
-        <td id="LC63" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC63" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// Encode the provided bytes into a hex string</span></td>
       </tr>
       <tr>
         <td id="L64" class="blob-num js-line-number" data-line-number="64"></td>
-        <td id="LC64" class="blob-code blob-code-inner js-file-line">#[derive(Serialize, Deserialize, Debug, Clone)]</td>
+        <td id="LC64" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">to_hex</span>(bytes: <span class="pl-k">Vec</span>&lt;<span class="pl-k">u8</span>&gt;) -&gt; <span class="pl-k">String</span> {</td>
       </tr>
       <tr>
         <td id="L65" class="blob-num js-line-number" data-line-number="65"></td>
-        <td id="LC65" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">struct</span> <span class="pl-en">SubmitParams</span> {</td>
+        <td id="LC65" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">let</span> <span class="pl-k">mut</span> s <span class="pl-k">=</span> <span class="pl-k">String</span><span class="pl-k">::</span><span class="pl-en">new</span>();</td>
       </tr>
       <tr>
         <td id="L66" class="blob-num js-line-number" data-line-number="66"></td>
-        <td id="LC66" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> height: <span class="pl-k">u64</span>,</td>
+        <td id="LC66" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">for</span> byte <span class="pl-k">in</span> bytes {</td>
       </tr>
       <tr>
         <td id="L67" class="blob-num js-line-number" data-line-number="67"></td>
-        <td id="LC67" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> job_id: <span class="pl-k">u64</span>,</td>
+        <td id="LC67" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">write!</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> s, <span class="pl-s">&quot;{:02x}&quot;</span>, byte).<span class="pl-en">expect</span>(<span class="pl-s">&quot;Unable to write&quot;</span>);</td>
       </tr>
       <tr>
         <td id="L68" class="blob-num js-line-number" data-line-number="68"></td>
-        <td id="LC68" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> nonce: <span class="pl-k">u64</span>,</td>
+        <td id="LC68" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L69" class="blob-num js-line-number" data-line-number="69"></td>
-        <td id="LC69" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> edge_bits: <span class="pl-k">u32</span>,</td>
+        <td id="LC69" class="blob-code blob-code-inner js-file-line">	s</td>
       </tr>
       <tr>
         <td id="L70" class="blob-num js-line-number" data-line-number="70"></td>
-        <td id="LC70" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> pow: <span class="pl-k">Vec</span><span class="pl-k">&lt;</span><span class="pl-k">u64</span><span class="pl-k">&gt;</span>,</td>
+        <td id="LC70" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L71" class="blob-num js-line-number" data-line-number="71"></td>
-        <td id="LC71" class="blob-code blob-code-inner js-file-line">}</td>
+        <td id="LC71" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L72" class="blob-num js-line-number" data-line-number="72"></td>
-        <td id="LC72" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC72" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// Decode a hex string into bytes.</span></td>
       </tr>
       <tr>
         <td id="L73" class="blob-num js-line-number" data-line-number="73"></td>
-        <td id="LC73" class="blob-code blob-code-inner js-file-line">#[derive(Serialize, Deserialize, Clone, Debug)]</td>
+        <td id="LC73" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">from_hex</span>(hex_str: <span class="pl-k">String</span>) -&gt; <span class="pl-k">Result</span>&lt;<span class="pl-k">Vec</span>&lt;<span class="pl-k">u8</span>&gt;, num::ParseIntError&gt; {</td>
       </tr>
       <tr>
         <td id="L74" class="blob-num js-line-number" data-line-number="74"></td>
-        <td id="LC74" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">struct</span> <span class="pl-en">JobTemplate</span> {</td>
+        <td id="LC74" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">let</span> hex_trim <span class="pl-k">=</span> <span class="pl-k">if</span> <span class="pl-k">&amp;</span>hex_str[..<span class="pl-c1">2</span>] <span class="pl-k">==</span> <span class="pl-s">&quot;0x&quot;</span> {</td>
       </tr>
       <tr>
         <td id="L75" class="blob-num js-line-number" data-line-number="75"></td>
-        <td id="LC75" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> height: <span class="pl-k">u64</span>,</td>
+        <td id="LC75" class="blob-code blob-code-inner js-file-line">		hex_str[<span class="pl-c1">2</span>..].<span class="pl-en">to_owned</span>()</td>
       </tr>
       <tr>
         <td id="L76" class="blob-num js-line-number" data-line-number="76"></td>
-        <td id="LC76" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> job_id: <span class="pl-k">u64</span>,</td>
+        <td id="LC76" class="blob-code blob-code-inner js-file-line">	} <span class="pl-k">else</span> {</td>
       </tr>
       <tr>
         <td id="L77" class="blob-num js-line-number" data-line-number="77"></td>
-        <td id="LC77" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> difficulty: <span class="pl-k">u64</span>,</td>
+        <td id="LC77" class="blob-code blob-code-inner js-file-line">		hex_str.<span class="pl-en">clone</span>()</td>
       </tr>
       <tr>
         <td id="L78" class="blob-num js-line-number" data-line-number="78"></td>
-        <td id="LC78" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> pre_pow: <span class="pl-k">String</span>,</td>
+        <td id="LC78" class="blob-code blob-code-inner js-file-line">	};</td>
       </tr>
       <tr>
         <td id="L79" class="blob-num js-line-number" data-line-number="79"></td>
-        <td id="LC79" class="blob-code blob-code-inner js-file-line">}</td>
+        <td id="LC79" class="blob-code blob-code-inner js-file-line">	<span class="pl-en">split_n</span>(<span class="pl-k">&amp;</span>hex_trim.<span class="pl-en">trim</span>()[..], <span class="pl-c1">2</span>)</td>
       </tr>
       <tr>
         <td id="L80" class="blob-num js-line-number" data-line-number="80"></td>
-        <td id="LC80" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC80" class="blob-code blob-code-inner js-file-line">		.<span class="pl-en">iter</span>()</td>
       </tr>
       <tr>
         <td id="L81" class="blob-num js-line-number" data-line-number="81"></td>
-        <td id="LC81" class="blob-code blob-code-inner js-file-line"><span class="pl-k">impl</span> <span class="pl-en">JobTemplate</span> {</td>
+        <td id="LC81" class="blob-code blob-code-inner js-file-line">		.<span class="pl-en">map</span>(<span class="pl-k">|</span>b<span class="pl-k">|</span> <span class="pl-k">u8</span><span class="pl-k">::</span><span class="pl-en">from_str_radix</span>(b, <span class="pl-c1">16</span>))</td>
       </tr>
       <tr>
         <td id="L82" class="blob-num js-line-number" data-line-number="82"></td>
-        <td id="LC82" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">new</span>() -&gt; JobTemplate {</td>
+        <td id="LC82" class="blob-code blob-code-inner js-file-line">		.<span class="pl-en">collect</span><span class="pl-k">::</span>&lt;<span class="pl-k">Result</span>&lt;<span class="pl-k">Vec</span>&lt;<span class="pl-k">u8</span>&gt;, _&gt;&gt;()</td>
       </tr>
       <tr>
         <td id="L83" class="blob-num js-line-number" data-line-number="83"></td>
-        <td id="LC83" class="blob-code blob-code-inner js-file-line">        JobTemplate {</td>
+        <td id="LC83" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L84" class="blob-num js-line-number" data-line-number="84"></td>
-        <td id="LC84" class="blob-code blob-code-inner js-file-line">            height: <span class="pl-c1">0</span>,</td>
+        <td id="LC84" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L85" class="blob-num js-line-number" data-line-number="85"></td>
-        <td id="LC85" class="blob-code blob-code-inner js-file-line">            job_id: <span class="pl-c1">0</span>,</td>
+        <td id="LC85" class="blob-code blob-code-inner js-file-line"><span class="pl-k">fn</span> <span class="pl-en">split_n</span>(s: <span class="pl-k">&amp;</span><span class="pl-k">str</span>, n: <span class="pl-k">usize</span>) -&gt; <span class="pl-k">Vec</span>&lt;<span class="pl-k">&amp;</span><span class="pl-k">str</span>&gt; {</td>
       </tr>
       <tr>
         <td id="L86" class="blob-num js-line-number" data-line-number="86"></td>
-        <td id="LC86" class="blob-code blob-code-inner js-file-line">            difficulty: <span class="pl-c1">0</span>,</td>
+        <td id="LC86" class="blob-code blob-code-inner js-file-line">	(<span class="pl-c1">0</span>..(s.<span class="pl-en">len</span>() <span class="pl-k">-</span> n <span class="pl-k">+</span> <span class="pl-c1">1</span>) <span class="pl-k">/</span> <span class="pl-c1">2</span> <span class="pl-k">+</span> <span class="pl-c1">1</span>)</td>
       </tr>
       <tr>
         <td id="L87" class="blob-num js-line-number" data-line-number="87"></td>
-        <td id="LC87" class="blob-code blob-code-inner js-file-line">            pre_pow: <span class="pl-s">&quot;&quot;</span>.<span class="pl-en">to_string</span>(),</td>
+        <td id="LC87" class="blob-code blob-code-inner js-file-line">		.<span class="pl-en">map</span>(<span class="pl-k">|</span>i<span class="pl-k">|</span> <span class="pl-k">&amp;</span>s[<span class="pl-c1">2</span> <span class="pl-k">*</span> i..<span class="pl-c1">2</span> <span class="pl-k">*</span> i <span class="pl-k">+</span> n])</td>
       </tr>
       <tr>
         <td id="L88" class="blob-num js-line-number" data-line-number="88"></td>
-        <td id="LC88" class="blob-code blob-code-inner js-file-line">        }</td>
+        <td id="LC88" class="blob-code blob-code-inner js-file-line">		.<span class="pl-en">collect</span>()</td>
       </tr>
       <tr>
         <td id="L89" class="blob-num js-line-number" data-line-number="89"></td>
-        <td id="LC89" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L90" class="blob-num js-line-number" data-line-number="90"></td>
-        <td id="LC90" class="blob-code blob-code-inner js-file-line">}</td>
-      </tr>
-      <tr>
-        <td id="L91" class="blob-num js-line-number" data-line-number="91"></td>
-        <td id="LC91" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L92" class="blob-num js-line-number" data-line-number="92"></td>
-        <td id="LC92" class="blob-code blob-code-inner js-file-line">#[derive(Serialize, Deserialize, Clone, Debug)]</td>
-      </tr>
-      <tr>
-        <td id="L93" class="blob-num js-line-number" data-line-number="93"></td>
-        <td id="LC93" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">struct</span> <span class="pl-en">WorkerStatus</span> {</td>
-      </tr>
-      <tr>
-        <td id="L94" class="blob-num js-line-number" data-line-number="94"></td>
-        <td id="LC94" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> id: <span class="pl-k">String</span>,</td>
-      </tr>
-      <tr>
-        <td id="L95" class="blob-num js-line-number" data-line-number="95"></td>
-        <td id="LC95" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> height: <span class="pl-k">u64</span>,</td>
-      </tr>
-      <tr>
-        <td id="L96" class="blob-num js-line-number" data-line-number="96"></td>
-        <td id="LC96" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> difficulty: <span class="pl-k">u64</span>,</td>
-      </tr>
-      <tr>
-        <td id="L97" class="blob-num js-line-number" data-line-number="97"></td>
-        <td id="LC97" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> accepted: <span class="pl-k">u64</span>,</td>
-      </tr>
-      <tr>
-        <td id="L98" class="blob-num js-line-number" data-line-number="98"></td>
-        <td id="LC98" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> rejected: <span class="pl-k">u64</span>,</td>
-      </tr>
-      <tr>
-        <td id="L99" class="blob-num js-line-number" data-line-number="99"></td>
-        <td id="LC99" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> stale: <span class="pl-k">u64</span>,</td>
-      </tr>
-      <tr>
-        <td id="L100" class="blob-num js-line-number" data-line-number="100"></td>
-        <td id="LC100" class="blob-code blob-code-inner js-file-line">}</td>
-      </tr>
-      <tr>
-        <td id="L101" class="blob-num js-line-number" data-line-number="101"></td>
-        <td id="LC101" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L102" class="blob-num js-line-number" data-line-number="102"></td>
-        <td id="LC102" class="blob-code blob-code-inner js-file-line"><span class="pl-k">impl</span> <span class="pl-en">WorkerStatus</span> {</td>
-      </tr>
-      <tr>
-        <td id="L103" class="blob-num js-line-number" data-line-number="103"></td>
-        <td id="LC103" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">new</span>(id: <span class="pl-k">String</span>) -&gt; WorkerStatus {</td>
-      </tr>
-      <tr>
-        <td id="L104" class="blob-num js-line-number" data-line-number="104"></td>
-        <td id="LC104" class="blob-code blob-code-inner js-file-line">        WorkerStatus {</td>
-      </tr>
-      <tr>
-        <td id="L105" class="blob-num js-line-number" data-line-number="105"></td>
-        <td id="LC105" class="blob-code blob-code-inner js-file-line">            id: id,</td>
-      </tr>
-      <tr>
-        <td id="L106" class="blob-num js-line-number" data-line-number="106"></td>
-        <td id="LC106" class="blob-code blob-code-inner js-file-line">            height: <span class="pl-c1">0</span>,</td>
-      </tr>
-      <tr>
-        <td id="L107" class="blob-num js-line-number" data-line-number="107"></td>
-        <td id="LC107" class="blob-code blob-code-inner js-file-line">            difficulty: <span class="pl-c1">0</span>,</td>
-      </tr>
-      <tr>
-        <td id="L108" class="blob-num js-line-number" data-line-number="108"></td>
-        <td id="LC108" class="blob-code blob-code-inner js-file-line">            accepted: <span class="pl-c1">0</span>,</td>
-      </tr>
-      <tr>
-        <td id="L109" class="blob-num js-line-number" data-line-number="109"></td>
-        <td id="LC109" class="blob-code blob-code-inner js-file-line">            rejected: <span class="pl-c1">0</span>,</td>
-      </tr>
-      <tr>
-        <td id="L110" class="blob-num js-line-number" data-line-number="110"></td>
-        <td id="LC110" class="blob-code blob-code-inner js-file-line">            stale: <span class="pl-c1">0</span>,</td>
-      </tr>
-      <tr>
-        <td id="L111" class="blob-num js-line-number" data-line-number="111"></td>
-        <td id="LC111" class="blob-code blob-code-inner js-file-line">        }</td>
-      </tr>
-      <tr>
-        <td id="L112" class="blob-num js-line-number" data-line-number="112"></td>
-        <td id="LC112" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L113" class="blob-num js-line-number" data-line-number="113"></td>
-        <td id="LC113" class="blob-code blob-code-inner js-file-line">}</td>
-      </tr>
-      <tr>
-        <td id="L114" class="blob-num js-line-number" data-line-number="114"></td>
-        <td id="LC114" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L115" class="blob-num js-line-number" data-line-number="115"></td>
-        <td id="LC115" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// --------------------------------</span></td>
-      </tr>
-      <tr>
-        <td id="L116" class="blob-num js-line-number" data-line-number="116"></td>
-        <td id="LC116" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// A Staratum Protocol Interface</span></td>
-      </tr>
-      <tr>
-        <td id="L117" class="blob-num js-line-number" data-line-number="117"></td>
-        <td id="LC117" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L118" class="blob-num js-line-number" data-line-number="118"></td>
-        <td id="LC118" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">struct</span> <span class="pl-en">StratumProtocol</span> {</td>
-      </tr>
-      <tr>
-        <td id="L119" class="blob-num js-line-number" data-line-number="119"></td>
-        <td id="LC119" class="blob-code blob-code-inner js-file-line">    id: <span class="pl-k">String</span>,</td>
-      </tr>
-      <tr>
-        <td id="L120" class="blob-num js-line-number" data-line-number="120"></td>
-        <td id="LC120" class="blob-code blob-code-inner js-file-line">}</td>
-      </tr>
-      <tr>
-        <td id="L121" class="blob-num js-line-number" data-line-number="121"></td>
-        <td id="LC121" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L122" class="blob-num js-line-number" data-line-number="122"></td>
-        <td id="LC122" class="blob-code blob-code-inner js-file-line"><span class="pl-k">impl</span> <span class="pl-en">StratumProtocol</span> {</td>
-      </tr>
-      <tr>
-        <td id="L123" class="blob-num js-line-number" data-line-number="123"></td>
-        <td id="LC123" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">/// Creates a new Protocol instance for communication with a Stratum Server</span></td>
-      </tr>
-      <tr>
-        <td id="L124" class="blob-num js-line-number" data-line-number="124"></td>
-        <td id="LC124" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">new</span>() -&gt; StratumProtocol {</td>
-      </tr>
-      <tr>
-        <td id="L125" class="blob-num js-line-number" data-line-number="125"></td>
-        <td id="LC125" class="blob-code blob-code-inner js-file-line">        StratumProtocol {</td>
-      </tr>
-      <tr>
-        <td id="L126" class="blob-num js-line-number" data-line-number="126"></td>
-        <td id="LC126" class="blob-code blob-code-inner js-file-line">            id: <span class="pl-k">String</span><span class="pl-k">::</span><span class="pl-en">from</span>(<span class="pl-s">&quot;proto&quot;</span>),</td>
-      </tr>
-      <tr>
-        <td id="L127" class="blob-num js-line-number" data-line-number="127"></td>
-        <td id="LC127" class="blob-code blob-code-inner js-file-line">        }</td>
-      </tr>
-      <tr>
-        <td id="L128" class="blob-num js-line-number" data-line-number="128"></td>
-        <td id="LC128" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L129" class="blob-num js-line-number" data-line-number="129"></td>
-        <td id="LC129" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L130" class="blob-num js-line-number" data-line-number="130"></td>
-        <td id="LC130" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">/// Read a message from the stream</span></td>
-      </tr>
-      <tr>
-        <td id="L131" class="blob-num js-line-number" data-line-number="131"></td>
-        <td id="LC131" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">fn</span> <span class="pl-en">read_message</span>(</td>
-      </tr>
-      <tr>
-        <td id="L132" class="blob-num js-line-number" data-line-number="132"></td>
-        <td id="LC132" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>,</td>
-      </tr>
-      <tr>
-        <td id="L133" class="blob-num js-line-number" data-line-number="133"></td>
-        <td id="LC133" class="blob-code blob-code-inner js-file-line">        stream: <span class="pl-k">&amp;</span><span class="pl-k">mut</span> BufStream&lt;TcpStream&gt;,</td>
-      </tr>
-      <tr>
-        <td id="L134" class="blob-num js-line-number" data-line-number="134"></td>
-        <td id="LC134" class="blob-code blob-code-inner js-file-line">    ) -&gt; <span class="pl-k">Result</span>&lt;<span class="pl-k">Option</span>&lt;<span class="pl-k">String</span>&gt;, <span class="pl-k">String</span>&gt; {</td>
-      </tr>
-      <tr>
-        <td id="L135" class="blob-num js-line-number" data-line-number="135"></td>
-        <td id="LC135" class="blob-code blob-code-inner js-file-line">        <span class="pl-c">// Read and return a single message or None</span></td>
-      </tr>
-      <tr>
-        <td id="L136" class="blob-num js-line-number" data-line-number="136"></td>
-        <td id="LC136" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">let</span> <span class="pl-k">mut</span> line <span class="pl-k">=</span> <span class="pl-k">String</span><span class="pl-k">::</span><span class="pl-en">new</span>();</td>
-      </tr>
-      <tr>
-        <td id="L137" class="blob-num js-line-number" data-line-number="137"></td>
-        <td id="LC137" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">match</span> stream.<span class="pl-en">read_line</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> line) {</td>
-      </tr>
-      <tr>
-        <td id="L138" class="blob-num js-line-number" data-line-number="138"></td>
-        <td id="LC138" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">Ok</span>(_) <span class="pl-k">=&gt;</span> {</td>
-      </tr>
-      <tr>
-        <td id="L139" class="blob-num js-line-number" data-line-number="139"></td>
-        <td id="LC139" class="blob-code blob-code-inner js-file-line">                <span class="pl-c">// warn!(LOGGER, &quot;XXX DEBUG - line read: {:?}&quot;, line);</span></td>
-      </tr>
-      <tr>
-        <td id="L140" class="blob-num js-line-number" data-line-number="140"></td>
-        <td id="LC140" class="blob-code blob-code-inner js-file-line">                <span class="pl-c">// stream is not returning a proper error on disconnect</span></td>
-      </tr>
-      <tr>
-        <td id="L141" class="blob-num js-line-number" data-line-number="141"></td>
-        <td id="LC141" class="blob-code blob-code-inner js-file-line">                <span class="pl-k">if</span> line <span class="pl-k">==</span> <span class="pl-s">&quot;&quot;</span> {</td>
-      </tr>
-      <tr>
-        <td id="L142" class="blob-num js-line-number" data-line-number="142"></td>
-        <td id="LC142" class="blob-code blob-code-inner js-file-line">                    <span class="pl-k">return</span> <span class="pl-c1">Err</span>(<span class="pl-c1">format!</span>(<span class="pl-s">&quot;{} - Connection Error 1: Disconnected&quot;</span>, <span class="pl-c1">self</span>.id));</td>
-      </tr>
-      <tr>
-        <td id="L143" class="blob-num js-line-number" data-line-number="143"></td>
-        <td id="LC143" class="blob-code blob-code-inner js-file-line">                }</td>
-      </tr>
-      <tr>
-        <td id="L144" class="blob-num js-line-number" data-line-number="144"></td>
-        <td id="LC144" class="blob-code blob-code-inner js-file-line">                <span class="pl-k">return</span> <span class="pl-c1">Ok</span>(<span class="pl-c1">Some</span>(line));</td>
-      </tr>
-      <tr>
-        <td id="L145" class="blob-num js-line-number" data-line-number="145"></td>
-        <td id="LC145" class="blob-code blob-code-inner js-file-line">            }</td>
-      </tr>
-      <tr>
-        <td id="L146" class="blob-num js-line-number" data-line-number="146"></td>
-        <td id="LC146" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">Err</span>(<span class="pl-k">ref</span> e) <span class="pl-k">if</span> e.<span class="pl-en">kind</span>() <span class="pl-k">==</span> ErrorKind<span class="pl-k">::</span>WouldBlock <span class="pl-k">=&gt;</span> {</td>
-      </tr>
-      <tr>
-        <td id="L147" class="blob-num js-line-number" data-line-number="147"></td>
-        <td id="LC147" class="blob-code blob-code-inner js-file-line">                <span class="pl-c">// Not an error, just no messages ready</span></td>
-      </tr>
-      <tr>
-        <td id="L148" class="blob-num js-line-number" data-line-number="148"></td>
-        <td id="LC148" class="blob-code blob-code-inner js-file-line">                <span class="pl-k">return</span> <span class="pl-c1">Ok</span>(<span class="pl-c1">None</span>);</td>
-      </tr>
-      <tr>
-        <td id="L149" class="blob-num js-line-number" data-line-number="149"></td>
-        <td id="LC149" class="blob-code blob-code-inner js-file-line">            }</td>
-      </tr>
-      <tr>
-        <td id="L150" class="blob-num js-line-number" data-line-number="150"></td>
-        <td id="LC150" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">Err</span>(e) <span class="pl-k">=&gt;</span> {</td>
-      </tr>
-      <tr>
-        <td id="L151" class="blob-num js-line-number" data-line-number="151"></td>
-        <td id="LC151" class="blob-code blob-code-inner js-file-line">                <span class="pl-c1">error!</span>(LOGGER, <span class="pl-s">&quot;{} - Connection Error 1a: {}&quot;</span>, <span class="pl-c1">self</span>.id, e);</td>
-      </tr>
-      <tr>
-        <td id="L152" class="blob-num js-line-number" data-line-number="152"></td>
-        <td id="LC152" class="blob-code blob-code-inner js-file-line">                <span class="pl-k">return</span> <span class="pl-c1">Err</span>(<span class="pl-c1">format!</span>(<span class="pl-s">&quot;{}&quot;</span>, e));</td>
-      </tr>
-      <tr>
-        <td id="L153" class="blob-num js-line-number" data-line-number="153"></td>
-        <td id="LC153" class="blob-code blob-code-inner js-file-line">            }</td>
-      </tr>
-      <tr>
-        <td id="L154" class="blob-num js-line-number" data-line-number="154"></td>
-        <td id="LC154" class="blob-code blob-code-inner js-file-line">        }</td>
-      </tr>
-      <tr>
-        <td id="L155" class="blob-num js-line-number" data-line-number="155"></td>
-        <td id="LC155" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L156" class="blob-num js-line-number" data-line-number="156"></td>
-        <td id="LC156" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L157" class="blob-num js-line-number" data-line-number="157"></td>
-        <td id="LC157" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">/// Write a message to the stream and flush</span></td>
-      </tr>
-      <tr>
-        <td id="L158" class="blob-num js-line-number" data-line-number="158"></td>
-        <td id="LC158" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">write_message</span>(</td>
-      </tr>
-      <tr>
-        <td id="L159" class="blob-num js-line-number" data-line-number="159"></td>
-        <td id="LC159" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>,</td>
-      </tr>
-      <tr>
-        <td id="L160" class="blob-num js-line-number" data-line-number="160"></td>
-        <td id="LC160" class="blob-code blob-code-inner js-file-line">        message_in: <span class="pl-k">String</span>,</td>
-      </tr>
-      <tr>
-        <td id="L161" class="blob-num js-line-number" data-line-number="161"></td>
-        <td id="LC161" class="blob-code blob-code-inner js-file-line">        stream: <span class="pl-k">&amp;</span><span class="pl-k">mut</span> BufStream&lt;TcpStream&gt;,</td>
-      </tr>
-      <tr>
-        <td id="L162" class="blob-num js-line-number" data-line-number="162"></td>
-        <td id="LC162" class="blob-code blob-code-inner js-file-line">    ) -&gt; <span class="pl-k">Result</span>&lt;(), <span class="pl-k">String</span>&gt; {</td>
-      </tr>
-      <tr>
-        <td id="L163" class="blob-num js-line-number" data-line-number="163"></td>
-        <td id="LC163" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">let</span> <span class="pl-k">mut</span> message <span class="pl-k">=</span> message_in.<span class="pl-en">clone</span>();</td>
-      </tr>
-      <tr>
-        <td id="L164" class="blob-num js-line-number" data-line-number="164"></td>
-        <td id="LC164" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">if</span> <span class="pl-k">!</span>message.<span class="pl-en">ends_with</span>(<span class="pl-s">&quot;<span class="pl-cce">\n</span>&quot;</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L165" class="blob-num js-line-number" data-line-number="165"></td>
-        <td id="LC165" class="blob-code blob-code-inner js-file-line">            message <span class="pl-k">+=</span> <span class="pl-s">&quot;<span class="pl-cce">\n</span>&quot;</span>;</td>
-      </tr>
-      <tr>
-        <td id="L166" class="blob-num js-line-number" data-line-number="166"></td>
-        <td id="LC166" class="blob-code blob-code-inner js-file-line">        }</td>
-      </tr>
-      <tr>
-        <td id="L167" class="blob-num js-line-number" data-line-number="167"></td>
-        <td id="LC167" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">match</span> stream.<span class="pl-en">write</span>(message.<span class="pl-en">as_bytes</span>()) {</td>
-      </tr>
-      <tr>
-        <td id="L168" class="blob-num js-line-number" data-line-number="168"></td>
-        <td id="LC168" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">Ok</span>(_) <span class="pl-k">=&gt;</span> <span class="pl-k">match</span> stream.<span class="pl-en">flush</span>() {</td>
-      </tr>
-      <tr>
-        <td id="L169" class="blob-num js-line-number" data-line-number="169"></td>
-        <td id="LC169" class="blob-code blob-code-inner js-file-line">                <span class="pl-c1">Ok</span>(_) <span class="pl-k">=&gt;</span> {}</td>
-      </tr>
-      <tr>
-        <td id="L170" class="blob-num js-line-number" data-line-number="170"></td>
-        <td id="LC170" class="blob-code blob-code-inner js-file-line">                <span class="pl-c1">Err</span>(e) <span class="pl-k">=&gt;</span> {</td>
-      </tr>
-      <tr>
-        <td id="L171" class="blob-num js-line-number" data-line-number="171"></td>
-        <td id="LC171" class="blob-code blob-code-inner js-file-line">                    <span class="pl-c1">error!</span>(LOGGER, <span class="pl-s">&quot;{} - Connection Error 2: {}&quot;</span>, <span class="pl-c1">self</span>.id, e);</td>
-      </tr>
-      <tr>
-        <td id="L172" class="blob-num js-line-number" data-line-number="172"></td>
-        <td id="LC172" class="blob-code blob-code-inner js-file-line">                    <span class="pl-k">return</span> <span class="pl-c1">Err</span>(<span class="pl-c1">format!</span>(<span class="pl-s">&quot;{}&quot;</span>, e));</td>
-      </tr>
-      <tr>
-        <td id="L173" class="blob-num js-line-number" data-line-number="173"></td>
-        <td id="LC173" class="blob-code blob-code-inner js-file-line">                }</td>
-      </tr>
-      <tr>
-        <td id="L174" class="blob-num js-line-number" data-line-number="174"></td>
-        <td id="LC174" class="blob-code blob-code-inner js-file-line">            },</td>
-      </tr>
-      <tr>
-        <td id="L175" class="blob-num js-line-number" data-line-number="175"></td>
-        <td id="LC175" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">Err</span>(e) <span class="pl-k">=&gt;</span> {</td>
-      </tr>
-      <tr>
-        <td id="L176" class="blob-num js-line-number" data-line-number="176"></td>
-        <td id="LC176" class="blob-code blob-code-inner js-file-line">                <span class="pl-c1">error!</span>(LOGGER, <span class="pl-s">&quot;{} - Connection Error 2a: {}&quot;</span>, <span class="pl-c1">self</span>.id, e);</td>
-      </tr>
-      <tr>
-        <td id="L177" class="blob-num js-line-number" data-line-number="177"></td>
-        <td id="LC177" class="blob-code blob-code-inner js-file-line">                <span class="pl-k">return</span> <span class="pl-c1">Err</span>(<span class="pl-c1">format!</span>(<span class="pl-s">&quot;{}&quot;</span>, e));</td>
-      </tr>
-      <tr>
-        <td id="L178" class="blob-num js-line-number" data-line-number="178"></td>
-        <td id="LC178" class="blob-code blob-code-inner js-file-line">            }</td>
-      </tr>
-      <tr>
-        <td id="L179" class="blob-num js-line-number" data-line-number="179"></td>
-        <td id="LC179" class="blob-code blob-code-inner js-file-line">        }</td>
-      </tr>
-      <tr>
-        <td id="L180" class="blob-num js-line-number" data-line-number="180"></td>
-        <td id="LC180" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">return</span> <span class="pl-c1">Ok</span>(());</td>
-      </tr>
-      <tr>
-        <td id="L181" class="blob-num js-line-number" data-line-number="181"></td>
-        <td id="LC181" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L182" class="blob-num js-line-number" data-line-number="182"></td>
-        <td id="LC182" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L183" class="blob-num js-line-number" data-line-number="183"></td>
-        <td id="LC183" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">/// Get a message from the upstream</span></td>
-      </tr>
-      <tr>
-        <td id="L184" class="blob-num js-line-number" data-line-number="184"></td>
-        <td id="LC184" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">get_message</span>(</td>
-      </tr>
-      <tr>
-        <td id="L185" class="blob-num js-line-number" data-line-number="185"></td>
-        <td id="LC185" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>,</td>
-      </tr>
-      <tr>
-        <td id="L186" class="blob-num js-line-number" data-line-number="186"></td>
-        <td id="LC186" class="blob-code blob-code-inner js-file-line">        stream: <span class="pl-k">&amp;</span><span class="pl-k">mut</span> BufStream&lt;TcpStream&gt;,</td>
-      </tr>
-      <tr>
-        <td id="L187" class="blob-num js-line-number" data-line-number="187"></td>
-        <td id="LC187" class="blob-code blob-code-inner js-file-line">    ) -&gt; <span class="pl-k">Result</span>&lt;<span class="pl-k">Option</span>&lt;<span class="pl-k">String</span>&gt;, <span class="pl-k">String</span>&gt; {</td>
-      </tr>
-      <tr>
-        <td id="L188" class="blob-num js-line-number" data-line-number="188"></td>
-        <td id="LC188" class="blob-code blob-code-inner js-file-line">        <span class="pl-c">// XXX TODO: Verify this is a valid message before returning it</span></td>
-      </tr>
-      <tr>
-        <td id="L189" class="blob-num js-line-number" data-line-number="189"></td>
-        <td id="LC189" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">return</span> <span class="pl-c1">self</span>.<span class="pl-en">read_message</span>(stream);</td>
-      </tr>
-      <tr>
-        <td id="L190" class="blob-num js-line-number" data-line-number="190"></td>
-        <td id="LC190" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L191" class="blob-num js-line-number" data-line-number="191"></td>
-        <td id="LC191" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L192" class="blob-num js-line-number" data-line-number="192"></td>
-        <td id="LC192" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">/// Send a Request</span></td>
-      </tr>
-      <tr>
-        <td id="L193" class="blob-num js-line-number" data-line-number="193"></td>
-        <td id="LC193" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">// params is the method parameters in serde_json string</span></td>
-      </tr>
-      <tr>
-        <td id="L194" class="blob-num js-line-number" data-line-number="194"></td>
-        <td id="LC194" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">send_request</span>(</td>
-      </tr>
-      <tr>
-        <td id="L195" class="blob-num js-line-number" data-line-number="195"></td>
-        <td id="LC195" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>,</td>
-      </tr>
-      <tr>
-        <td id="L196" class="blob-num js-line-number" data-line-number="196"></td>
-        <td id="LC196" class="blob-code blob-code-inner js-file-line">        stream: <span class="pl-k">&amp;</span><span class="pl-k">mut</span> BufStream&lt;TcpStream&gt;,</td>
-      </tr>
-      <tr>
-        <td id="L197" class="blob-num js-line-number" data-line-number="197"></td>
-        <td id="LC197" class="blob-code blob-code-inner js-file-line">        method: <span class="pl-k">String</span>,</td>
-      </tr>
-      <tr>
-        <td id="L198" class="blob-num js-line-number" data-line-number="198"></td>
-        <td id="LC198" class="blob-code blob-code-inner js-file-line">        params: <span class="pl-k">Option</span>&lt;Value&gt;,</td>
-      </tr>
-      <tr>
-        <td id="L199" class="blob-num js-line-number" data-line-number="199"></td>
-        <td id="LC199" class="blob-code blob-code-inner js-file-line">        worker_id: <span class="pl-k">Option</span>&lt;<span class="pl-k">String</span>&gt;,</td>
-      </tr>
-      <tr>
-        <td id="L200" class="blob-num js-line-number" data-line-number="200"></td>
-        <td id="LC200" class="blob-code blob-code-inner js-file-line">    ) -&gt; <span class="pl-k">Result</span>&lt;(), <span class="pl-k">String</span>&gt; {</td>
-      </tr>
-      <tr>
-        <td id="L201" class="blob-num js-line-number" data-line-number="201"></td>
-        <td id="LC201" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">let</span> request_id <span class="pl-k">=</span> <span class="pl-k">match</span> worker_id {</td>
-      </tr>
-      <tr>
-        <td id="L202" class="blob-num js-line-number" data-line-number="202"></td>
-        <td id="LC202" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">None</span> <span class="pl-k">=&gt;</span> <span class="pl-s">&quot;&quot;</span>.<span class="pl-en">to_string</span>(),</td>
-      </tr>
-      <tr>
-        <td id="L203" class="blob-num js-line-number" data-line-number="203"></td>
-        <td id="LC203" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">Some</span>(id) <span class="pl-k">=&gt;</span> id,</td>
-      </tr>
-      <tr>
-        <td id="L204" class="blob-num js-line-number" data-line-number="204"></td>
-        <td id="LC204" class="blob-code blob-code-inner js-file-line">        };</td>
-      </tr>
-      <tr>
-        <td id="L205" class="blob-num js-line-number" data-line-number="205"></td>
-        <td id="LC205" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">let</span> req <span class="pl-k">=</span> RpcRequest {</td>
-      </tr>
-      <tr>
-        <td id="L206" class="blob-num js-line-number" data-line-number="206"></td>
-        <td id="LC206" class="blob-code blob-code-inner js-file-line">            id: request_id.<span class="pl-en">clone</span>(),</td>
-      </tr>
-      <tr>
-        <td id="L207" class="blob-num js-line-number" data-line-number="207"></td>
-        <td id="LC207" class="blob-code blob-code-inner js-file-line">            jsonrpc: <span class="pl-s">&quot;2.0&quot;</span>.<span class="pl-en">to_string</span>(),</td>
-      </tr>
-      <tr>
-        <td id="L208" class="blob-num js-line-number" data-line-number="208"></td>
-        <td id="LC208" class="blob-code blob-code-inner js-file-line">            method: method,</td>
-      </tr>
-      <tr>
-        <td id="L209" class="blob-num js-line-number" data-line-number="209"></td>
-        <td id="LC209" class="blob-code blob-code-inner js-file-line">            params: <span class="pl-c1">Some</span>(serde_json<span class="pl-k">::</span><span class="pl-en">to_value</span>(params).<span class="pl-en">unwrap</span>()),</td>
-      </tr>
-      <tr>
-        <td id="L210" class="blob-num js-line-number" data-line-number="210"></td>
-        <td id="LC210" class="blob-code blob-code-inner js-file-line">        };</td>
-      </tr>
-      <tr>
-        <td id="L211" class="blob-num js-line-number" data-line-number="211"></td>
-        <td id="LC211" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">let</span> req_str <span class="pl-k">=</span> serde_json<span class="pl-k">::</span><span class="pl-en">to_string</span>(<span class="pl-k">&amp;</span>req).<span class="pl-en">unwrap</span>();</td>
-      </tr>
-      <tr>
-        <td id="L212" class="blob-num js-line-number" data-line-number="212"></td>
-        <td id="LC212" class="blob-code blob-code-inner js-file-line">        <span class="pl-c1">trace!</span>(</td>
-      </tr>
-      <tr>
-        <td id="L213" class="blob-num js-line-number" data-line-number="213"></td>
-        <td id="LC213" class="blob-code blob-code-inner js-file-line">            LOGGER,</td>
-      </tr>
-      <tr>
-        <td id="L214" class="blob-num js-line-number" data-line-number="214"></td>
-        <td id="LC214" class="blob-code blob-code-inner js-file-line">            <span class="pl-s">&quot;{} for {} - Requesting: {}&quot;</span>,</td>
-      </tr>
-      <tr>
-        <td id="L215" class="blob-num js-line-number" data-line-number="215"></td>
-        <td id="LC215" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">self</span>.id,</td>
-      </tr>
-      <tr>
-        <td id="L216" class="blob-num js-line-number" data-line-number="216"></td>
-        <td id="LC216" class="blob-code blob-code-inner js-file-line">            request_id,</td>
-      </tr>
-      <tr>
-        <td id="L217" class="blob-num js-line-number" data-line-number="217"></td>
-        <td id="LC217" class="blob-code blob-code-inner js-file-line">            req_str</td>
-      </tr>
-      <tr>
-        <td id="L218" class="blob-num js-line-number" data-line-number="218"></td>
-        <td id="LC218" class="blob-code blob-code-inner js-file-line">        );</td>
-      </tr>
-      <tr>
-        <td id="L219" class="blob-num js-line-number" data-line-number="219"></td>
-        <td id="LC219" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">return</span> <span class="pl-c1">self</span>.<span class="pl-en">write_message</span>(req_str, stream);</td>
-      </tr>
-      <tr>
-        <td id="L220" class="blob-num js-line-number" data-line-number="220"></td>
-        <td id="LC220" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L221" class="blob-num js-line-number" data-line-number="221"></td>
-        <td id="LC221" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L222" class="blob-num js-line-number" data-line-number="222"></td>
-        <td id="LC222" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">/// Send a Response</span></td>
-      </tr>
-      <tr>
-        <td id="L223" class="blob-num js-line-number" data-line-number="223"></td>
-        <td id="LC223" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">send_response</span>(</td>
-      </tr>
-      <tr>
-        <td id="L224" class="blob-num js-line-number" data-line-number="224"></td>
-        <td id="LC224" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>,</td>
-      </tr>
-      <tr>
-        <td id="L225" class="blob-num js-line-number" data-line-number="225"></td>
-        <td id="LC225" class="blob-code blob-code-inner js-file-line">        stream: <span class="pl-k">&amp;</span><span class="pl-k">mut</span> BufStream&lt;TcpStream&gt;,</td>
-      </tr>
-      <tr>
-        <td id="L226" class="blob-num js-line-number" data-line-number="226"></td>
-        <td id="LC226" class="blob-code blob-code-inner js-file-line">        method: <span class="pl-k">String</span>,</td>
-      </tr>
-      <tr>
-        <td id="L227" class="blob-num js-line-number" data-line-number="227"></td>
-        <td id="LC227" class="blob-code blob-code-inner js-file-line">        result: Value,</td>
-      </tr>
-      <tr>
-        <td id="L228" class="blob-num js-line-number" data-line-number="228"></td>
-        <td id="LC228" class="blob-code blob-code-inner js-file-line">        worker_id: <span class="pl-k">Option</span>&lt;<span class="pl-k">String</span>&gt;,</td>
-      </tr>
-      <tr>
-        <td id="L229" class="blob-num js-line-number" data-line-number="229"></td>
-        <td id="LC229" class="blob-code blob-code-inner js-file-line">    ) -&gt; <span class="pl-k">Result</span>&lt;(), <span class="pl-k">String</span>&gt; {</td>
-      </tr>
-      <tr>
-        <td id="L230" class="blob-num js-line-number" data-line-number="230"></td>
-        <td id="LC230" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">let</span> res <span class="pl-k">=</span> RpcResponse {</td>
-      </tr>
-      <tr>
-        <td id="L231" class="blob-num js-line-number" data-line-number="231"></td>
-        <td id="LC231" class="blob-code blob-code-inner js-file-line">            id: worker_id.<span class="pl-en">clone</span>().<span class="pl-en">unwrap</span>(),</td>
-      </tr>
-      <tr>
-        <td id="L232" class="blob-num js-line-number" data-line-number="232"></td>
-        <td id="LC232" class="blob-code blob-code-inner js-file-line">            jsonrpc: <span class="pl-s">&quot;2.0&quot;</span>.<span class="pl-en">to_string</span>(),</td>
-      </tr>
-      <tr>
-        <td id="L233" class="blob-num js-line-number" data-line-number="233"></td>
-        <td id="LC233" class="blob-code blob-code-inner js-file-line">            method: method,</td>
-      </tr>
-      <tr>
-        <td id="L234" class="blob-num js-line-number" data-line-number="234"></td>
-        <td id="LC234" class="blob-code blob-code-inner js-file-line">            result: <span class="pl-c1">Some</span>(result),</td>
-      </tr>
-      <tr>
-        <td id="L235" class="blob-num js-line-number" data-line-number="235"></td>
-        <td id="LC235" class="blob-code blob-code-inner js-file-line">            error: <span class="pl-c1">None</span>,</td>
-      </tr>
-      <tr>
-        <td id="L236" class="blob-num js-line-number" data-line-number="236"></td>
-        <td id="LC236" class="blob-code blob-code-inner js-file-line">        };</td>
-      </tr>
-      <tr>
-        <td id="L237" class="blob-num js-line-number" data-line-number="237"></td>
-        <td id="LC237" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">let</span> res_str <span class="pl-k">=</span> serde_json<span class="pl-k">::</span><span class="pl-en">to_string</span>(<span class="pl-k">&amp;</span>res).<span class="pl-en">unwrap</span>();</td>
-      </tr>
-      <tr>
-        <td id="L238" class="blob-num js-line-number" data-line-number="238"></td>
-        <td id="LC238" class="blob-code blob-code-inner js-file-line">        <span class="pl-c1">trace!</span>(</td>
-      </tr>
-      <tr>
-        <td id="L239" class="blob-num js-line-number" data-line-number="239"></td>
-        <td id="LC239" class="blob-code blob-code-inner js-file-line">            LOGGER,</td>
-      </tr>
-      <tr>
-        <td id="L240" class="blob-num js-line-number" data-line-number="240"></td>
-        <td id="LC240" class="blob-code blob-code-inner js-file-line">            <span class="pl-s">&quot;{} for {} - Responding: {}&quot;</span>,</td>
-      </tr>
-      <tr>
-        <td id="L241" class="blob-num js-line-number" data-line-number="241"></td>
-        <td id="LC241" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">self</span>.id,</td>
-      </tr>
-      <tr>
-        <td id="L242" class="blob-num js-line-number" data-line-number="242"></td>
-        <td id="LC242" class="blob-code blob-code-inner js-file-line">            worker_id.<span class="pl-en">unwrap</span>(),</td>
-      </tr>
-      <tr>
-        <td id="L243" class="blob-num js-line-number" data-line-number="243"></td>
-        <td id="LC243" class="blob-code blob-code-inner js-file-line">            res_str</td>
-      </tr>
-      <tr>
-        <td id="L244" class="blob-num js-line-number" data-line-number="244"></td>
-        <td id="LC244" class="blob-code blob-code-inner js-file-line">        );</td>
-      </tr>
-      <tr>
-        <td id="L245" class="blob-num js-line-number" data-line-number="245"></td>
-        <td id="LC245" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">return</span> <span class="pl-c1">self</span>.<span class="pl-en">write_message</span>(res_str, stream);</td>
-      </tr>
-      <tr>
-        <td id="L246" class="blob-num js-line-number" data-line-number="246"></td>
-        <td id="LC246" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L247" class="blob-num js-line-number" data-line-number="247"></td>
-        <td id="LC247" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L248" class="blob-num js-line-number" data-line-number="248"></td>
-        <td id="LC248" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">/// Send an Error Response</span></td>
-      </tr>
-      <tr>
-        <td id="L249" class="blob-num js-line-number" data-line-number="249"></td>
-        <td id="LC249" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">send_error_response</span>(</td>
-      </tr>
-      <tr>
-        <td id="L250" class="blob-num js-line-number" data-line-number="250"></td>
-        <td id="LC250" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>,</td>
-      </tr>
-      <tr>
-        <td id="L251" class="blob-num js-line-number" data-line-number="251"></td>
-        <td id="LC251" class="blob-code blob-code-inner js-file-line">        stream: <span class="pl-k">&amp;</span><span class="pl-k">mut</span> BufStream&lt;TcpStream&gt;,</td>
-      </tr>
-      <tr>
-        <td id="L252" class="blob-num js-line-number" data-line-number="252"></td>
-        <td id="LC252" class="blob-code blob-code-inner js-file-line">        method: <span class="pl-k">String</span>,</td>
-      </tr>
-      <tr>
-        <td id="L253" class="blob-num js-line-number" data-line-number="253"></td>
-        <td id="LC253" class="blob-code blob-code-inner js-file-line">        error: RpcError,</td>
-      </tr>
-      <tr>
-        <td id="L254" class="blob-num js-line-number" data-line-number="254"></td>
-        <td id="LC254" class="blob-code blob-code-inner js-file-line">    ) -&gt; <span class="pl-k">Result</span>&lt;(), <span class="pl-k">String</span>&gt; {</td>
-      </tr>
-      <tr>
-        <td id="L255" class="blob-num js-line-number" data-line-number="255"></td>
-        <td id="LC255" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">let</span> res <span class="pl-k">=</span> RpcResponse {</td>
-      </tr>
-      <tr>
-        <td id="L256" class="blob-num js-line-number" data-line-number="256"></td>
-        <td id="LC256" class="blob-code blob-code-inner js-file-line">            id: <span class="pl-c1">self</span>.id.<span class="pl-en">clone</span>(),</td>
-      </tr>
-      <tr>
-        <td id="L257" class="blob-num js-line-number" data-line-number="257"></td>
-        <td id="LC257" class="blob-code blob-code-inner js-file-line">            jsonrpc: <span class="pl-s">&quot;2.0&quot;</span>.<span class="pl-en">to_string</span>(),</td>
-      </tr>
-      <tr>
-        <td id="L258" class="blob-num js-line-number" data-line-number="258"></td>
-        <td id="LC258" class="blob-code blob-code-inner js-file-line">            method: method,</td>
-      </tr>
-      <tr>
-        <td id="L259" class="blob-num js-line-number" data-line-number="259"></td>
-        <td id="LC259" class="blob-code blob-code-inner js-file-line">            result: <span class="pl-c1">None</span>,</td>
-      </tr>
-      <tr>
-        <td id="L260" class="blob-num js-line-number" data-line-number="260"></td>
-        <td id="LC260" class="blob-code blob-code-inner js-file-line">            error: <span class="pl-c1">Some</span>(serde_json<span class="pl-k">::</span><span class="pl-en">to_value</span>(error).<span class="pl-en">unwrap</span>()),</td>
-      </tr>
-      <tr>
-        <td id="L261" class="blob-num js-line-number" data-line-number="261"></td>
-        <td id="LC261" class="blob-code blob-code-inner js-file-line">        };</td>
-      </tr>
-      <tr>
-        <td id="L262" class="blob-num js-line-number" data-line-number="262"></td>
-        <td id="LC262" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">let</span> res_str <span class="pl-k">=</span> serde_json<span class="pl-k">::</span><span class="pl-en">to_string</span>(<span class="pl-k">&amp;</span>res).<span class="pl-en">unwrap</span>();</td>
-      </tr>
-      <tr>
-        <td id="L263" class="blob-num js-line-number" data-line-number="263"></td>
-        <td id="LC263" class="blob-code blob-code-inner js-file-line">        <span class="pl-c1">trace!</span>(LOGGER, <span class="pl-s">&quot;{} - Responding with Error: {}&quot;</span>, <span class="pl-c1">self</span>.id, res_str);</td>
-      </tr>
-      <tr>
-        <td id="L264" class="blob-num js-line-number" data-line-number="264"></td>
-        <td id="LC264" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">return</span> <span class="pl-c1">self</span>.<span class="pl-en">write_message</span>(res_str, stream);</td>
-      </tr>
-      <tr>
-        <td id="L265" class="blob-num js-line-number" data-line-number="265"></td>
-        <td id="LC265" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L266" class="blob-num js-line-number" data-line-number="266"></td>
-        <td id="LC266" class="blob-code blob-code-inner js-file-line">}</td>
+        <td id="LC89" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
 </table>
 
@@ -1941,7 +1224,7 @@
       <ul class="BlobToolbar-dropdown dropdown-menu dropdown-menu-se mt-2" style="width:185px">
         <li><clipboard-copy role="menuitem" class="dropdown-item" id="js-copy-lines" style="cursor:pointer;" data-original-text="Copy lines">Copy lines</clipboard-copy></li>
         <li><clipboard-copy role="menuitem" class="dropdown-item" id="js-copy-permalink" style="cursor:pointer;" data-original-text="Copy permalink">Copy permalink</clipboard-copy></li>
-        <li><a class="dropdown-item js-update-url-with-hash" id="js-view-git-blame" role="menuitem" href="/grin-pool/grin-pool/blame/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/proto.rs">View git blame</a></li>
+        <li><a class="dropdown-item js-update-url-with-hash" id="js-view-git-blame" role="menuitem" href="/grin-pool/grin-pool/blame/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/util.rs">View git blame</a></li>
           <li><a class="dropdown-item" id="js-new-issue" role="menuitem" href="/grin-pool/grin-pool/issues/new">Reference in new issue</a></li>
       </ul>
     </details-menu>
@@ -1978,7 +1261,7 @@
 <div class="footer container-lg px-3" role="contentinfo">
   <div class="position-relative d-flex flex-justify-between pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
     <ul class="list-style-none d-flex flex-wrap ">
-      <li class="mr-3">&copy; 2019 <span title="0.50832s from unicorn-865f858f86-khtlk">GitHub</span>, Inc.</li>
+      <li class="mr-3">&copy; 2019 <span title="0.34290s from unicorn-865f858f86-wq5vq">GitHub</span>, Inc.</li>
         <li class="mr-3"><a data-ga-click="Footer, go to terms, text:terms" href="https://github.com/site/terms">Terms</a></li>
         <li class="mr-3"><a data-ga-click="Footer, go to privacy, text:privacy" href="https://github.com/site/privacy">Privacy</a></li>
         <li class="mr-3"><a data-ga-click="Footer, go to security, text:security" href="https://github.com/security">Security</a></li>

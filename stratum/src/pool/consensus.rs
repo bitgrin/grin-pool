@@ -28,7 +28,7 @@
 
   <meta name="viewport" content="width=device-width">
   
-  <title>grin-pool/pool.rs at e422e94ec92425835ddff79ea3ac00b7b0ca9fef · grin-pool/grin-pool</title>
+  <title>grin-pool/consensus.rs at e422e94ec92425835ddff79ea3ac00b7b0ca9fef · grin-pool/grin-pool</title>
     <meta name="description" content="Grin Mining Pool. Contribute to grin-pool/grin-pool development by creating an account on GitHub.">
     <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
   <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
@@ -38,10 +38,10 @@
     <meta property="og:image" content="https://avatars3.githubusercontent.com/u/39641344?s=400&amp;v=4" /><meta property="og:site_name" content="GitHub" /><meta property="og:type" content="object" /><meta property="og:title" content="grin-pool/grin-pool" /><meta property="og:url" content="https://github.com/grin-pool/grin-pool" /><meta property="og:description" content="Grin Mining Pool. Contribute to grin-pool/grin-pool development by creating an account on GitHub." />
 
   <link rel="assets" href="https://github.githubassets.com/">
-  <link rel="web-socket" href="wss://live.github.com/_sockets/VjI6MzcxNjQwMzk4OmQxNzRkMGQ1OTlmMTYyZDIyY2ZjNGZmZGFlZDYyMTEzN2Q4NWRmMjczYmI4ODhlMzQ3ZDM1NjRlNDUwZTlmYmU=--3e3fbf1e3a04f869acc91af5671c261fcee43a40">
+  <link rel="web-socket" href="wss://live.github.com/_sockets/VjI6MzcxNjQwMzk4OmFmMTU0OGM5NTRiMGQ2YWIzNTk4YTRmYTMwOGJkMjFkZGJlMDNiNWVjOGM3MTg4NzU0ZDk2NzUwYzBkMWY1YWY=--de0b9aea1a06a25a0a03311e9750c554964f353c">
   <meta name="pjax-timeout" content="1000">
   <link rel="sudo-modal" href="/sessions/sudo_modal">
-  <meta name="request-id" content="DF97:2E5CA:180DC11:241A946:5C5DE4E2" data-pjax-transient>
+  <meta name="request-id" content="DF97:2E5CA:180E13C:241B625:5C5DE4F7" data-pjax-transient>
 
 
   
@@ -52,7 +52,7 @@
     <meta name="google-site-verification" content="ZzhVyEFwb7w3e0-uOTltm8Jsck2F5StVihD0exw2fsA">
     <meta name="google-site-verification" content="GXs5KoUUkNCoaAZn7wPN-t01Pywp9M3sEjnt_3_ZWPc">
 
-  <meta name="octolytics-host" content="collector.githubapp.com" /><meta name="octolytics-app-id" content="github" /><meta name="octolytics-event-url" content="https://collector.githubapp.com/github-external/browser_event" /><meta name="octolytics-dimension-request_id" content="DF97:2E5CA:180DC11:241A946:5C5DE4E2" /><meta name="octolytics-dimension-region_edge" content="ams" /><meta name="octolytics-dimension-region_render" content="iad" /><meta name="octolytics-actor-id" content="47373416" /><meta name="octolytics-actor-login" content="motelddir" /><meta name="octolytics-actor-hash" content="8937bd41117596503f049683f239e8e589c54278dc453cbc5e6785d1ed636c8d" />
+  <meta name="octolytics-host" content="collector.githubapp.com" /><meta name="octolytics-app-id" content="github" /><meta name="octolytics-event-url" content="https://collector.githubapp.com/github-external/browser_event" /><meta name="octolytics-dimension-request_id" content="DF97:2E5CA:180E13C:241B625:5C5DE4F7" /><meta name="octolytics-dimension-region_edge" content="ams" /><meta name="octolytics-dimension-region_render" content="iad" /><meta name="octolytics-actor-id" content="47373416" /><meta name="octolytics-actor-login" content="motelddir" /><meta name="octolytics-actor-hash" content="8937bd41117596503f049683f239e8e589c54278dc453cbc5e6785d1ed636c8d" />
 <meta name="analytics-location" content="/&lt;user-name&gt;/&lt;repo-name&gt;/blob/show" data-pjax-transient="true" />
 
 
@@ -70,7 +70,7 @@
     <meta name="user-login" content="motelddir">
 
       <meta name="expected-hostname" content="github.com">
-    <meta name="js-proxy-site-detection-payload" content="NGJiNzY4YjIxMTJkNDdiYTExYmI4MTcyY2QwYzI2MTAxY2U0N2VkM2I4NTU0MDRiOWIzNWFmYTQxZDFlMGUxY3x7InJlbW90ZV9hZGRyZXNzIjoiODkuMS4yMDguMjI0IiwicmVxdWVzdF9pZCI6IkRGOTc6MkU1Q0E6MTgwREMxMToyNDFBOTQ2OjVDNURFNEUyIiwidGltZXN0YW1wIjoxNTQ5NjU3MzI1LCJob3N0IjoiZ2l0aHViLmNvbSJ9">
+    <meta name="js-proxy-site-detection-payload" content="YzA0ZmZkOTNmNmNiMWFkNGUzNTNiZjE0ZmQ1YWI4ZDZiZDk4NTQ4NjBkNjc1MDA2YWUyZWIxM2JhNjBjZDlkN3x7InJlbW90ZV9hZGRyZXNzIjoiODkuMS4yMDguMjI0IiwicmVxdWVzdF9pZCI6IkRGOTc6MkU1Q0E6MTgwRTEzQzoyNDFCNjI1OjVDNURFNEY3IiwidGltZXN0YW1wIjoxNTQ5NjU3MzQwLCJob3N0IjoiZ2l0aHViLmNvbSJ9">
 
     <meta name="enabled-features" content="UNIVERSE_BANNER,MARKETPLACE_PLAN_RESTRICTION_EDITOR,NOTIFY_ON_BLOCK,RELATED_ISSUES,MARKETPLACE_BROWSING_V2,MARKETPLACE_INSIGHTS_V2,LAZY_JAVASCRIPT">
 
@@ -86,7 +86,7 @@
   <meta name="octolytics-dimension-user_id" content="39641344" /><meta name="octolytics-dimension-user_login" content="grin-pool" /><meta name="octolytics-dimension-repository_id" content="134929212" /><meta name="octolytics-dimension-repository_nwo" content="grin-pool/grin-pool" /><meta name="octolytics-dimension-repository_public" content="true" /><meta name="octolytics-dimension-repository_is_fork" content="false" /><meta name="octolytics-dimension-repository_network_root_id" content="134929212" /><meta name="octolytics-dimension-repository_network_root_nwo" content="grin-pool/grin-pool" /><meta name="octolytics-dimension-repository_explore_github_marketplace_ci_cta_shown" content="false" />
 
 
-    <link rel="canonical" href="https://github.com/grin-pool/grin-pool/blob/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/pool.rs" data-pjax-transient>
+    <link rel="canonical" href="https://github.com/grin-pool/grin-pool/blob/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/consensus.rs" data-pjax-transient>
 
 
   <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
@@ -154,7 +154,7 @@
           aria-autocomplete="list"
           aria-controls="jump-to-results"
           aria-label="Search or jump to…"
-          data-jump-to-suggestions-path="/_graphql/GetSuggestedNavigationDestinations#csrf-token=3gKs7cGelfo1bMby+7WYb0fudVqI4aH6/JEx7j+vyo4TzgPD1qStM20YSw7JpOgfw7ybiQQ0ufYWCRSd7WMyUg=="
+          data-jump-to-suggestions-path="/_graphql/GetSuggestedNavigationDestinations#csrf-token=2atET+DxKCFTbkFp1R4KiSymy4bUMXsmpqeC40Q+Id8UZ+th98sQ6AsazJXnD3r5qPQlVVjkYypMP6eQlvLZAw=="
           spellcheck="false"
           autocomplete="off"
           >
@@ -384,7 +384,7 @@
       </div>
     </summary>
     <details-dialog class="details-dialog rounded-1 anim-fade-in fast Box Box--overlay" role="dialog" tabindex="-1">
-      <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="position-relative flex-auto js-user-status-form" action="/users/status?compact=1&amp;link_mentions=0&amp;truncate=1" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="put" /><input type="hidden" name="authenticity_token" value="tvA24yB1eWBN5wgB6BMDR1UXHyhoNhVdAkPxcuGzN9gJZjPqGuSDAFtR70heQUE2wcb71qdFmCTPLqdxD+s7uw==" />
+      <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="position-relative flex-auto js-user-status-form" action="/users/status?compact=1&amp;link_mentions=0&amp;truncate=1" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="put" /><input type="hidden" name="authenticity_token" value="ibhZyq4+QRaFATowyPRWSg6+VpEKikJxlgGx6duI2eU2LlzDlK+7dpO33Xl+phQ7mm+yb8X5zwhbbOfqNdDVhg==" />
         <div class="Box-header bg-gray border-bottom p-3">
           <button class="Box-btn-octicon js-toggle-user-status-edit btn-octicon float-right" type="reset" aria-label="Close dialog" data-close-dialog>
             <svg class="octicon octicon-x" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"/></svg>
@@ -500,7 +500,7 @@
         <div role="none" class="dropdown-divider"></div>
         <a role="menuitem" class="dropdown-item" href="https://help.github.com" data-ga-click="Header, go to help, text:help">Help</a>
         <a role="menuitem" class="dropdown-item" href="/settings/profile" data-ga-click="Header, go to settings, icon:settings">Settings</a>
-        <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="logout-form" action="/logout" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="d452Fai8OF83Jg6UwxHwO/TmTZb9My0pMLm9DfJqK9JGydLNqQwFFJ7KroKJXB33zM4zs4r9+sq5OeJM+cjHZg==" />
+        <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="logout-form" action="/logout" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="v2FPD+2TYWkdR2yBshLBfP/XaphtFqAfc8mFn6o7WL+OJuvX7CNcIrSrzJf4Xyywx/8UvRrYd/z6SdreoZm0Cw==" />
           
           <button type="submit" class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout" role="menuitem">
             Sign out
@@ -512,7 +512,7 @@
 
 
 
-        <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="sr-only right-0" action="/logout" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="x+0Zc8oPgk999FgoosbFZLfUw+d457qEve4vxGs+F7n2qr2ry7+/BNQY+D7oiyioj/y9wg8pbWc0bnCFYJz7DQ==" />
+        <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="sr-only right-0" action="/logout" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="h7FscZrPBQqsWi0KRAOpMI8JOWMa9hZC6f8yBVfHvmy29sipm384QQW2jRwOTkT8tyFHRm04waFgf21EXGVS2A==" />
           <button type="submit" class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout">
             Sign out
           </button>
@@ -553,7 +553,7 @@
       <ul class="pagehead-actions">
 
   <li>
-        <!-- '"` --><!-- </textarea></xmp> --></option></form><form data-remote="true" class="js-social-form js-social-container" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="Hu04P4tkPs4eESdUqshDHaXDH94qFJ6ppms37jhq5mYUg1ErG/y8JoZ1hiPHxIm7Vpi0xlS4XVHTG5rNLTvmpQ==" />      <input type="hidden" name="repository_id" id="repository_id" value="134929212" class="form-control" />
+        <!-- '"` --><!-- </textarea></xmp> --></option></form><form data-remote="true" class="js-social-form js-social-container" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="qYdGernFkJtsjg9vMDFKRF2UjTVv01g430kVADryrByj6S9uKV0Sc/TqrhhdPYDirs8mLRF/m8CqObgjL6Os3w==" />      <input type="hidden" name="repository_id" id="repository_id" value="134929212" class="form-control" />
 
       <details class="details-reset details-overlay select-menu float-left">
         <summary class="btn btn-sm btn-with-count select-menu-button" data-ga-click="Repository, click Watch settings, action:blob#show">
@@ -627,7 +627,7 @@
 
   <li>
       <div class="js-toggler-container js-social-container starring-container ">
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="starred js-social-form" action="/grin-pool/grin-pool/unstar" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="A9bgguGsJQxslrrPnwBCMxLRd7K5IDTe9UY50p5KxIqejBxflq05+mh6Qd3/MdJayFGBpfY1jhMRcjXGPhmF8Q==" />
+    <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="starred js-social-form" action="/grin-pool/grin-pool/unstar" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="k2t4ODbkuR6UPRCbYK7U/+/xS37VZ2UucCAoNKytIyYOMYTlQeWl6JDR64kAn0SWNXG9aZpy3+OUFCQgDP5iXQ==" />
       <input type="hidden" name="context" value="repository"></input>
       <button
         type="submit"
@@ -642,7 +642,7 @@
           96
         </a>
 </form>
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="unstarred js-social-form" action="/grin-pool/grin-pool/star" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="vZuy0tIG9OugZMnvrN5juyPQZKDo3niLbbcgDNiDhOpd9ON8gVtKKto/iCu6ZgW/QQ3oMKQ+Xg6gkTkFsgintA==" />
+    <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="unstarred js-social-form" action="/grin-pool/grin-pool/star" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="S/j59GPH3AQpFoBln4zLaUMgs8cBIexy54PPx6Vb6s6rl6haMJpixVNNwaGJNK1tIf0/V03ByvcqpdbOz9DJkA==" />
       <input type="hidden" name="context" value="repository"></input>
       <button
         type="submit"
@@ -661,7 +661,7 @@
   </li>
 
   <li>
-          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="btn-with-count" action="/grin-pool/grin-pool/fork" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="2lRm4eqCsk7HvO/oJ/NAFwLm0QSEBGL6Q00Fxea6jMwAFmD6WNQD4zlvqWd/c63Ps2CyHgjKxgwbLkvc9MzG6Q==" />
+          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="btn-with-count" action="/grin-pool/grin-pool/fork" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="VedkgmiyoNdJY0+J2UuxHD/jnwdC4HOgDT/yevDNjziPpWKZ2uQRerewCQaBy1zEjmX8Hc4u11ZVXLxj4rvFHQ==" />
             <button
                 type="submit"
                 class="btn btn-sm btn-with-count"
@@ -747,9 +747,9 @@
 
 
   
-    <a class="d-none js-permalink-shortcut" data-hotkey="y" href="/grin-pool/grin-pool/blob/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/pool.rs">Permalink</a>
+    <a class="d-none js-permalink-shortcut" data-hotkey="y" href="/grin-pool/grin-pool/blob/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/consensus.rs">Permalink</a>
 
-    <!-- blob contrib key: blob_contributors:v21:1476fba11c226ab5d53f5215a46bc193 -->
+    <!-- blob contrib key: blob_contributors:v21:b3d7804524a042422394bf66d76e8b50 -->
 
     
 
@@ -764,7 +764,7 @@
     <span class="css-truncate-target">e422e94ec9</span>
   </summary>
 
-  <details-menu class="select-menu-modal position-absolute" style="z-index: 99;" src="/grin-pool/grin-pool/ref-list/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/pool.rs?source_action=show&amp;source_controller=blob" preload>
+  <details-menu class="select-menu-modal position-absolute" style="z-index: 99;" src="/grin-pool/grin-pool/ref-list/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/consensus.rs?source_action=show&amp;source_controller=blob" preload>
     <include-fragment class="select-menu-loading-overlay anim-pulse">
       <svg height="32" class="octicon octicon-octoface" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M14.7 5.34c.13-.32.55-1.59-.13-3.31 0 0-1.05-.33-3.44 1.3-1-.28-2.07-.32-3.13-.32s-2.13.04-3.13.32c-2.39-1.64-3.44-1.3-3.44-1.3-.68 1.72-.26 2.99-.13 3.31C.49 6.21 0 7.33 0 8.69 0 13.84 3.33 15 7.98 15S16 13.84 16 8.69c0-1.36-.49-2.48-1.3-3.35zM8 14.02c-3.3 0-5.98-.15-5.98-3.35 0-.76.38-1.48 1.02-2.07 1.07-.98 2.9-.46 4.96-.46 2.07 0 3.88-.52 4.96.46.65.59 1.02 1.3 1.02 2.07 0 3.19-2.68 3.35-5.98 3.35zM5.49 9.01c-.66 0-1.2.8-1.2 1.78s.54 1.79 1.2 1.79c.66 0 1.2-.8 1.2-1.79s-.54-1.78-1.2-1.78zm5.02 0c-.66 0-1.2.79-1.2 1.78s.54 1.79 1.2 1.79c.66 0 1.2-.8 1.2-1.79s-.53-1.78-1.2-1.78z"/></svg>
     </include-fragment>
@@ -783,12 +783,12 @@
         </clipboard-copy>
       </div>
       <div id="blob-path" class="breadcrumb">
-        <span class="repo-root js-repo-root"><span class="js-path-segment"><a data-pjax="true" rel="nofollow" href="/grin-pool/grin-pool/tree/e422e94ec92425835ddff79ea3ac00b7b0ca9fef"><span>grin-pool</span></a></span></span><span class="separator">/</span><span class="js-path-segment"><a data-pjax="true" rel="nofollow" href="/grin-pool/grin-pool/tree/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum"><span>stratum</span></a></span><span class="separator">/</span><span class="js-path-segment"><a data-pjax="true" rel="nofollow" href="/grin-pool/grin-pool/tree/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src"><span>src</span></a></span><span class="separator">/</span><span class="js-path-segment"><a data-pjax="true" rel="nofollow" href="/grin-pool/grin-pool/tree/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool"><span>pool</span></a></span><span class="separator">/</span><strong class="final-path">pool.rs</strong>
+        <span class="repo-root js-repo-root"><span class="js-path-segment"><a data-pjax="true" rel="nofollow" href="/grin-pool/grin-pool/tree/e422e94ec92425835ddff79ea3ac00b7b0ca9fef"><span>grin-pool</span></a></span></span><span class="separator">/</span><span class="js-path-segment"><a data-pjax="true" rel="nofollow" href="/grin-pool/grin-pool/tree/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum"><span>stratum</span></a></span><span class="separator">/</span><span class="js-path-segment"><a data-pjax="true" rel="nofollow" href="/grin-pool/grin-pool/tree/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src"><span>src</span></a></span><span class="separator">/</span><span class="js-path-segment"><a data-pjax="true" rel="nofollow" href="/grin-pool/grin-pool/tree/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool"><span>pool</span></a></span><span class="separator">/</span><strong class="final-path">consensus.rs</strong>
       </div>
     </div>
 
 
-    <include-fragment src="/grin-pool/grin-pool/contributors/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/pool.rs" class="commit-tease commit-loader">
+    <include-fragment src="/grin-pool/grin-pool/contributors/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/consensus.rs" class="commit-tease commit-loader">
       <div>
         Fetching contributors&hellip;
       </div>
@@ -809,9 +809,9 @@
 
 
     <div class="BtnGroup">
-      <a id="raw-url" class="btn btn-sm BtnGroup-item" href="/grin-pool/grin-pool/raw/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/pool.rs">Raw</a>
-        <a class="btn btn-sm js-update-url-with-hash BtnGroup-item" data-hotkey="b" href="/grin-pool/grin-pool/blame/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/pool.rs">Blame</a>
-      <a rel="nofollow" class="btn btn-sm BtnGroup-item" href="/grin-pool/grin-pool/commits/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/pool.rs">History</a>
+      <a id="raw-url" class="btn btn-sm BtnGroup-item" href="/grin-pool/grin-pool/raw/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/consensus.rs">Raw</a>
+        <a class="btn btn-sm js-update-url-with-hash BtnGroup-item" data-hotkey="b" href="/grin-pool/grin-pool/blame/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/consensus.rs">Blame</a>
+      <a rel="nofollow" class="btn btn-sm BtnGroup-item" href="/grin-pool/grin-pool/commits/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/consensus.rs">History</a>
     </div>
 
 
@@ -833,9 +833,9 @@
   </div>
 
   <div class="file-info">
-      381 lines (354 sloc)
+      286 lines (243 sloc)
       <span class="file-info-divider"></span>
-    15.6 KB
+    8.33 KB
   </div>
 </div>
 
@@ -846,113 +846,114 @@
 <table class="highlight tab-size js-file-line-container" data-tab-size="8">
       <tr>
         <td id="L1" class="blob-num js-line-number" data-line-number="1"></td>
-        <td id="LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// Copyright 2018 Blade M. Doyle</span></td>
+        <td id="LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// Copyright 2018 The Grin Developers</span></td>
       </tr>
       <tr>
         <td id="L2" class="blob-num js-line-number" data-line-number="2"></td>
-        <td id="LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span></td>
+        <td id="LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//</span></td>
       </tr>
       <tr>
         <td id="L3" class="blob-num js-line-number" data-line-number="3"></td>
-        <td id="LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// you may not use this file except in compliance with the License.</span></td>
+        <td id="LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span></td>
       </tr>
       <tr>
         <td id="L4" class="blob-num js-line-number" data-line-number="4"></td>
-        <td id="LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// You may obtain a copy of the License at</span></td>
+        <td id="LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// you may not use this file except in compliance with the License.</span></td>
       </tr>
       <tr>
         <td id="L5" class="blob-num js-line-number" data-line-number="5"></td>
-        <td id="LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//</span></td>
+        <td id="LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// You may obtain a copy of the License at</span></td>
       </tr>
       <tr>
         <td id="L6" class="blob-num js-line-number" data-line-number="6"></td>
-        <td id="LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//     http://www.apache.org/licenses/LICENSE-2.0</span></td>
+        <td id="LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//</span></td>
       </tr>
       <tr>
         <td id="L7" class="blob-num js-line-number" data-line-number="7"></td>
-        <td id="LC7" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//</span></td>
+        <td id="LC7" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//     http://www.apache.org/licenses/LICENSE-2.0</span></td>
       </tr>
       <tr>
         <td id="L8" class="blob-num js-line-number" data-line-number="8"></td>
-        <td id="LC8" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// Unless required by applicable law or agreed to in writing, software</span></td>
+        <td id="LC8" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//</span></td>
       </tr>
       <tr>
         <td id="L9" class="blob-num js-line-number" data-line-number="9"></td>
-        <td id="LC9" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span></td>
+        <td id="LC9" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// Unless required by applicable law or agreed to in writing, software</span></td>
       </tr>
       <tr>
         <td id="L10" class="blob-num js-line-number" data-line-number="10"></td>
-        <td id="LC10" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></td>
+        <td id="LC10" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span></td>
       </tr>
       <tr>
         <td id="L11" class="blob-num js-line-number" data-line-number="11"></td>
-        <td id="LC11" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// See the License for the specific language governing permissions and</span></td>
+        <td id="LC11" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></td>
       </tr>
       <tr>
         <td id="L12" class="blob-num js-line-number" data-line-number="12"></td>
-        <td id="LC12" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// limitations under the License.</span></td>
+        <td id="LC12" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// See the License for the specific language governing permissions and</span></td>
       </tr>
       <tr>
         <td id="L13" class="blob-num js-line-number" data-line-number="13"></td>
-        <td id="LC13" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC13" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// limitations under the License.</span></td>
       </tr>
       <tr>
         <td id="L14" class="blob-num js-line-number" data-line-number="14"></td>
-        <td id="LC14" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> bufstream<span class="pl-k">::</span>BufStream;</td>
-      </tr>
-      <tr>
-        <td id="L15" class="blob-num js-line-number" data-line-number="15"></td>
-        <td id="LC15" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> std<span class="pl-k">::</span>collections<span class="pl-k">::</span>HashMap;</td>
-      </tr>
-      <tr>
-        <td id="L16" class="blob-num js-line-number" data-line-number="16"></td>
-        <td id="LC16" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> std<span class="pl-k">::</span>net<span class="pl-k">::</span>{Shutdown, SocketAddr, TcpListener, TcpStream};</td>
-      </tr>
-      <tr>
-        <td id="L17" class="blob-num js-line-number" data-line-number="17"></td>
-        <td id="LC17" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> std<span class="pl-k">::</span>sync<span class="pl-k">::</span>{Arc, Mutex, RwLock};</td>
-      </tr>
-      <tr>
-        <td id="L18" class="blob-num js-line-number" data-line-number="18"></td>
-        <td id="LC18" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> std<span class="pl-k">::</span>time<span class="pl-k">::</span>Instant;</td>
-      </tr>
-      <tr>
-        <td id="L19" class="blob-num js-line-number" data-line-number="19"></td>
-        <td id="LC19" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> std<span class="pl-k">::</span>{thread, time};</td>
-      </tr>
-      <tr>
-        <td id="L20" class="blob-num js-line-number" data-line-number="20"></td>
-        <td id="LC20" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> rand<span class="pl-k">::</span>Rng;</td>
-      </tr>
-      <tr>
-        <td id="L21" class="blob-num js-line-number" data-line-number="21"></td>
-        <td id="LC21" class="blob-code blob-code-inner js-file-line">
+        <td id="LC14" class="blob-code blob-code-inner js-file-line">
 </td>
       </tr>
       <tr>
+        <td id="L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="LC15" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// Difficulty calculation as from Grin</span></td>
+      </tr>
+      <tr>
+        <td id="L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="LC16" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="LC17" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> blake2<span class="pl-k">::</span>blake2b<span class="pl-k">::</span>Blake2b;</td>
+      </tr>
+      <tr>
+        <td id="L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="LC18" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> std<span class="pl-k">::</span>cmp<span class="pl-k">::</span>{max, min};</td>
+      </tr>
+      <tr>
+        <td id="L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="LC19" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> std<span class="pl-k">::</span>fmt;</td>
+      </tr>
+      <tr>
+        <td id="L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="LC20" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> byteorder<span class="pl-k">::</span>{BigEndian, ByteOrder};</td>
+      </tr>
+      <tr>
+        <td id="L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="LC21" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> pool<span class="pl-k">::</span>util;</td>
+      </tr>
+      <tr>
         <td id="L22" class="blob-num js-line-number" data-line-number="22"></td>
-        <td id="LC22" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> pool<span class="pl-k">::</span>config<span class="pl-k">::</span>{Config, NodeConfig, PoolConfig, WorkerConfig};</td>
+        <td id="LC22" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L23" class="blob-num js-line-number" data-line-number="23"></td>
-        <td id="LC23" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> pool<span class="pl-k">::</span>logger<span class="pl-k">::</span>LOGGER;</td>
+        <td id="LC23" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// constants from grin</span></td>
       </tr>
       <tr>
         <td id="L24" class="blob-num js-line-number" data-line-number="24"></td>
-        <td id="LC24" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> pool<span class="pl-k">::</span>proto<span class="pl-k">::</span>{JobTemplate, RpcError, SubmitParams};</td>
+        <td id="LC24" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> DEFAULT_MIN_EDGE_BITS: <span class="pl-k">u8</span> <span class="pl-k">=</span> <span class="pl-c1">31</span>;</td>
       </tr>
       <tr>
         <td id="L25" class="blob-num js-line-number" data-line-number="25"></td>
-        <td id="LC25" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> pool<span class="pl-k">::</span>server<span class="pl-k">::</span>Server;</td>
+        <td id="LC25" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> SECOND_POW_EDGE_BITS: <span class="pl-k">u8</span> <span class="pl-k">=</span> <span class="pl-c1">29</span>;</td>
       </tr>
       <tr>
         <td id="L26" class="blob-num js-line-number" data-line-number="26"></td>
-        <td id="LC26" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> pool<span class="pl-k">::</span>worker<span class="pl-k">::</span>Worker;</td>
+        <td id="LC26" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> PROOF_SIZE: <span class="pl-k">usize</span> <span class="pl-k">=</span> <span class="pl-c1">42</span>;</td>
       </tr>
       <tr>
         <td id="L27" class="blob-num js-line-number" data-line-number="27"></td>
-        <td id="LC27" class="blob-code blob-code-inner js-file-line"><span class="pl-k">use</span> pool<span class="pl-k">::</span>consensus<span class="pl-k">::</span>Proof;</td>
+        <td id="LC27" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> BLOCK_TIME_SEC: <span class="pl-k">u64</span> <span class="pl-k">=</span> <span class="pl-c1">60</span>;</td>
       </tr>
       <tr>
         <td id="L28" class="blob-num js-line-number" data-line-number="28"></td>
@@ -961,772 +962,782 @@
       </tr>
       <tr>
         <td id="L29" class="blob-num js-line-number" data-line-number="29"></td>
-        <td id="LC29" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// ----------------------------------------</span></td>
+        <td id="LC29" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> HOUR_HEIGHT: <span class="pl-k">u64</span> <span class="pl-k">=</span> <span class="pl-c1">3600</span> <span class="pl-k">/</span> BLOCK_TIME_SEC;</td>
       </tr>
       <tr>
         <td id="L30" class="blob-num js-line-number" data-line-number="30"></td>
-        <td id="LC30" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// Worker Connection Thread Function</span></td>
+        <td id="LC30" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> DAY_HEIGHT: <span class="pl-k">u64</span> <span class="pl-k">=</span> <span class="pl-c1">24</span> <span class="pl-k">*</span> HOUR_HEIGHT;</td>
       </tr>
       <tr>
         <td id="L31" class="blob-num js-line-number" data-line-number="31"></td>
-        <td id="LC31" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC31" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> WEEK_HEIGHT: <span class="pl-k">u64</span> <span class="pl-k">=</span> <span class="pl-c1">7</span> <span class="pl-k">*</span> DAY_HEIGHT;</td>
       </tr>
       <tr>
         <td id="L32" class="blob-num js-line-number" data-line-number="32"></td>
-        <td id="LC32" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// Run in a thread. Adds new connections to the workers list</span></td>
+        <td id="LC32" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> YEAR_HEIGHT: <span class="pl-k">u64</span> <span class="pl-k">=</span> <span class="pl-c1">52</span> <span class="pl-k">*</span> WEEK_HEIGHT;</td>
       </tr>
       <tr>
         <td id="L33" class="blob-num js-line-number" data-line-number="33"></td>
-        <td id="LC33" class="blob-code blob-code-inner js-file-line"><span class="pl-k">fn</span> <span class="pl-en">accept_workers</span>(</td>
+        <td id="LC33" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L34" class="blob-num js-line-number" data-line-number="34"></td>
-        <td id="LC34" class="blob-code blob-code-inner js-file-line">    stratum_id: <span class="pl-k">String</span>,</td>
+        <td id="LC34" class="blob-code blob-code-inner js-file-line"><span class="pl-k">const</span> BASE_EDGE_BITS: <span class="pl-k">u8</span> <span class="pl-k">=</span> <span class="pl-c1">24</span>;</td>
       </tr>
       <tr>
         <td id="L35" class="blob-num js-line-number" data-line-number="35"></td>
-        <td id="LC35" class="blob-code blob-code-inner js-file-line">    address: <span class="pl-k">String</span>,</td>
+        <td id="LC35" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L36" class="blob-num js-line-number" data-line-number="36"></td>
-        <td id="LC36" class="blob-code blob-code-inner js-file-line">    difficulty: <span class="pl-k">u64</span>,</td>
+        <td id="LC36" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// Compute weight of a graph as number of siphash bits defining the graph</span></td>
       </tr>
       <tr>
         <td id="L37" class="blob-num js-line-number" data-line-number="37"></td>
-        <td id="LC37" class="blob-code blob-code-inner js-file-line">    workers: <span class="pl-k">&amp;</span><span class="pl-k">mut</span> Arc&lt;Mutex&lt;HashMap&lt;<span class="pl-k">String</span>, Worker&gt;&gt;&gt;,</td>
+        <td id="LC37" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// Must be made dependent on height to phase out smaller size over the years</span></td>
       </tr>
       <tr>
         <td id="L38" class="blob-num js-line-number" data-line-number="38"></td>
-        <td id="LC38" class="blob-code blob-code-inner js-file-line">) {</td>
+        <td id="LC38" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// This can wait until end of 2019 at latest</span></td>
       </tr>
       <tr>
         <td id="L39" class="blob-num js-line-number" data-line-number="39"></td>
-        <td id="LC39" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">let</span> listener <span class="pl-k">=</span> TcpListener<span class="pl-k">::</span><span class="pl-en">bind</span>(address).<span class="pl-en">expect</span>(<span class="pl-s">&quot;Failed to bind to listen address&quot;</span>);</td>
+        <td id="LC39" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">graph_weight</span>(height: <span class="pl-k">u64</span>, edge_bits: <span class="pl-k">u8</span>) -&gt; <span class="pl-k">u64</span> {</td>
       </tr>
       <tr>
         <td id="L40" class="blob-num js-line-number" data-line-number="40"></td>
-        <td id="LC40" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">let</span> banned: HashMap<span class="pl-k">&lt;</span>SocketAddr, Instant<span class="pl-k">&gt;</span> <span class="pl-k">=</span> HashMap<span class="pl-k">::</span><span class="pl-en">new</span>();</td>
+        <td id="LC40" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">let</span> <span class="pl-k">mut</span> xpr_edge_bits <span class="pl-k">=</span> edge_bits <span class="pl-k">as</span> <span class="pl-k">u64</span>;</td>
       </tr>
       <tr>
         <td id="L41" class="blob-num js-line-number" data-line-number="41"></td>
-        <td id="LC41" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">let</span> <span class="pl-k">mut</span> rng <span class="pl-k">=</span> rand<span class="pl-k">::</span><span class="pl-en">thread_rng</span>();</td>
+        <td id="LC41" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L42" class="blob-num js-line-number" data-line-number="42"></td>
-        <td id="LC42" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">// XXX TODO: Call the Redis api to get a list of banned IPs, refresh that list sometimes</span></td>
+        <td id="LC42" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">let</span> bits_over_min <span class="pl-k">=</span> edge_bits.<span class="pl-en">saturating_sub</span>(DEFAULT_MIN_EDGE_BITS);</td>
       </tr>
       <tr>
         <td id="L43" class="blob-num js-line-number" data-line-number="43"></td>
-        <td id="LC43" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">for</span> stream <span class="pl-k">in</span> listener.<span class="pl-en">incoming</span>() {</td>
+        <td id="LC43" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">let</span> expiry_height <span class="pl-k">=</span> (<span class="pl-c1">1</span> <span class="pl-k">&lt;&lt;</span> bits_over_min) <span class="pl-k">*</span> YEAR_HEIGHT;</td>
       </tr>
       <tr>
         <td id="L44" class="blob-num js-line-number" data-line-number="44"></td>
-        <td id="LC44" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">match</span> stream {</td>
+        <td id="LC44" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> height <span class="pl-k">&gt;=</span> expiry_height {</td>
       </tr>
       <tr>
         <td id="L45" class="blob-num js-line-number" data-line-number="45"></td>
-        <td id="LC45" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">Ok</span>(stream) <span class="pl-k">=&gt;</span> {</td>
+        <td id="LC45" class="blob-code blob-code-inner js-file-line">		xpr_edge_bits <span class="pl-k">=</span> xpr_edge_bits.<span class="pl-en">saturating_sub</span>(<span class="pl-c1">1</span> <span class="pl-k">+</span> (height <span class="pl-k">-</span> expiry_height) <span class="pl-k">/</span> WEEK_HEIGHT);</td>
       </tr>
       <tr>
         <td id="L46" class="blob-num js-line-number" data-line-number="46"></td>
-        <td id="LC46" class="blob-code blob-code-inner js-file-line">                <span class="pl-k">match</span> stream.<span class="pl-en">peer_addr</span>() {</td>
+        <td id="LC46" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L47" class="blob-num js-line-number" data-line-number="47"></td>
-        <td id="LC47" class="blob-code blob-code-inner js-file-line">                    <span class="pl-c1">Ok</span>(worker_addr) <span class="pl-k">=&gt;</span> {</td>
+        <td id="LC47" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L48" class="blob-num js-line-number" data-line-number="48"></td>
-        <td id="LC48" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">// XXX ALWAYS DO THIS FIRST - Check if this ip is banned and if so, drop it</span></td>
+        <td id="LC48" class="blob-code blob-code-inner js-file-line">	(<span class="pl-c1">2</span> <span class="pl-k">&lt;&lt;</span> (edge_bits <span class="pl-k">-</span> BASE_EDGE_BITS) <span class="pl-k">as</span> <span class="pl-k">u64</span>) <span class="pl-k">*</span> xpr_edge_bits</td>
       </tr>
       <tr>
         <td id="L49" class="blob-num js-line-number" data-line-number="49"></td>
-        <td id="LC49" class="blob-code blob-code-inner js-file-line">                        <span class="pl-k">if</span> banned.<span class="pl-en">contains_key</span>(<span class="pl-k">&amp;</span>worker_addr) {</td>
+        <td id="LC49" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L50" class="blob-num js-line-number" data-line-number="50"></td>
-        <td id="LC50" class="blob-code blob-code-inner js-file-line">                            <span class="pl-k">let</span> _ <span class="pl-k">=</span> stream.<span class="pl-en">shutdown</span>(Shutdown<span class="pl-k">::</span>Both);</td>
+        <td id="LC50" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L51" class="blob-num js-line-number" data-line-number="51"></td>
-        <td id="LC51" class="blob-code blob-code-inner js-file-line">                            <span class="pl-k">continue</span>;</td>
+        <td id="LC51" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// The difficulty is defined as the maximum target divided by the block hash.</span></td>
       </tr>
       <tr>
         <td id="L52" class="blob-num js-line-number" data-line-number="52"></td>
-        <td id="LC52" class="blob-code blob-code-inner js-file-line">                        }</td>
+        <td id="LC52" class="blob-code blob-code-inner js-file-line">#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Ord)]</td>
       </tr>
       <tr>
         <td id="L53" class="blob-num js-line-number" data-line-number="53"></td>
-        <td id="LC53" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c1">warn!</span>(</td>
+        <td id="LC53" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">struct</span> <span class="pl-en">Difficulty</span> {</td>
       </tr>
       <tr>
         <td id="L54" class="blob-num js-line-number" data-line-number="54"></td>
-        <td id="LC54" class="blob-code blob-code-inner js-file-line">                            LOGGER,</td>
+        <td id="LC54" class="blob-code blob-code-inner js-file-line">	num: <span class="pl-k">u64</span>,</td>
       </tr>
       <tr>
         <td id="L55" class="blob-num js-line-number" data-line-number="55"></td>
-        <td id="LC55" class="blob-code blob-code-inner js-file-line">                            <span class="pl-s">&quot;Worker Listener - New connection from ip: {}&quot;</span>,</td>
+        <td id="LC55" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L56" class="blob-num js-line-number" data-line-number="56"></td>
-        <td id="LC56" class="blob-code blob-code-inner js-file-line">                            worker_addr</td>
+        <td id="LC56" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L57" class="blob-num js-line-number" data-line-number="57"></td>
-        <td id="LC57" class="blob-code blob-code-inner js-file-line">                        );</td>
+        <td id="LC57" class="blob-code blob-code-inner js-file-line"><span class="pl-k">impl</span> <span class="pl-en">Difficulty</span> {</td>
       </tr>
       <tr>
         <td id="L58" class="blob-num js-line-number" data-line-number="58"></td>
-        <td id="LC58" class="blob-code blob-code-inner js-file-line">                        stream</td>
+        <td id="LC58" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// Convert a `u32` into a `Difficulty`</span></td>
       </tr>
       <tr>
         <td id="L59" class="blob-num js-line-number" data-line-number="59"></td>
-        <td id="LC59" class="blob-code blob-code-inner js-file-line">                            .<span class="pl-en">set_nonblocking</span>(<span class="pl-c1">true</span>)</td>
+        <td id="LC59" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">from_num</span>(num: <span class="pl-k">u64</span>) -&gt; Difficulty {</td>
       </tr>
       <tr>
         <td id="L60" class="blob-num js-line-number" data-line-number="60"></td>
-        <td id="LC60" class="blob-code blob-code-inner js-file-line">                            .<span class="pl-en">expect</span>(<span class="pl-s">&quot;set_nonblocking call failed&quot;</span>);</td>
+        <td id="LC60" class="blob-code blob-code-inner js-file-line">		<span class="pl-c">// can&#39;t have difficulty lower than 1</span></td>
       </tr>
       <tr>
         <td id="L61" class="blob-num js-line-number" data-line-number="61"></td>
-        <td id="LC61" class="blob-code blob-code-inner js-file-line">                        <span class="pl-k">let</span> <span class="pl-k">mut</span> worker <span class="pl-k">=</span> Worker<span class="pl-k">::</span><span class="pl-en">new</span>(<span class="pl-c1">0</span>, BufStream<span class="pl-k">::</span><span class="pl-en">new</span>(stream));</td>
+        <td id="LC61" class="blob-code blob-code-inner js-file-line">		Difficulty { num: <span class="pl-en">max</span>(num, <span class="pl-c1">1</span>) }</td>
       </tr>
       <tr>
         <td id="L62" class="blob-num js-line-number" data-line-number="62"></td>
-        <td id="LC62" class="blob-code blob-code-inner js-file-line">                        worker.<span class="pl-en">set_difficulty</span>(difficulty);</td>
+        <td id="LC62" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L63" class="blob-num js-line-number" data-line-number="63"></td>
-        <td id="LC63" class="blob-code blob-code-inner js-file-line">                        <span class="pl-k">let</span> initial_id <span class="pl-k">=</span> rng.<span class="pl-en">gen</span><span class="pl-k">::</span>&lt;<span class="pl-k">u32</span>&gt;();</td>
+        <td id="LC63" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L64" class="blob-num js-line-number" data-line-number="64"></td>
-        <td id="LC64" class="blob-code blob-code-inner js-file-line">                        workers.<span class="pl-en">lock</span>().<span class="pl-en">unwrap</span>().<span class="pl-en">insert</span>(initial_id.<span class="pl-en">to_string</span>(), worker);</td>
+        <td id="LC64" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// Computes the difficulty from a hash. Divides the maximum target by the</span></td>
       </tr>
       <tr>
         <td id="L65" class="blob-num js-line-number" data-line-number="65"></td>
-        <td id="LC65" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">// The new worker is now added to the workers list</span></td>
+        <td id="LC65" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// provided hash and applies the Cuck(at)oo size adjustment factor (see</span></td>
       </tr>
       <tr>
         <td id="L66" class="blob-num js-line-number" data-line-number="66"></td>
-        <td id="LC66" class="blob-code blob-code-inner js-file-line">                    }</td>
+        <td id="LC66" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// https://lists.launchpad.net/mimblewimble/msg00494.html).</span></td>
       </tr>
       <tr>
         <td id="L67" class="blob-num js-line-number" data-line-number="67"></td>
-        <td id="LC67" class="blob-code blob-code-inner js-file-line">                    <span class="pl-c1">Err</span>(e) <span class="pl-k">=&gt;</span> {</td>
+        <td id="LC67" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">fn</span> <span class="pl-en">from_proof_adjusted</span>(height: <span class="pl-k">u64</span>, proof: <span class="pl-k">&amp;</span>Proof) -&gt; Difficulty {</td>
       </tr>
       <tr>
         <td id="L68" class="blob-num js-line-number" data-line-number="68"></td>
-        <td id="LC68" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c1">warn!</span>(</td>
+        <td id="LC68" class="blob-code blob-code-inner js-file-line">		<span class="pl-c">// scale with natural scaling factor</span></td>
       </tr>
       <tr>
         <td id="L69" class="blob-num js-line-number" data-line-number="69"></td>
-        <td id="LC69" class="blob-code blob-code-inner js-file-line">                            LOGGER,</td>
+        <td id="LC69" class="blob-code blob-code-inner js-file-line">		Difficulty<span class="pl-k">::</span><span class="pl-en">from_num</span>(proof.<span class="pl-en">scaled_difficulty</span>(<span class="pl-en">graph_weight</span>(height, proof.edge_bits)))</td>
       </tr>
       <tr>
         <td id="L70" class="blob-num js-line-number" data-line-number="70"></td>
-        <td id="LC70" class="blob-code blob-code-inner js-file-line">                            <span class="pl-s">&quot;{} - Worker Listener - Error getting wokers ip address: {:?}&quot;</span>, stratum_id, e</td>
+        <td id="LC70" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L71" class="blob-num js-line-number" data-line-number="71"></td>
-        <td id="LC71" class="blob-code blob-code-inner js-file-line">                        );</td>
+        <td id="LC71" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L72" class="blob-num js-line-number" data-line-number="72"></td>
-        <td id="LC72" class="blob-code blob-code-inner js-file-line">                    }</td>
+        <td id="LC72" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// unscaled proof</span></td>
       </tr>
       <tr>
         <td id="L73" class="blob-num js-line-number" data-line-number="73"></td>
-        <td id="LC73" class="blob-code blob-code-inner js-file-line">                }</td>
+        <td id="LC73" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">fn</span> <span class="pl-en">from_proof_unscaled</span>(proof: <span class="pl-k">&amp;</span>Proof) -&gt; Difficulty {</td>
       </tr>
       <tr>
         <td id="L74" class="blob-num js-line-number" data-line-number="74"></td>
-        <td id="LC74" class="blob-code blob-code-inner js-file-line">            }</td>
+        <td id="LC74" class="blob-code blob-code-inner js-file-line">		Difficulty<span class="pl-k">::</span><span class="pl-en">from_num</span>(proof.<span class="pl-en">scaled_difficulty</span>(<span class="pl-c1">1u64</span>))</td>
       </tr>
       <tr>
         <td id="L75" class="blob-num js-line-number" data-line-number="75"></td>
-        <td id="LC75" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">Err</span>(e) <span class="pl-k">=&gt;</span> {</td>
+        <td id="LC75" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L76" class="blob-num js-line-number" data-line-number="76"></td>
-        <td id="LC76" class="blob-code blob-code-inner js-file-line">                <span class="pl-c1">warn!</span>(</td>
+        <td id="LC76" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L77" class="blob-num js-line-number" data-line-number="77"></td>
-        <td id="LC77" class="blob-code blob-code-inner js-file-line">                    LOGGER,</td>
+        <td id="LC77" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// Same as `from_proof_adjusted` but instead of an adjustment based on</span></td>
       </tr>
       <tr>
         <td id="L78" class="blob-num js-line-number" data-line-number="78"></td>
-        <td id="LC78" class="blob-code blob-code-inner js-file-line">                    <span class="pl-s">&quot;{} - Worker Listener - Error accepting connection: {:?}&quot;</span>, stratum_id, e</td>
+        <td id="LC78" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// cycle size, scales based on a provided factor. Used by dual PoW system</span></td>
       </tr>
       <tr>
         <td id="L79" class="blob-num js-line-number" data-line-number="79"></td>
-        <td id="LC79" class="blob-code blob-code-inner js-file-line">                );</td>
+        <td id="LC79" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// to scale one PoW against the other.</span></td>
       </tr>
       <tr>
         <td id="L80" class="blob-num js-line-number" data-line-number="80"></td>
-        <td id="LC80" class="blob-code blob-code-inner js-file-line">            }</td>
+        <td id="LC80" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">fn</span> <span class="pl-en">from_proof_scaled</span>(proof: <span class="pl-k">&amp;</span>Proof, scaling: <span class="pl-k">u32</span>) -&gt; Difficulty {</td>
       </tr>
       <tr>
         <td id="L81" class="blob-num js-line-number" data-line-number="81"></td>
-        <td id="LC81" class="blob-code blob-code-inner js-file-line">        }</td>
+        <td id="LC81" class="blob-code blob-code-inner js-file-line">		<span class="pl-c">// Scaling between 2 proof of work algos</span></td>
       </tr>
       <tr>
         <td id="L82" class="blob-num js-line-number" data-line-number="82"></td>
-        <td id="LC82" class="blob-code blob-code-inner js-file-line">    }</td>
+        <td id="LC82" class="blob-code blob-code-inner js-file-line">		Difficulty<span class="pl-k">::</span><span class="pl-en">from_num</span>(proof.<span class="pl-en">scaled_difficulty</span>(scaling <span class="pl-k">as</span> <span class="pl-k">u64</span>))</td>
       </tr>
       <tr>
         <td id="L83" class="blob-num js-line-number" data-line-number="83"></td>
-        <td id="LC83" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">// close the socket server</span></td>
+        <td id="LC83" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L84" class="blob-num js-line-number" data-line-number="84"></td>
-        <td id="LC84" class="blob-code blob-code-inner js-file-line">    <span class="pl-en">drop</span>(listener);</td>
+        <td id="LC84" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L85" class="blob-num js-line-number" data-line-number="85"></td>
-        <td id="LC85" class="blob-code blob-code-inner js-file-line">}</td>
+        <td id="LC85" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// Converts the difficulty into a u64</span></td>
       </tr>
       <tr>
         <td id="L86" class="blob-num js-line-number" data-line-number="86"></td>
-        <td id="LC86" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC86" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">to_num</span>(<span class="pl-k">&amp;</span><span class="pl-c1">self</span>) -&gt; <span class="pl-k">u64</span> {</td>
       </tr>
       <tr>
         <td id="L87" class="blob-num js-line-number" data-line-number="87"></td>
-        <td id="LC87" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// ----------------------------------------</span></td>
+        <td id="LC87" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">self</span>.num</td>
       </tr>
       <tr>
         <td id="L88" class="blob-num js-line-number" data-line-number="88"></td>
-        <td id="LC88" class="blob-code blob-code-inner js-file-line"><span class="pl-c">// A Grin mining pool</span></td>
+        <td id="LC88" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L89" class="blob-num js-line-number" data-line-number="89"></td>
-        <td id="LC89" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC89" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L90" class="blob-num js-line-number" data-line-number="90"></td>
-        <td id="LC90" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">struct</span> <span class="pl-en">Pool</span> {</td>
+        <td id="LC90" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L91" class="blob-num js-line-number" data-line-number="91"></td>
-        <td id="LC91" class="blob-code blob-code-inner js-file-line">    id: <span class="pl-k">String</span>,</td>
+        <td id="LC91" class="blob-code blob-code-inner js-file-line"><span class="pl-k">impl</span> <span class="pl-en">fmt</span>::<span class="pl-en">Display</span> <span class="pl-k">for</span> <span class="pl-en">Difficulty</span> {</td>
       </tr>
       <tr>
         <td id="L92" class="blob-num js-line-number" data-line-number="92"></td>
-        <td id="LC92" class="blob-code blob-code-inner js-file-line">    job: JobTemplate,</td>
+        <td id="LC92" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">fn</span> <span class="pl-en">fmt</span>(<span class="pl-k">&amp;</span><span class="pl-c1">self</span>, f: <span class="pl-k">&amp;</span><span class="pl-k">mut</span> fmt::Formatter&lt;<span class="pl-k">&#39;<span class="pl-en">_</span></span>&gt;) -&gt; fmt::<span class="pl-k">Result</span> {</td>
       </tr>
       <tr>
         <td id="L93" class="blob-num js-line-number" data-line-number="93"></td>
-        <td id="LC93" class="blob-code blob-code-inner js-file-line">    config: Config,</td>
+        <td id="LC93" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">write!</span>(f, <span class="pl-s">&quot;{}&quot;</span>, <span class="pl-c1">self</span>.num)</td>
       </tr>
       <tr>
         <td id="L94" class="blob-num js-line-number" data-line-number="94"></td>
-        <td id="LC94" class="blob-code blob-code-inner js-file-line">    server: Server,</td>
+        <td id="LC94" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L95" class="blob-num js-line-number" data-line-number="95"></td>
-        <td id="LC95" class="blob-code blob-code-inner js-file-line">    workers: Arc<span class="pl-k">&lt;</span>Mutex<span class="pl-k">&lt;</span>HashMap<span class="pl-k">&lt;</span><span class="pl-k">String</span>, Worker<span class="pl-k">&gt;&gt;</span><span class="pl-k">&gt;</span>,</td>
+        <td id="LC95" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L96" class="blob-num js-line-number" data-line-number="96"></td>
-        <td id="LC96" class="blob-code blob-code-inner js-file-line">    duplicates: HashMap<span class="pl-k">&lt;</span><span class="pl-k">Vec</span><span class="pl-k">&lt;</span><span class="pl-k">u64</span><span class="pl-k">&gt;</span>, <span class="pl-k">usize</span><span class="pl-k">&gt;</span>, <span class="pl-c">// pow vector, worker id who first submitted it</span></td>
+        <td id="LC96" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L97" class="blob-num js-line-number" data-line-number="97"></td>
-        <td id="LC97" class="blob-code blob-code-inner js-file-line">}</td>
+        <td id="LC97" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// A Cuck(at)oo Cycle proof of work, consisting of the edge_bits to get the graph</span></td>
       </tr>
       <tr>
         <td id="L98" class="blob-num js-line-number" data-line-number="98"></td>
-        <td id="LC98" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC98" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// size (i.e. the 2-log of the number of edges) and the nonces</span></td>
       </tr>
       <tr>
         <td id="L99" class="blob-num js-line-number" data-line-number="99"></td>
-        <td id="LC99" class="blob-code blob-code-inner js-file-line"><span class="pl-k">impl</span> <span class="pl-en">Pool</span> {</td>
+        <td id="LC99" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// of the graph solution. While being expressed as u64 for simplicity,</span></td>
       </tr>
       <tr>
         <td id="L100" class="blob-num js-line-number" data-line-number="100"></td>
-        <td id="LC100" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">/// Create a new Grin Stratum Pool</span></td>
+        <td id="LC100" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// nonces a.k.a. edge indices range from 0 to (1 &lt;&lt; edge_bits) - 1</span></td>
       </tr>
       <tr>
         <td id="L101" class="blob-num js-line-number" data-line-number="101"></td>
-        <td id="LC101" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">new</span>(config: Config) -&gt; Pool {</td>
+        <td id="LC101" class="blob-code blob-code-inner js-file-line"><span class="pl-c">///</span></td>
       </tr>
       <tr>
         <td id="L102" class="blob-num js-line-number" data-line-number="102"></td>
-        <td id="LC102" class="blob-code blob-code-inner js-file-line">        Pool {</td>
+        <td id="LC102" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// The hash of the `Proof` is the hash of its packed nonces when serializing</span></td>
       </tr>
       <tr>
         <td id="L103" class="blob-num js-line-number" data-line-number="103"></td>
-        <td id="LC103" class="blob-code blob-code-inner js-file-line">            id: <span class="pl-s">&quot;Grin Pool&quot;</span>.<span class="pl-en">to_string</span>(),</td>
+        <td id="LC103" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// them at their exact bit size. The resulting bit sequence is padded to be</span></td>
       </tr>
       <tr>
         <td id="L104" class="blob-num js-line-number" data-line-number="104"></td>
-        <td id="LC104" class="blob-code blob-code-inner js-file-line">            job: JobTemplate<span class="pl-k">::</span><span class="pl-en">new</span>(),</td>
+        <td id="LC104" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// byte-aligned.</span></td>
       </tr>
       <tr>
         <td id="L105" class="blob-num js-line-number" data-line-number="105"></td>
-        <td id="LC105" class="blob-code blob-code-inner js-file-line">            config: config.<span class="pl-en">clone</span>(),</td>
+        <td id="LC105" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L106" class="blob-num js-line-number" data-line-number="106"></td>
-        <td id="LC106" class="blob-code blob-code-inner js-file-line">            server: Server<span class="pl-k">::</span><span class="pl-en">new</span>(config.<span class="pl-en">clone</span>()),</td>
+        <td id="LC106" class="blob-code blob-code-inner js-file-line">#[derive(Clone, PartialOrd, PartialEq)]</td>
       </tr>
       <tr>
         <td id="L107" class="blob-num js-line-number" data-line-number="107"></td>
-        <td id="LC107" class="blob-code blob-code-inner js-file-line">            workers: Arc<span class="pl-k">::</span><span class="pl-en">new</span>(Mutex<span class="pl-k">::</span><span class="pl-en">new</span>(HashMap<span class="pl-k">::</span><span class="pl-en">new</span>())),</td>
+        <td id="LC107" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">struct</span> <span class="pl-en">Proof</span> {</td>
       </tr>
       <tr>
         <td id="L108" class="blob-num js-line-number" data-line-number="108"></td>
-        <td id="LC108" class="blob-code blob-code-inner js-file-line">            duplicates: HashMap<span class="pl-k">::</span><span class="pl-en">new</span>(),</td>
+        <td id="LC108" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// Power of 2 used for the size of the cuckoo graph</span></td>
       </tr>
       <tr>
         <td id="L109" class="blob-num js-line-number" data-line-number="109"></td>
-        <td id="LC109" class="blob-code blob-code-inner js-file-line">        }</td>
+        <td id="LC109" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">pub</span> edge_bits: <span class="pl-k">u8</span>,</td>
       </tr>
       <tr>
         <td id="L110" class="blob-num js-line-number" data-line-number="110"></td>
-        <td id="LC110" class="blob-code blob-code-inner js-file-line">    }</td>
+        <td id="LC110" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// The nonces</span></td>
       </tr>
       <tr>
         <td id="L111" class="blob-num js-line-number" data-line-number="111"></td>
-        <td id="LC111" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC111" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">pub</span> nonces: <span class="pl-k">Vec</span><span class="pl-k">&lt;</span><span class="pl-k">u64</span><span class="pl-k">&gt;</span>,</td>
       </tr>
       <tr>
         <td id="L112" class="blob-num js-line-number" data-line-number="112"></td>
-        <td id="LC112" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">/// Run the Pool</span></td>
+        <td id="LC112" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L113" class="blob-num js-line-number" data-line-number="113"></td>
-        <td id="LC113" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">run</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>) {</td>
+        <td id="LC113" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L114" class="blob-num js-line-number" data-line-number="114"></td>
-        <td id="LC114" class="blob-code blob-code-inner js-file-line">        <span class="pl-c">// Start a thread for each listen port to accept new worker connections</span></td>
+        <td id="LC114" class="blob-code blob-code-inner js-file-line"><span class="pl-k">impl</span> <span class="pl-en">fmt</span>::<span class="pl-en">Debug</span> <span class="pl-k">for</span> <span class="pl-en">Proof</span> {</td>
       </tr>
       <tr>
         <td id="L115" class="blob-num js-line-number" data-line-number="115"></td>
-        <td id="LC115" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">for</span> port_difficulty <span class="pl-k">in</span> <span class="pl-k">&amp;</span><span class="pl-c1">self</span>.config.workers.port_difficulty {</td>
+        <td id="LC115" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">fn</span> <span class="pl-en">fmt</span>(<span class="pl-k">&amp;</span><span class="pl-c1">self</span>, f: <span class="pl-k">&amp;</span><span class="pl-k">mut</span> fmt::Formatter&lt;<span class="pl-k">&#39;<span class="pl-en">_</span></span>&gt;) -&gt; fmt::<span class="pl-k">Result</span> {</td>
       </tr>
       <tr>
         <td id="L116" class="blob-num js-line-number" data-line-number="116"></td>
-        <td id="LC116" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">let</span> <span class="pl-k">mut</span> workers_th <span class="pl-k">=</span> <span class="pl-c1">self</span>.workers.<span class="pl-en">clone</span>();</td>
+        <td id="LC116" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">write!</span>(f, <span class="pl-s">&quot;Cuckoo{}(&quot;</span>, <span class="pl-c1">self</span>.edge_bits)?;</td>
       </tr>
       <tr>
         <td id="L117" class="blob-num js-line-number" data-line-number="117"></td>
-        <td id="LC117" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">let</span> id_th <span class="pl-k">=</span> <span class="pl-c1">self</span>.id.<span class="pl-en">clone</span>();</td>
+        <td id="LC117" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">for</span> (i, val) <span class="pl-k">in</span> <span class="pl-c1">self</span>.nonces[..].<span class="pl-en">iter</span>().<span class="pl-en">enumerate</span>() {</td>
       </tr>
       <tr>
         <td id="L118" class="blob-num js-line-number" data-line-number="118"></td>
-        <td id="LC118" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">let</span> address_th <span class="pl-k">=</span> <span class="pl-c1">self</span>.config.workers.listen_address.<span class="pl-en">clone</span>() <span class="pl-k">+</span> <span class="pl-s">&quot;:&quot;</span></td>
+        <td id="LC118" class="blob-code blob-code-inner js-file-line">			<span class="pl-c1">write!</span>(f, <span class="pl-s">&quot;{:x}&quot;</span>, val)?;</td>
       </tr>
       <tr>
         <td id="L119" class="blob-num js-line-number" data-line-number="119"></td>
-        <td id="LC119" class="blob-code blob-code-inner js-file-line">                <span class="pl-k">+</span> <span class="pl-k">&amp;</span>port_difficulty.port.<span class="pl-en">to_string</span>();</td>
+        <td id="LC119" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">if</span> i <span class="pl-k">&lt;</span> <span class="pl-c1">self</span>.nonces.<span class="pl-en">len</span>() <span class="pl-k">-</span> <span class="pl-c1">1</span> {</td>
       </tr>
       <tr>
         <td id="L120" class="blob-num js-line-number" data-line-number="120"></td>
-        <td id="LC120" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">let</span> difficulty_th <span class="pl-k">=</span> port_difficulty.difficulty;</td>
+        <td id="LC120" class="blob-code blob-code-inner js-file-line">				<span class="pl-c1">write!</span>(f, <span class="pl-s">&quot; &quot;</span>)?;</td>
       </tr>
       <tr>
         <td id="L121" class="blob-num js-line-number" data-line-number="121"></td>
-        <td id="LC121" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">let</span> _listener_th <span class="pl-k">=</span> thread<span class="pl-k">::</span><span class="pl-en">spawn</span>(<span class="pl-k">move</span> <span class="pl-k">||</span> {</td>
+        <td id="LC121" class="blob-code blob-code-inner js-file-line">			}</td>
       </tr>
       <tr>
         <td id="L122" class="blob-num js-line-number" data-line-number="122"></td>
-        <td id="LC122" class="blob-code blob-code-inner js-file-line">                <span class="pl-en">accept_workers</span>(id_th, address_th, difficulty_th, <span class="pl-k">&amp;</span><span class="pl-k">mut</span> workers_th);</td>
+        <td id="LC122" class="blob-code blob-code-inner js-file-line">		}</td>
       </tr>
       <tr>
         <td id="L123" class="blob-num js-line-number" data-line-number="123"></td>
-        <td id="LC123" class="blob-code blob-code-inner js-file-line">            });</td>
+        <td id="LC123" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">write!</span>(f, <span class="pl-s">&quot;)&quot;</span>)</td>
       </tr>
       <tr>
         <td id="L124" class="blob-num js-line-number" data-line-number="124"></td>
-        <td id="LC124" class="blob-code blob-code-inner js-file-line">        }</td>
+        <td id="LC124" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L125" class="blob-num js-line-number" data-line-number="125"></td>
-        <td id="LC125" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC125" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L126" class="blob-num js-line-number" data-line-number="126"></td>
-        <td id="LC126" class="blob-code blob-code-inner js-file-line">        <span class="pl-c">// ------------</span></td>
+        <td id="LC126" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L127" class="blob-num js-line-number" data-line-number="127"></td>
-        <td id="LC127" class="blob-code blob-code-inner js-file-line">        <span class="pl-c">// Main loop</span></td>
+        <td id="LC127" class="blob-code blob-code-inner js-file-line"><span class="pl-k">impl</span> <span class="pl-c1">Eq</span> <span class="pl-k">for</span> <span class="pl-en">Proof</span> {}</td>
       </tr>
       <tr>
         <td id="L128" class="blob-num js-line-number" data-line-number="128"></td>
-        <td id="LC128" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">loop</span> {</td>
+        <td id="LC128" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L129" class="blob-num js-line-number" data-line-number="129"></td>
-        <td id="LC129" class="blob-code blob-code-inner js-file-line">            <span class="pl-c">// XXX TODO: Error checking</span></td>
+        <td id="LC129" class="blob-code blob-code-inner js-file-line"><span class="pl-k">impl</span> <span class="pl-en">Proof</span> {</td>
       </tr>
       <tr>
         <td id="L130" class="blob-num js-line-number" data-line-number="130"></td>
-        <td id="LC130" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC130" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// Builds a proof with provided nonces at default edge_bits</span></td>
       </tr>
       <tr>
         <td id="L131" class="blob-num js-line-number" data-line-number="131"></td>
-        <td id="LC131" class="blob-code blob-code-inner js-file-line">            <span class="pl-c">// (re)connect if server is not connected or is in error state</span></td>
+        <td id="LC131" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">new</span>(<span class="pl-k">mut</span> in_nonces: <span class="pl-k">Vec</span>&lt;<span class="pl-k">u64</span>&gt;, edge_bits: <span class="pl-k">u8</span>) -&gt; Proof {</td>
       </tr>
       <tr>
         <td id="L132" class="blob-num js-line-number" data-line-number="132"></td>
-        <td id="LC132" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">match</span> <span class="pl-c1">self</span>.server.<span class="pl-en">connect</span>() {</td>
+        <td id="LC132" class="blob-code blob-code-inner js-file-line">		in_nonces.<span class="pl-en">sort</span>();</td>
       </tr>
       <tr>
         <td id="L133" class="blob-num js-line-number" data-line-number="133"></td>
-        <td id="LC133" class="blob-code blob-code-inner js-file-line">                <span class="pl-c1">Ok</span>(_) <span class="pl-k">=&gt;</span> { } <span class="pl-c">// server.connect method also logs in and requests a job</span></td>
+        <td id="LC133" class="blob-code blob-code-inner js-file-line">		Proof {</td>
       </tr>
       <tr>
         <td id="L134" class="blob-num js-line-number" data-line-number="134"></td>
-        <td id="LC134" class="blob-code blob-code-inner js-file-line">                <span class="pl-c1">Err</span>(e) <span class="pl-k">=&gt;</span> {</td>
+        <td id="LC134" class="blob-code blob-code-inner js-file-line">			edge_bits: edge_bits,</td>
       </tr>
       <tr>
         <td id="L135" class="blob-num js-line-number" data-line-number="135"></td>
-        <td id="LC135" class="blob-code blob-code-inner js-file-line">                    <span class="pl-c1">error!</span>(</td>
+        <td id="LC135" class="blob-code blob-code-inner js-file-line">			nonces: in_nonces,</td>
       </tr>
       <tr>
         <td id="L136" class="blob-num js-line-number" data-line-number="136"></td>
-        <td id="LC136" class="blob-code blob-code-inner js-file-line">                        LOGGER,</td>
+        <td id="LC136" class="blob-code blob-code-inner js-file-line">		}</td>
       </tr>
       <tr>
         <td id="L137" class="blob-num js-line-number" data-line-number="137"></td>
-        <td id="LC137" class="blob-code blob-code-inner js-file-line">                        <span class="pl-s">&quot;{} - Unable to connect to upstream server: {}&quot;</span>, <span class="pl-c1">self</span>.id, e</td>
+        <td id="LC137" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L138" class="blob-num js-line-number" data-line-number="138"></td>
-        <td id="LC138" class="blob-code blob-code-inner js-file-line">                    );</td>
+        <td id="LC138" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L139" class="blob-num js-line-number" data-line-number="139"></td>
-        <td id="LC139" class="blob-code blob-code-inner js-file-line">                    thread<span class="pl-k">::</span><span class="pl-en">sleep</span>(time<span class="pl-k">::</span>Duration<span class="pl-k">::</span><span class="pl-en">from_secs</span>(<span class="pl-c1">1</span>));</td>
+        <td id="LC139" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// Difficulty achieved by this proof with given scaling factor</span></td>
       </tr>
       <tr>
         <td id="L140" class="blob-num js-line-number" data-line-number="140"></td>
-        <td id="LC140" class="blob-code blob-code-inner js-file-line">                    <span class="pl-k">continue</span>;</td>
+        <td id="LC140" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">fn</span> <span class="pl-en">scaled_difficulty</span>(<span class="pl-k">&amp;</span><span class="pl-c1">self</span>, scale: <span class="pl-k">u64</span>) -&gt; <span class="pl-k">u64</span> {</td>
       </tr>
       <tr>
         <td id="L141" class="blob-num js-line-number" data-line-number="141"></td>
-        <td id="LC141" class="blob-code blob-code-inner js-file-line">                }</td>
+        <td id="LC141" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> diff <span class="pl-k">=</span> ((scale <span class="pl-k">as</span> <span class="pl-k">u128</span>) <span class="pl-k">&lt;&lt;</span> <span class="pl-c1">64</span>) <span class="pl-k">/</span> (<span class="pl-en">max</span>(<span class="pl-c1">1</span>, <span class="pl-c1">self</span>.<span class="pl-en">hash</span>().<span class="pl-en">to_u64</span>()) <span class="pl-k">as</span> <span class="pl-k">u128</span>);</td>
       </tr>
       <tr>
         <td id="L142" class="blob-num js-line-number" data-line-number="142"></td>
-        <td id="LC142" class="blob-code blob-code-inner js-file-line">            }</td>
+        <td id="LC142" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">min</span>(diff, <span class="pl-k">&lt;</span><span class="pl-k">u64</span><span class="pl-k">&gt;</span><span class="pl-k">::</span><span class="pl-en">max_value</span>() <span class="pl-k">as</span> <span class="pl-k">u128</span>) <span class="pl-k">as</span> <span class="pl-k">u64</span></td>
       </tr>
       <tr>
         <td id="L143" class="blob-num js-line-number" data-line-number="143"></td>
-        <td id="LC143" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC143" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L144" class="blob-num js-line-number" data-line-number="144"></td>
-        <td id="LC144" class="blob-code blob-code-inner js-file-line">            <span class="pl-c">// check the server for messages and handle them</span></td>
+        <td id="LC144" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L145" class="blob-num js-line-number" data-line-number="145"></td>
-        <td id="LC145" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">let</span> _ <span class="pl-k">=</span> <span class="pl-c1">self</span>.<span class="pl-en">process_server_messages</span>();</td>
+        <td id="LC145" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// Hash, as in Grin</span></td>
       </tr>
       <tr>
         <td id="L146" class="blob-num js-line-number" data-line-number="146"></td>
-        <td id="LC146" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC146" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">fn</span> <span class="pl-en">hash</span>(<span class="pl-k">&amp;</span><span class="pl-c1">self</span>) -&gt; Hash {</td>
       </tr>
       <tr>
         <td id="L147" class="blob-num js-line-number" data-line-number="147"></td>
-        <td id="LC147" class="blob-code blob-code-inner js-file-line">            <span class="pl-c">// if the server gave us a new block</span></td>
+        <td id="LC147" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> nonce_bits <span class="pl-k">=</span> <span class="pl-c1">self</span>.edge_bits <span class="pl-k">as</span> <span class="pl-k">usize</span>;</td>
       </tr>
       <tr>
         <td id="L148" class="blob-num js-line-number" data-line-number="148"></td>
-        <td id="LC148" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">let</span> _ <span class="pl-k">=</span> <span class="pl-c1">self</span>.<span class="pl-en">accept_new_job</span>();</td>
+        <td id="LC148" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> <span class="pl-k">mut</span> bitvec <span class="pl-k">=</span> BitVec<span class="pl-k">::</span><span class="pl-en">new</span>(nonce_bits <span class="pl-k">*</span> PROOF_SIZE);</td>
       </tr>
       <tr>
         <td id="L149" class="blob-num js-line-number" data-line-number="149"></td>
-        <td id="LC149" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC149" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">for</span> (n, nonce) <span class="pl-k">in</span> <span class="pl-c1">self</span>.nonces.<span class="pl-en">iter</span>().<span class="pl-en">enumerate</span>() {</td>
       </tr>
       <tr>
         <td id="L150" class="blob-num js-line-number" data-line-number="150"></td>
-        <td id="LC150" class="blob-code blob-code-inner js-file-line">            <span class="pl-c">// Process messages from the workers</span></td>
+        <td id="LC150" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">for</span> bit <span class="pl-k">in</span> <span class="pl-c1">0</span>..nonce_bits {</td>
       </tr>
       <tr>
         <td id="L151" class="blob-num js-line-number" data-line-number="151"></td>
-        <td id="LC151" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">let</span> _ <span class="pl-k">=</span> <span class="pl-c1">self</span>.<span class="pl-en">process_worker_messages</span>();</td>
+        <td id="LC151" class="blob-code blob-code-inner js-file-line">				<span class="pl-k">if</span> nonce <span class="pl-k">&amp;</span> (<span class="pl-c1">1</span> <span class="pl-k">&lt;&lt;</span> bit) <span class="pl-k">!=</span> <span class="pl-c1">0</span> {</td>
       </tr>
       <tr>
         <td id="L152" class="blob-num js-line-number" data-line-number="152"></td>
-        <td id="LC152" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC152" class="blob-code blob-code-inner js-file-line">					bitvec.<span class="pl-en">set_bit_at</span>(n <span class="pl-k">*</span> nonce_bits <span class="pl-k">+</span> (bit <span class="pl-k">as</span> <span class="pl-k">usize</span>))</td>
       </tr>
       <tr>
         <td id="L153" class="blob-num js-line-number" data-line-number="153"></td>
-        <td id="LC153" class="blob-code blob-code-inner js-file-line">            <span class="pl-c">// Process worker shares</span></td>
+        <td id="LC153" class="blob-code blob-code-inner js-file-line">				}</td>
       </tr>
       <tr>
         <td id="L154" class="blob-num js-line-number" data-line-number="154"></td>
-        <td id="LC154" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">let</span> _ <span class="pl-k">=</span> <span class="pl-c1">self</span>.<span class="pl-en">process_shares</span>();</td>
+        <td id="LC154" class="blob-code blob-code-inner js-file-line">			}</td>
       </tr>
       <tr>
         <td id="L155" class="blob-num js-line-number" data-line-number="155"></td>
-        <td id="LC155" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC155" class="blob-code blob-code-inner js-file-line">		}</td>
       </tr>
       <tr>
         <td id="L156" class="blob-num js-line-number" data-line-number="156"></td>
-        <td id="LC156" class="blob-code blob-code-inner js-file-line">            <span class="pl-c">// Send jobs to needy workers</span></td>
+        <td id="LC156" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> <span class="pl-k">mut</span> blake2b <span class="pl-k">=</span> Blake2b<span class="pl-k">::</span><span class="pl-en">new</span>(<span class="pl-c1">32</span>);</td>
       </tr>
       <tr>
         <td id="L157" class="blob-num js-line-number" data-line-number="157"></td>
-        <td id="LC157" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//            if self.server.job.height &gt; 0 {</span></td>
+        <td id="LC157" class="blob-code blob-code-inner js-file-line">		blake2b.<span class="pl-en">update</span>(<span class="pl-k">&amp;</span>bitvec.bits);</td>
       </tr>
       <tr>
         <td id="L158" class="blob-num js-line-number" data-line-number="158"></td>
-        <td id="LC158" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">let</span> _ <span class="pl-k">=</span> <span class="pl-c1">self</span>.<span class="pl-en">send_jobs</span>();</td>
+        <td id="LC158" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> <span class="pl-k">mut</span> ret <span class="pl-k">=</span> [<span class="pl-c1">0</span>; <span class="pl-c1">32</span>];</td>
       </tr>
       <tr>
         <td id="L159" class="blob-num js-line-number" data-line-number="159"></td>
-        <td id="LC159" class="blob-code blob-code-inner js-file-line"><span class="pl-c">//            }</span></td>
+        <td id="LC159" class="blob-code blob-code-inner js-file-line">		ret.<span class="pl-en">copy_from_slice</span>(blake2b.<span class="pl-en">finalize</span>().<span class="pl-en">as_bytes</span>());</td>
       </tr>
       <tr>
         <td id="L160" class="blob-num js-line-number" data-line-number="160"></td>
-        <td id="LC160" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC160" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">Hash</span>(ret)</td>
       </tr>
       <tr>
         <td id="L161" class="blob-num js-line-number" data-line-number="161"></td>
-        <td id="LC161" class="blob-code blob-code-inner js-file-line">            <span class="pl-c">// Delete workers in error state</span></td>
+        <td id="LC161" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L162" class="blob-num js-line-number" data-line-number="162"></td>
-        <td id="LC162" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">let</span> _num_active_workers <span class="pl-k">=</span> <span class="pl-c1">self</span>.<span class="pl-en">clean_workers</span>();</td>
+        <td id="LC162" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L163" class="blob-num js-line-number" data-line-number="163"></td>
-        <td id="LC163" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC163" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// Maximum difficulty this proof of work can achieve</span></td>
       </tr>
       <tr>
         <td id="L164" class="blob-num js-line-number" data-line-number="164"></td>
-        <td id="LC164" class="blob-code blob-code-inner js-file-line">            thread<span class="pl-k">::</span><span class="pl-en">sleep</span>(time<span class="pl-k">::</span>Duration<span class="pl-k">::</span><span class="pl-en">from_millis</span>(<span class="pl-c1">10</span>));</td>
+        <td id="LC164" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">to_difficulty</span>(<span class="pl-k">&amp;</span><span class="pl-c1">self</span>, height: <span class="pl-k">u64</span>, sec_scaling: <span class="pl-k">u32</span>) -&gt; Difficulty {</td>
       </tr>
       <tr>
         <td id="L165" class="blob-num js-line-number" data-line-number="165"></td>
-        <td id="LC165" class="blob-code blob-code-inner js-file-line">        }</td>
+        <td id="LC165" class="blob-code blob-code-inner js-file-line">		<span class="pl-c">// 2 proof of works, Cuckoo29 (for now) and Cuckoo30+, which are scaled</span></td>
       </tr>
       <tr>
         <td id="L166" class="blob-num js-line-number" data-line-number="166"></td>
-        <td id="LC166" class="blob-code blob-code-inner js-file-line">    }</td>
+        <td id="LC166" class="blob-code blob-code-inner js-file-line">		<span class="pl-c">// differently (scaling not controlled for now)</span></td>
       </tr>
       <tr>
         <td id="L167" class="blob-num js-line-number" data-line-number="167"></td>
-        <td id="LC167" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC167" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> <span class="pl-c1">self</span>.edge_bits <span class="pl-k">==</span> SECOND_POW_EDGE_BITS {</td>
       </tr>
       <tr>
         <td id="L168" class="blob-num js-line-number" data-line-number="168"></td>
-        <td id="LC168" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">// ------------</span></td>
+        <td id="LC168" class="blob-code blob-code-inner js-file-line">			Difficulty<span class="pl-k">::</span><span class="pl-en">from_proof_scaled</span>(<span class="pl-k">&amp;</span><span class="pl-c1">self</span>, sec_scaling)</td>
       </tr>
       <tr>
         <td id="L169" class="blob-num js-line-number" data-line-number="169"></td>
-        <td id="LC169" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">// Pool Methods</span></td>
+        <td id="LC169" class="blob-code blob-code-inner js-file-line">		} <span class="pl-k">else</span> {</td>
       </tr>
       <tr>
         <td id="L170" class="blob-num js-line-number" data-line-number="170"></td>
-        <td id="LC170" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">//</span></td>
+        <td id="LC170" class="blob-code blob-code-inner js-file-line">			Difficulty<span class="pl-k">::</span><span class="pl-en">from_proof_adjusted</span>(height, <span class="pl-k">&amp;</span><span class="pl-c1">self</span>)</td>
       </tr>
       <tr>
         <td id="L171" class="blob-num js-line-number" data-line-number="171"></td>
-        <td id="LC171" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC171" class="blob-code blob-code-inner js-file-line">		}</td>
       </tr>
       <tr>
         <td id="L172" class="blob-num js-line-number" data-line-number="172"></td>
-        <td id="LC172" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">// Process messages from the upstream server</span></td>
+        <td id="LC172" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L173" class="blob-num js-line-number" data-line-number="173"></td>
-        <td id="LC173" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">// Will contain job requests, submit results, status results, etc...</span></td>
-      </tr>
-      <tr>
-        <td id="L174" class="blob-num js-line-number" data-line-number="174"></td>
-        <td id="LC174" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">fn</span> <span class="pl-en">process_server_messages</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>) -&gt; <span class="pl-k">Result</span>&lt;(), RpcError&gt; {</td>
-      </tr>
-      <tr>
-        <td id="L175" class="blob-num js-line-number" data-line-number="175"></td>
-        <td id="LC175" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">match</span> <span class="pl-c1">self</span>.server.<span class="pl-en">process_messages</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>.workers) {</td>
-      </tr>
-      <tr>
-        <td id="L176" class="blob-num js-line-number" data-line-number="176"></td>
-        <td id="LC176" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">Ok</span>(_) <span class="pl-k">=&gt;</span> {</td>
-      </tr>
-      <tr>
-        <td id="L177" class="blob-num js-line-number" data-line-number="177"></td>
-        <td id="LC177" class="blob-code blob-code-inner js-file-line">                <span class="pl-k">return</span> <span class="pl-c1">Ok</span>(());</td>
-      </tr>
-      <tr>
-        <td id="L178" class="blob-num js-line-number" data-line-number="178"></td>
-        <td id="LC178" class="blob-code blob-code-inner js-file-line">            }</td>
-      </tr>
-      <tr>
-        <td id="L179" class="blob-num js-line-number" data-line-number="179"></td>
-        <td id="LC179" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">Err</span>(e) <span class="pl-k">=&gt;</span> {</td>
-      </tr>
-      <tr>
-        <td id="L180" class="blob-num js-line-number" data-line-number="180"></td>
-        <td id="LC180" class="blob-code blob-code-inner js-file-line">                <span class="pl-c">// Log an error</span></td>
-      </tr>
-      <tr>
-        <td id="L181" class="blob-num js-line-number" data-line-number="181"></td>
-        <td id="LC181" class="blob-code blob-code-inner js-file-line">                <span class="pl-c1">error!</span>(</td>
-      </tr>
-      <tr>
-        <td id="L182" class="blob-num js-line-number" data-line-number="182"></td>
-        <td id="LC182" class="blob-code blob-code-inner js-file-line">                    LOGGER,</td>
-      </tr>
-      <tr>
-        <td id="L183" class="blob-num js-line-number" data-line-number="183"></td>
-        <td id="LC183" class="blob-code blob-code-inner js-file-line">                    <span class="pl-s">&quot;{} - Error processing upstream message: {:?}&quot;</span>, <span class="pl-c1">self</span>.id, e</td>
-      </tr>
-      <tr>
-        <td id="L184" class="blob-num js-line-number" data-line-number="184"></td>
-        <td id="LC184" class="blob-code blob-code-inner js-file-line">                );</td>
-      </tr>
-      <tr>
-        <td id="L185" class="blob-num js-line-number" data-line-number="185"></td>
-        <td id="LC185" class="blob-code blob-code-inner js-file-line">                <span class="pl-c">// There are also special case(s) where we want to do something for a specific</span></td>
-      </tr>
-      <tr>
-        <td id="L186" class="blob-num js-line-number" data-line-number="186"></td>
-        <td id="LC186" class="blob-code blob-code-inner js-file-line">                <span class="pl-c">// error</span></td>
-      </tr>
-      <tr>
-        <td id="L187" class="blob-num js-line-number" data-line-number="187"></td>
-        <td id="LC187" class="blob-code blob-code-inner js-file-line">                <span class="pl-k">if</span> e.message.<span class="pl-en">contains</span>(<span class="pl-s">&quot;Node is syncing&quot;</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L188" class="blob-num js-line-number" data-line-number="188"></td>
-        <td id="LC188" class="blob-code blob-code-inner js-file-line">                    thread<span class="pl-k">::</span><span class="pl-en">sleep</span>(time<span class="pl-k">::</span>Duration<span class="pl-k">::</span><span class="pl-en">from_secs</span>(<span class="pl-c1">2</span>));</td>
-      </tr>
-      <tr>
-        <td id="L189" class="blob-num js-line-number" data-line-number="189"></td>
-        <td id="LC189" class="blob-code blob-code-inner js-file-line">                }</td>
-      </tr>
-      <tr>
-        <td id="L190" class="blob-num js-line-number" data-line-number="190"></td>
-        <td id="LC190" class="blob-code blob-code-inner js-file-line">                <span class="pl-k">return</span> <span class="pl-c1">Err</span>(e);</td>
-      </tr>
-      <tr>
-        <td id="L191" class="blob-num js-line-number" data-line-number="191"></td>
-        <td id="LC191" class="blob-code blob-code-inner js-file-line">            }</td>
-      </tr>
-      <tr>
-        <td id="L192" class="blob-num js-line-number" data-line-number="192"></td>
-        <td id="LC192" class="blob-code blob-code-inner js-file-line">        }</td>
-      </tr>
-      <tr>
-        <td id="L193" class="blob-num js-line-number" data-line-number="193"></td>
-        <td id="LC193" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L194" class="blob-num js-line-number" data-line-number="194"></td>
-        <td id="LC194" class="blob-code blob-code-inner js-file-line">
+        <td id="LC173" class="blob-code blob-code-inner js-file-line">
 </td>
       </tr>
       <tr>
+        <td id="L174" class="blob-num js-line-number" data-line-number="174"></td>
+        <td id="LC174" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// unscaled difficulty</span></td>
+      </tr>
+      <tr>
+        <td id="L175" class="blob-num js-line-number" data-line-number="175"></td>
+        <td id="LC175" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">to_difficulty_unscaled</span>(<span class="pl-k">&amp;</span><span class="pl-c1">self</span>) -&gt; Difficulty {</td>
+      </tr>
+      <tr>
+        <td id="L176" class="blob-num js-line-number" data-line-number="176"></td>
+        <td id="LC176" class="blob-code blob-code-inner js-file-line">		Difficulty<span class="pl-k">::</span><span class="pl-en">from_proof_unscaled</span>(<span class="pl-k">&amp;</span><span class="pl-c1">self</span>)</td>
+      </tr>
+      <tr>
+        <td id="L177" class="blob-num js-line-number" data-line-number="177"></td>
+        <td id="LC177" class="blob-code blob-code-inner js-file-line">	}</td>
+      </tr>
+      <tr>
+        <td id="L178" class="blob-num js-line-number" data-line-number="178"></td>
+        <td id="LC178" class="blob-code blob-code-inner js-file-line">}</td>
+      </tr>
+      <tr>
+        <td id="L179" class="blob-num js-line-number" data-line-number="179"></td>
+        <td id="LC179" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="L180" class="blob-num js-line-number" data-line-number="180"></td>
+        <td id="LC180" class="blob-code blob-code-inner js-file-line"><span class="pl-k">struct</span> <span class="pl-en">BitVec</span> {</td>
+      </tr>
+      <tr>
+        <td id="L181" class="blob-num js-line-number" data-line-number="181"></td>
+        <td id="LC181" class="blob-code blob-code-inner js-file-line">	bits: <span class="pl-k">Vec</span><span class="pl-k">&lt;</span><span class="pl-k">u8</span><span class="pl-k">&gt;</span>,</td>
+      </tr>
+      <tr>
+        <td id="L182" class="blob-num js-line-number" data-line-number="182"></td>
+        <td id="LC182" class="blob-code blob-code-inner js-file-line">}</td>
+      </tr>
+      <tr>
+        <td id="L183" class="blob-num js-line-number" data-line-number="183"></td>
+        <td id="LC183" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="L184" class="blob-num js-line-number" data-line-number="184"></td>
+        <td id="LC184" class="blob-code blob-code-inner js-file-line"><span class="pl-k">impl</span> <span class="pl-en">BitVec</span> {</td>
+      </tr>
+      <tr>
+        <td id="L185" class="blob-num js-line-number" data-line-number="185"></td>
+        <td id="LC185" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// Number of bytes required to store the provided number of bits</span></td>
+      </tr>
+      <tr>
+        <td id="L186" class="blob-num js-line-number" data-line-number="186"></td>
+        <td id="LC186" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">fn</span> <span class="pl-en">bytes_len</span>(bits_len: <span class="pl-k">usize</span>) -&gt; <span class="pl-k">usize</span> {</td>
+      </tr>
+      <tr>
+        <td id="L187" class="blob-num js-line-number" data-line-number="187"></td>
+        <td id="LC187" class="blob-code blob-code-inner js-file-line">		(bits_len <span class="pl-k">+</span> <span class="pl-c1">7</span>) <span class="pl-k">/</span> <span class="pl-c1">8</span></td>
+      </tr>
+      <tr>
+        <td id="L188" class="blob-num js-line-number" data-line-number="188"></td>
+        <td id="LC188" class="blob-code blob-code-inner js-file-line">	}</td>
+      </tr>
+      <tr>
+        <td id="L189" class="blob-num js-line-number" data-line-number="189"></td>
+        <td id="LC189" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="L190" class="blob-num js-line-number" data-line-number="190"></td>
+        <td id="LC190" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">fn</span> <span class="pl-en">new</span>(bits_len: <span class="pl-k">usize</span>) -&gt; BitVec {</td>
+      </tr>
+      <tr>
+        <td id="L191" class="blob-num js-line-number" data-line-number="191"></td>
+        <td id="LC191" class="blob-code blob-code-inner js-file-line">		BitVec {</td>
+      </tr>
+      <tr>
+        <td id="L192" class="blob-num js-line-number" data-line-number="192"></td>
+        <td id="LC192" class="blob-code blob-code-inner js-file-line">			bits: <span class="pl-c1">vec!</span>[<span class="pl-c1">0</span>; BitVec<span class="pl-k">::</span><span class="pl-en">bytes_len</span>(bits_len)],</td>
+      </tr>
+      <tr>
+        <td id="L193" class="blob-num js-line-number" data-line-number="193"></td>
+        <td id="LC193" class="blob-code blob-code-inner js-file-line">		}</td>
+      </tr>
+      <tr>
+        <td id="L194" class="blob-num js-line-number" data-line-number="194"></td>
+        <td id="LC194" class="blob-code blob-code-inner js-file-line">	}</td>
+      </tr>
+      <tr>
         <td id="L195" class="blob-num js-line-number" data-line-number="195"></td>
-        <td id="LC195" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">fn</span> <span class="pl-en">process_worker_messages</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>) {</td>
+        <td id="LC195" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L196" class="blob-num js-line-number" data-line-number="196"></td>
-        <td id="LC196" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">let</span> <span class="pl-k">mut</span> id_changed: <span class="pl-k">Vec</span><span class="pl-k">&lt;</span><span class="pl-k">String</span><span class="pl-k">&gt;</span> <span class="pl-k">=</span> <span class="pl-c1">vec!</span>[];</td>
+        <td id="LC196" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">fn</span> <span class="pl-en">set_bit_at</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>, pos: <span class="pl-k">usize</span>) {</td>
       </tr>
       <tr>
         <td id="L197" class="blob-num js-line-number" data-line-number="197"></td>
-        <td id="LC197" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">let</span> <span class="pl-k">mut</span> w_m <span class="pl-k">=</span> <span class="pl-c1">self</span>.workers.<span class="pl-en">lock</span>().<span class="pl-en">unwrap</span>();</td>
+        <td id="LC197" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">self</span>.bits[pos <span class="pl-k">/</span> <span class="pl-c1">8</span>] <span class="pl-k">|=</span> <span class="pl-c1">1</span> <span class="pl-k">&lt;&lt;</span> (pos <span class="pl-k">%</span> <span class="pl-c1">8</span>) <span class="pl-k">as</span> <span class="pl-k">u8</span>;</td>
       </tr>
       <tr>
         <td id="L198" class="blob-num js-line-number" data-line-number="198"></td>
-        <td id="LC198" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">for</span> (worker_id, worker) <span class="pl-k">in</span> w_m.<span class="pl-en">iter_mut</span>() {</td>
+        <td id="LC198" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L199" class="blob-num js-line-number" data-line-number="199"></td>
-        <td id="LC199" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">let</span> res <span class="pl-k">=</span> worker.<span class="pl-en">process_messages</span>();</td>
+        <td id="LC199" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L200" class="blob-num js-line-number" data-line-number="200"></td>
-        <td id="LC200" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">if</span> worker_id <span class="pl-k">!=</span> <span class="pl-k">&amp;</span><span class="pl-k">*</span>worker.<span class="pl-en">full_id</span>() {</td>
+        <td id="LC200" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L201" class="blob-num js-line-number" data-line-number="201"></td>
-        <td id="LC201" class="blob-code blob-code-inner js-file-line">                <span class="pl-c">// User id changed - probably because they logged in</span></td>
+        <td id="LC201" class="blob-code blob-code-inner js-file-line"><span class="pl-k">impl</span> <span class="pl-en">Hash</span> {</td>
       </tr>
       <tr>
         <td id="L202" class="blob-num js-line-number" data-line-number="202"></td>
-        <td id="LC202" class="blob-code blob-code-inner js-file-line">                id_changed.<span class="pl-en">push</span>(worker_id.<span class="pl-en">clone</span>());</td>
+        <td id="LC202" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// to u64</span></td>
       </tr>
       <tr>
         <td id="L203" class="blob-num js-line-number" data-line-number="203"></td>
-        <td id="LC203" class="blob-code blob-code-inner js-file-line">                <span class="pl-c1">error!</span>( LOGGER, <span class="pl-s">&quot;id changed:  full_id {} - {:?}&quot;</span>, worker.<span class="pl-en">full_id</span>().<span class="pl-en">clone</span>(), res );</td>
+        <td id="LC203" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">to_u64</span>(<span class="pl-k">&amp;</span><span class="pl-c1">self</span>) -&gt; <span class="pl-k">u64</span> {</td>
       </tr>
       <tr>
         <td id="L204" class="blob-num js-line-number" data-line-number="204"></td>
-        <td id="LC204" class="blob-code blob-code-inner js-file-line">            }</td>
+        <td id="LC204" class="blob-code blob-code-inner js-file-line">		BigEndian<span class="pl-k">::</span><span class="pl-en">read_u64</span>(<span class="pl-k">&amp;</span><span class="pl-c1">self</span>.<span class="pl-c1">0</span>)</td>
       </tr>
       <tr>
         <td id="L205" class="blob-num js-line-number" data-line-number="205"></td>
-        <td id="LC205" class="blob-code blob-code-inner js-file-line">        }</td>
+        <td id="LC205" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L206" class="blob-num js-line-number" data-line-number="206"></td>
-        <td id="LC206" class="blob-code blob-code-inner js-file-line">        <span class="pl-c">// Rehash the worker using updated id</span></td>
+        <td id="LC206" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L207" class="blob-num js-line-number" data-line-number="207"></td>
-        <td id="LC207" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">for</span> orig_id <span class="pl-k">in</span> id_changed.<span class="pl-en">iter</span>() {</td>
+        <td id="LC207" class="blob-code blob-code-inner js-file-line">	<span class="pl-c">/// to hex</span></td>
       </tr>
       <tr>
         <td id="L208" class="blob-num js-line-number" data-line-number="208"></td>
-        <td id="LC208" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">let</span> worker_o <span class="pl-k">=</span> w_m.<span class="pl-en">remove</span>(<span class="pl-k">&amp;</span>orig_id.<span class="pl-en">clone</span>());</td>
+        <td id="LC208" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">pub</span> <span class="pl-k">fn</span> <span class="pl-en">to_hex</span>(<span class="pl-k">&amp;</span><span class="pl-c1">self</span>) -&gt; <span class="pl-k">String</span> {</td>
       </tr>
       <tr>
         <td id="L209" class="blob-num js-line-number" data-line-number="209"></td>
-        <td id="LC209" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">match</span> worker_o {</td>
+        <td id="LC209" class="blob-code blob-code-inner js-file-line">		util<span class="pl-k">::</span><span class="pl-en">to_hex</span>(<span class="pl-c1">self</span>.<span class="pl-c1">0</span>.<span class="pl-en">to_vec</span>())</td>
       </tr>
       <tr>
         <td id="L210" class="blob-num js-line-number" data-line-number="210"></td>
-        <td id="LC210" class="blob-code blob-code-inner js-file-line">                <span class="pl-c1">None</span> <span class="pl-k">=&gt;</span> {},</td>
+        <td id="LC210" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L211" class="blob-num js-line-number" data-line-number="211"></td>
-        <td id="LC211" class="blob-code blob-code-inner js-file-line">                <span class="pl-c1">Some</span>(worker) <span class="pl-k">=&gt;</span> {</td>
+        <td id="LC211" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L212" class="blob-num js-line-number" data-line-number="212"></td>
-        <td id="LC212" class="blob-code blob-code-inner js-file-line">                    w_m.<span class="pl-en">insert</span>(worker.<span class="pl-en">full_id</span>(), worker);</td>
+        <td id="LC212" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L213" class="blob-num js-line-number" data-line-number="213"></td>
-        <td id="LC213" class="blob-code blob-code-inner js-file-line">                }</td>
+        <td id="LC213" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// A hash to uniquely (or close enough) identify one of the main blockchain</span></td>
       </tr>
       <tr>
         <td id="L214" class="blob-num js-line-number" data-line-number="214"></td>
-        <td id="LC214" class="blob-code blob-code-inner js-file-line">            }</td>
+        <td id="LC214" class="blob-code blob-code-inner js-file-line"><span class="pl-c">/// constructs. Used pervasively for blocks, transactions and outputs.</span></td>
       </tr>
       <tr>
         <td id="L215" class="blob-num js-line-number" data-line-number="215"></td>
-        <td id="LC215" class="blob-code blob-code-inner js-file-line">        }</td>
+        <td id="LC215" class="blob-code blob-code-inner js-file-line">#[derive(Copy, Clone, PartialEq, PartialOrd, Eq, Ord, Hash, Serialize, Deserialize)]</td>
       </tr>
       <tr>
         <td id="L216" class="blob-num js-line-number" data-line-number="216"></td>
-        <td id="LC216" class="blob-code blob-code-inner js-file-line">    }</td>
+        <td id="LC216" class="blob-code blob-code-inner js-file-line"><span class="pl-k">pub</span> <span class="pl-k">struct</span> <span class="pl-en">Hash</span>([<span class="pl-k">u8</span>; <span class="pl-c1">32</span>]);</td>
       </tr>
       <tr>
         <td id="L217" class="blob-num js-line-number" data-line-number="217"></td>
@@ -1735,660 +1746,285 @@
       </tr>
       <tr>
         <td id="L218" class="blob-num js-line-number" data-line-number="218"></td>
-        <td id="LC218" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">fn</span> <span class="pl-en">send_jobs</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>) {</td>
+        <td id="LC218" class="blob-code blob-code-inner js-file-line"><span class="pl-k">impl</span> <span class="pl-en">fmt</span>::<span class="pl-en">Debug</span> <span class="pl-k">for</span> <span class="pl-en">Hash</span> {</td>
       </tr>
       <tr>
         <td id="L219" class="blob-num js-line-number" data-line-number="219"></td>
-        <td id="LC219" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">let</span> <span class="pl-k">mut</span> w_m <span class="pl-k">=</span> <span class="pl-c1">self</span>.workers.<span class="pl-en">lock</span>().<span class="pl-en">unwrap</span>();</td>
+        <td id="LC219" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">fn</span> <span class="pl-en">fmt</span>(<span class="pl-k">&amp;</span><span class="pl-c1">self</span>, f: <span class="pl-k">&amp;</span><span class="pl-k">mut</span> fmt::Formatter&lt;<span class="pl-k">&#39;<span class="pl-en">_</span></span>&gt;) -&gt; fmt::<span class="pl-k">Result</span> {</td>
       </tr>
       <tr>
         <td id="L220" class="blob-num js-line-number" data-line-number="220"></td>
-        <td id="LC220" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">for</span> (worker_id, worker) <span class="pl-k">in</span> w_m.<span class="pl-en">iter_mut</span>() {</td>
+        <td id="LC220" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> hash_hex <span class="pl-k">=</span> <span class="pl-c1">self</span>.<span class="pl-en">to_hex</span>();</td>
       </tr>
       <tr>
         <td id="L221" class="blob-num js-line-number" data-line-number="221"></td>
-        <td id="LC221" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">if</span> worker.needs_job <span class="pl-k">&amp;&amp;</span> worker.authenticated {</td>
+        <td id="LC221" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">const</span> NUM_SHOW: <span class="pl-k">usize</span> <span class="pl-k">=</span> <span class="pl-c1">12</span>;</td>
       </tr>
       <tr>
         <td id="L222" class="blob-num js-line-number" data-line-number="222"></td>
-        <td id="LC222" class="blob-code blob-code-inner js-file-line">                <span class="pl-c1">warn!</span>( LOGGER, <span class="pl-s">&quot;job to: {} - needs_job: {}, requested_job: {}, authenticated: {}&quot;</span>, worker_id, worker.needs_job, worker.requested_job, worker.authenticated );</td>
+        <td id="LC222" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L223" class="blob-num js-line-number" data-line-number="223"></td>
-        <td id="LC223" class="blob-code blob-code-inner js-file-line">                <span class="pl-c">// Randomize the nonce</span></td>
+        <td id="LC223" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">write!</span>(f, <span class="pl-s">&quot;{}&quot;</span>, <span class="pl-k">&amp;</span>hash_hex[..NUM_SHOW])</td>
       </tr>
       <tr>
         <td id="L224" class="blob-num js-line-number" data-line-number="224"></td>
-        <td id="LC224" class="blob-code blob-code-inner js-file-line">                <span class="pl-c">// XXX TODO (Need to know block header format and deserialize it</span></td>
+        <td id="LC224" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L225" class="blob-num js-line-number" data-line-number="225"></td>
-        <td id="LC225" class="blob-code blob-code-inner js-file-line">                worker.<span class="pl-en">set_difficulty</span>(<span class="pl-c1">1</span>); <span class="pl-c">// XXX TODO: this get from config?</span></td>
+        <td id="LC225" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L226" class="blob-num js-line-number" data-line-number="226"></td>
-        <td id="LC226" class="blob-code blob-code-inner js-file-line">                worker.<span class="pl-en">set_height</span>(<span class="pl-c1">self</span>.job.height);</td>
+        <td id="LC226" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L227" class="blob-num js-line-number" data-line-number="227"></td>
-        <td id="LC227" class="blob-code blob-code-inner js-file-line">                worker.<span class="pl-en">send_job</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>.server.job.<span class="pl-en">clone</span>());</td>
+        <td id="LC227" class="blob-code blob-code-inner js-file-line"><span class="pl-k">impl</span> <span class="pl-en">fmt</span>::<span class="pl-en">Display</span> <span class="pl-k">for</span> <span class="pl-en">Hash</span> {</td>
       </tr>
       <tr>
         <td id="L228" class="blob-num js-line-number" data-line-number="228"></td>
-        <td id="LC228" class="blob-code blob-code-inner js-file-line">            }</td>
+        <td id="LC228" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">fn</span> <span class="pl-en">fmt</span>(<span class="pl-k">&amp;</span><span class="pl-c1">self</span>, f: <span class="pl-k">&amp;</span><span class="pl-k">mut</span> fmt::Formatter&lt;<span class="pl-k">&#39;<span class="pl-en">_</span></span>&gt;) -&gt; fmt::<span class="pl-k">Result</span> {</td>
       </tr>
       <tr>
         <td id="L229" class="blob-num js-line-number" data-line-number="229"></td>
-        <td id="LC229" class="blob-code blob-code-inner js-file-line">        }</td>
+        <td id="LC229" class="blob-code blob-code-inner js-file-line">		fmt<span class="pl-k">::</span>Debug<span class="pl-k">::</span><span class="pl-en">fmt</span>(<span class="pl-c1">self</span>, f)</td>
       </tr>
       <tr>
         <td id="L230" class="blob-num js-line-number" data-line-number="230"></td>
-        <td id="LC230" class="blob-code blob-code-inner js-file-line">    }</td>
+        <td id="LC230" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L231" class="blob-num js-line-number" data-line-number="231"></td>
-        <td id="LC231" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC231" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L232" class="blob-num js-line-number" data-line-number="232"></td>
-        <td id="LC232" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">fn</span> <span class="pl-en">accept_new_job</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>) {</td>
+        <td id="LC232" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L233" class="blob-num js-line-number" data-line-number="233"></td>
-        <td id="LC233" class="blob-code blob-code-inner js-file-line">        <span class="pl-c">// Use the new job</span></td>
+        <td id="LC233" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L234" class="blob-num js-line-number" data-line-number="234"></td>
-        <td id="LC234" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">if</span> <span class="pl-c1">self</span>.job.pre_pow <span class="pl-k">!=</span> <span class="pl-c1">self</span>.server.job.pre_pow {</td>
+        <td id="LC234" class="blob-code blob-code-inner js-file-line">#[cfg(test)]</td>
       </tr>
       <tr>
         <td id="L235" class="blob-num js-line-number" data-line-number="235"></td>
-        <td id="LC235" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">debug!</span>(LOGGER, <span class="pl-s">&quot;accept_new_job: {} vs {}&quot;</span>, <span class="pl-c1">self</span>.job.pre_pow.<span class="pl-en">clone</span>(), <span class="pl-c1">self</span>.server.job.pre_pow.<span class="pl-en">clone</span>());</td>
+        <td id="LC235" class="blob-code blob-code-inner js-file-line"><span class="pl-k">mod</span> tests {</td>
       </tr>
       <tr>
         <td id="L236" class="blob-num js-line-number" data-line-number="236"></td>
-        <td id="LC236" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">self</span>.job <span class="pl-k">=</span> <span class="pl-c1">self</span>.server.job.<span class="pl-en">clone</span>();</td>
+        <td id="LC236" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">use</span> <span class="pl-k">super</span><span class="pl-k">::</span><span class="pl-k">*</span>;</td>
       </tr>
       <tr>
         <td id="L237" class="blob-num js-line-number" data-line-number="237"></td>
-        <td id="LC237" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">debug!</span>(LOGGER, <span class="pl-s">&quot;accept_new_job broadcasting: {}&quot;</span>, <span class="pl-c1">self</span>.job.pre_pow.<span class="pl-en">clone</span>());</td>
+        <td id="LC237" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L238" class="blob-num js-line-number" data-line-number="238"></td>
-        <td id="LC238" class="blob-code blob-code-inner js-file-line">            <span class="pl-c">// broadcast it to the workers</span></td>
+        <td id="LC238" class="blob-code blob-code-inner js-file-line">	#[test]</td>
       </tr>
       <tr>
         <td id="L239" class="blob-num js-line-number" data-line-number="239"></td>
-        <td id="LC239" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">let</span> _ <span class="pl-k">=</span> <span class="pl-c1">self</span>.<span class="pl-en">broadcast_job</span>();</td>
+        <td id="LC239" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">fn</span> <span class="pl-en">proof_hash</span>() {</td>
       </tr>
       <tr>
         <td id="L240" class="blob-num js-line-number" data-line-number="240"></td>
-        <td id="LC240" class="blob-code blob-code-inner js-file-line">            <span class="pl-c">// clear last block duplicates map</span></td>
+        <td id="LC240" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> <span class="pl-k">mut</span> in_nonces: <span class="pl-k">Vec</span><span class="pl-k">&lt;</span><span class="pl-k">u64</span><span class="pl-k">&gt;</span> <span class="pl-k">=</span> [<span class="pl-c1">0u64</span>; <span class="pl-c1">42</span>].<span class="pl-en">to_vec</span>(); </td>
       </tr>
       <tr>
         <td id="L241" class="blob-num js-line-number" data-line-number="241"></td>
-        <td id="LC241" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">self</span>.duplicates <span class="pl-k">=</span> HashMap<span class="pl-k">::</span><span class="pl-en">new</span>()</td>
+        <td id="LC241" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> proof <span class="pl-k">=</span> Proof<span class="pl-k">::</span><span class="pl-en">new</span>(in_nonces.<span class="pl-en">clone</span>(), DEFAULT_MIN_EDGE_BITS);</td>
       </tr>
       <tr>
         <td id="L242" class="blob-num js-line-number" data-line-number="242"></td>
-        <td id="LC242" class="blob-code blob-code-inner js-file-line">        }</td>
+        <td id="LC242" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> hash_str <span class="pl-k">=</span> <span class="pl-c1">format!</span>(<span class="pl-s">&quot;{}&quot;</span>, proof.<span class="pl-en">hash</span>());</td>
       </tr>
       <tr>
         <td id="L243" class="blob-num js-line-number" data-line-number="243"></td>
-        <td id="LC243" class="blob-code blob-code-inner js-file-line">    }</td>
+        <td id="LC243" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">println!</span>(<span class="pl-s">&quot;Hash is: {}&quot;</span>, hash_str);</td>
       </tr>
       <tr>
         <td id="L244" class="blob-num js-line-number" data-line-number="244"></td>
-        <td id="LC244" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC244" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">assert_eq!</span>(<span class="pl-k">&amp;</span>hash_str, <span class="pl-s">&quot;5fa5af8a4c86&quot;</span>);</td>
       </tr>
       <tr>
         <td id="L245" class="blob-num js-line-number" data-line-number="245"></td>
-        <td id="LC245" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">//</span></td>
+        <td id="LC245" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L246" class="blob-num js-line-number" data-line-number="246"></td>
-        <td id="LC246" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">// Process shares returned by each workers</span></td>
+        <td id="LC246" class="blob-code blob-code-inner js-file-line">		in_nonces[<span class="pl-c1">41</span>] <span class="pl-k">=</span> <span class="pl-c1">23402320128419283</span>;</td>
       </tr>
       <tr>
         <td id="L247" class="blob-num js-line-number" data-line-number="247"></td>
-        <td id="LC247" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">fn</span> <span class="pl-en">process_shares</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>) {</td>
+        <td id="LC247" class="blob-code blob-code-inner js-file-line">		in_nonces[<span class="pl-c1">11</span>] <span class="pl-k">=</span> <span class="pl-c1">81239481234781924</span>;</td>
       </tr>
       <tr>
         <td id="L248" class="blob-num js-line-number" data-line-number="248"></td>
-        <td id="LC248" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">let</span> <span class="pl-k">mut</span> w_m <span class="pl-k">=</span> <span class="pl-c1">self</span>.workers.<span class="pl-en">lock</span>().<span class="pl-en">unwrap</span>();</td>
+        <td id="LC248" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> proof <span class="pl-k">=</span> Proof<span class="pl-k">::</span><span class="pl-en">new</span>(in_nonces.<span class="pl-en">clone</span>(), DEFAULT_MIN_EDGE_BITS);</td>
       </tr>
       <tr>
         <td id="L249" class="blob-num js-line-number" data-line-number="249"></td>
-        <td id="LC249" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">for</span> (worker_id, worker) <span class="pl-k">in</span> w_m.<span class="pl-en">iter_mut</span>() {</td>
+        <td id="LC249" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> hash_str <span class="pl-k">=</span> <span class="pl-c1">format!</span>(<span class="pl-s">&quot;{}&quot;</span>, proof.<span class="pl-en">hash</span>());</td>
       </tr>
       <tr>
         <td id="L250" class="blob-num js-line-number" data-line-number="250"></td>
-        <td id="LC250" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">match</span> worker.<span class="pl-en">get_shares</span>().<span class="pl-en">unwrap</span>() {</td>
+        <td id="LC250" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">println!</span>(<span class="pl-s">&quot;Hash is: {}&quot;</span>, hash_str);</td>
       </tr>
       <tr>
         <td id="L251" class="blob-num js-line-number" data-line-number="251"></td>
-        <td id="LC251" class="blob-code blob-code-inner js-file-line">                <span class="pl-c1">None</span> <span class="pl-k">=&gt;</span> {}</td>
+        <td id="LC251" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">assert_eq!</span>(<span class="pl-k">&amp;</span>hash_str, <span class="pl-s">&quot;378594bac9a4&quot;</span>);</td>
       </tr>
       <tr>
         <td id="L252" class="blob-num js-line-number" data-line-number="252"></td>
-        <td id="LC252" class="blob-code blob-code-inner js-file-line">                <span class="pl-c1">Some</span>(shares) <span class="pl-k">=&gt;</span> {</td>
+        <td id="LC252" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L253" class="blob-num js-line-number" data-line-number="253"></td>
-        <td id="LC253" class="blob-code blob-code-inner js-file-line">                    <span class="pl-k">for</span> share <span class="pl-k">in</span> shares {</td>
+        <td id="LC253" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">for</span> i <span class="pl-k">in</span> in_nonces.<span class="pl-en">iter_mut</span>() {</td>
       </tr>
       <tr>
         <td id="L254" class="blob-num js-line-number" data-line-number="254"></td>
-        <td id="LC254" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">//  Check for duplicate or add to duplicate map</span></td>
+        <td id="LC254" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">*</span>i <span class="pl-k">=</span> std<span class="pl-k">::</span><span class="pl-k">u64</span><span class="pl-k">::</span>MAX;</td>
       </tr>
       <tr>
         <td id="L255" class="blob-num js-line-number" data-line-number="255"></td>
-        <td id="LC255" class="blob-code blob-code-inner js-file-line">                        <span class="pl-k">if</span> <span class="pl-c1">self</span>.duplicates.<span class="pl-en">contains_key</span>(<span class="pl-k">&amp;</span>share.pow) {</td>
+        <td id="LC255" class="blob-code blob-code-inner js-file-line">		}</td>
       </tr>
       <tr>
         <td id="L256" class="blob-num js-line-number" data-line-number="256"></td>
-        <td id="LC256" class="blob-code blob-code-inner js-file-line">                            <span class="pl-c1">debug!</span>(</td>
+        <td id="LC256" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> proof <span class="pl-k">=</span> Proof<span class="pl-k">::</span><span class="pl-en">new</span>(in_nonces.<span class="pl-en">clone</span>(), DEFAULT_MIN_EDGE_BITS);</td>
       </tr>
       <tr>
         <td id="L257" class="blob-num js-line-number" data-line-number="257"></td>
-        <td id="LC257" class="blob-code blob-code-inner js-file-line">                                LOGGER,</td>
+        <td id="LC257" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> hash_str <span class="pl-k">=</span> <span class="pl-c1">format!</span>(<span class="pl-s">&quot;{}&quot;</span>, proof.<span class="pl-en">hash</span>());</td>
       </tr>
       <tr>
         <td id="L258" class="blob-num js-line-number" data-line-number="258"></td>
-        <td id="LC258" class="blob-code blob-code-inner js-file-line">                                <span class="pl-s">&quot;{} - Rejected duplicate share from worker {} with login {}&quot;</span>,</td>
+        <td id="LC258" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">println!</span>(<span class="pl-s">&quot;Hash is: {}&quot;</span>, hash_str);</td>
       </tr>
       <tr>
         <td id="L259" class="blob-num js-line-number" data-line-number="259"></td>
-        <td id="LC259" class="blob-code blob-code-inner js-file-line">                                <span class="pl-c1">self</span>.id,</td>
+        <td id="LC259" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">assert_eq!</span>(<span class="pl-k">&amp;</span>hash_str, <span class="pl-s">&quot;99f04aafcbc1&quot;</span>);</td>
       </tr>
       <tr>
         <td id="L260" class="blob-num js-line-number" data-line-number="260"></td>
-        <td id="LC260" class="blob-code blob-code-inner js-file-line">                                worker.<span class="pl-en">id</span>(),</td>
+        <td id="LC260" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L261" class="blob-num js-line-number" data-line-number="261"></td>
-        <td id="LC261" class="blob-code blob-code-inner js-file-line">                                worker.<span class="pl-en">login</span>(),</td>
+        <td id="LC261" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L262" class="blob-num js-line-number" data-line-number="262"></td>
-        <td id="LC262" class="blob-code blob-code-inner js-file-line">                            );</td>
+        <td id="LC262" class="blob-code blob-code-inner js-file-line">	#[test]</td>
       </tr>
       <tr>
         <td id="L263" class="blob-num js-line-number" data-line-number="263"></td>
-        <td id="LC263" class="blob-code blob-code-inner js-file-line">                            worker.status.rejected <span class="pl-k">+=</span> <span class="pl-c1">1</span>;</td>
+        <td id="LC263" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">fn</span> <span class="pl-en">proof_difficulty</span>() {</td>
       </tr>
       <tr>
         <td id="L264" class="blob-num js-line-number" data-line-number="264"></td>
-        <td id="LC264" class="blob-code blob-code-inner js-file-line">                            worker.block_status.rejected <span class="pl-k">+=</span> <span class="pl-c1">1</span>;</td>
+        <td id="LC264" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> <span class="pl-k">mut</span> in_nonces: <span class="pl-k">Vec</span><span class="pl-k">&lt;</span><span class="pl-k">u64</span><span class="pl-k">&gt;</span> <span class="pl-k">=</span> [<span class="pl-c1">0u64</span>; <span class="pl-c1">42</span>].<span class="pl-en">to_vec</span>();</td>
       </tr>
       <tr>
         <td id="L265" class="blob-num js-line-number" data-line-number="265"></td>
-        <td id="LC265" class="blob-code blob-code-inner js-file-line">                            <span class="pl-k">continue</span>; <span class="pl-c">// Dont process this share anymore</span></td>
+        <td id="LC265" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> proof <span class="pl-k">=</span> Proof<span class="pl-k">::</span><span class="pl-en">new</span>(in_nonces.<span class="pl-en">clone</span>(), DEFAULT_MIN_EDGE_BITS);</td>
       </tr>
       <tr>
         <td id="L266" class="blob-num js-line-number" data-line-number="266"></td>
-        <td id="LC266" class="blob-code blob-code-inner js-file-line">                        } <span class="pl-k">else</span> {</td>
+        <td id="LC266" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> difficulty <span class="pl-k">=</span> proof.<span class="pl-en">to_difficulty</span>(<span class="pl-c1">20</span>, <span class="pl-c1">1</span>);</td>
       </tr>
       <tr>
         <td id="L267" class="blob-num js-line-number" data-line-number="267"></td>
-        <td id="LC267" class="blob-code blob-code-inner js-file-line">                            <span class="pl-c1">self</span>.duplicates.<span class="pl-en">insert</span>(share.pow.<span class="pl-en">clone</span>(), worker.<span class="pl-en">id</span>());</td>
+        <td id="LC267" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">println!</span>(<span class="pl-s">&quot;Diff is: {}&quot;</span>, difficulty);</td>
       </tr>
       <tr>
         <td id="L268" class="blob-num js-line-number" data-line-number="268"></td>
-        <td id="LC268" class="blob-code blob-code-inner js-file-line">                        }</td>
+        <td id="LC268" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">assert_eq!</span>(difficulty, Difficulty<span class="pl-k">::</span><span class="pl-en">from_num</span>(<span class="pl-c1">21240</span>));</td>
       </tr>
       <tr>
         <td id="L269" class="blob-num js-line-number" data-line-number="269"></td>
-        <td id="LC269" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">// XXX TODO:</span></td>
+        <td id="LC269" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L270" class="blob-num js-line-number" data-line-number="270"></td>
-        <td id="LC270" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">// Verify the timestamp matches what we sent so we know</span></td>
+        <td id="LC270" class="blob-code blob-code-inner js-file-line">		in_nonces[<span class="pl-c1">41</span>] <span class="pl-k">=</span> <span class="pl-c1">23402320128419283</span>;</td>
       </tr>
       <tr>
         <td id="L271" class="blob-num js-line-number" data-line-number="271"></td>
-        <td id="LC271" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">//   this share comes from the job we sent</span></td>
+        <td id="LC271" class="blob-code blob-code-inner js-file-line">		in_nonces[<span class="pl-c1">11</span>] <span class="pl-k">=</span> <span class="pl-c1">81239481234781924</span>;</td>
       </tr>
       <tr>
         <td id="L272" class="blob-num js-line-number" data-line-number="272"></td>
-        <td id="LC272" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">// XXX TO DO This I need to deserialize the block header</span></td>
+        <td id="LC272" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> proof <span class="pl-k">=</span> Proof<span class="pl-k">::</span><span class="pl-en">new</span>(in_nonces.<span class="pl-en">clone</span>(), <span class="pl-c1">31</span>);</td>
       </tr>
       <tr>
         <td id="L273" class="blob-num js-line-number" data-line-number="273"></td>
-        <td id="LC273" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">//			if share.pre_pow != self.current_block {</span></td>
+        <td id="LC273" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> difficulty <span class="pl-k">=</span> proof.<span class="pl-en">to_difficulty</span>(<span class="pl-c1">120000</span>, <span class="pl-c1">32348</span>);</td>
       </tr>
       <tr>
         <td id="L274" class="blob-num js-line-number" data-line-number="274"></td>
-        <td id="LC274" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">//			    debug!(</span></td>
+        <td id="LC274" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">println!</span>(<span class="pl-s">&quot;Diff is: {}&quot;</span>, difficulty);</td>
       </tr>
       <tr>
         <td id="L275" class="blob-num js-line-number" data-line-number="275"></td>
-        <td id="LC275" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">//                                LOGGER,</span></td>
+        <td id="LC275" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">assert_eq!</span>(difficulty, Difficulty<span class="pl-k">::</span><span class="pl-en">from_num</span>(<span class="pl-c1">36591</span>));</td>
       </tr>
       <tr>
         <td id="L276" class="blob-num js-line-number" data-line-number="276"></td>
-        <td id="LC276" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">//                                &quot;{} - Rejected corrupt share from worker {} with login {}&quot;,</span></td>
+        <td id="LC276" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L277" class="blob-num js-line-number" data-line-number="277"></td>
-        <td id="LC277" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">//                                self.id,</span></td>
+        <td id="LC277" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">for</span> i <span class="pl-k">in</span> in_nonces.<span class="pl-en">iter_mut</span>() {</td>
       </tr>
       <tr>
         <td id="L278" class="blob-num js-line-number" data-line-number="278"></td>
-        <td id="LC278" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">//                                worker.id(),</span></td>
+        <td id="LC278" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">*</span>i <span class="pl-k">=</span> std<span class="pl-k">::</span><span class="pl-k">u64</span><span class="pl-k">::</span>MAX;</td>
       </tr>
       <tr>
         <td id="L279" class="blob-num js-line-number" data-line-number="279"></td>
-        <td id="LC279" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">//                                worker.login(),</span></td>
+        <td id="LC279" class="blob-code blob-code-inner js-file-line">		}</td>
       </tr>
       <tr>
         <td id="L280" class="blob-num js-line-number" data-line-number="280"></td>
-        <td id="LC280" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">//                            );</span></td>
+        <td id="LC280" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> proof <span class="pl-k">=</span> Proof<span class="pl-k">::</span><span class="pl-en">new</span>(in_nonces.<span class="pl-en">clone</span>(), <span class="pl-c1">35</span>);</td>
       </tr>
       <tr>
         <td id="L281" class="blob-num js-line-number" data-line-number="281"></td>
-        <td id="LC281" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">//                            worker.status.rejected += 1;</span></td>
+        <td id="LC281" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">let</span> difficulty <span class="pl-k">=</span> proof.<span class="pl-en">to_difficulty</span>(<span class="pl-c1">1300000</span>, <span class="pl-c1">92348</span>);</td>
       </tr>
       <tr>
         <td id="L282" class="blob-num js-line-number" data-line-number="282"></td>
-        <td id="LC282" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">//                            worker.block_status.rejected += 1;</span></td>
+        <td id="LC282" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">println!</span>(<span class="pl-s">&quot;Diff is: {}&quot;</span>, difficulty);</td>
       </tr>
       <tr>
         <td id="L283" class="blob-num js-line-number" data-line-number="283"></td>
-        <td id="LC283" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">//                            continue; // Dont process this share anymore</span></td>
+        <td id="LC283" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">assert_eq!</span>(difficulty, Difficulty<span class="pl-k">::</span><span class="pl-en">from_num</span>(<span class="pl-c1">296303</span>));</td>
       </tr>
       <tr>
         <td id="L284" class="blob-num js-line-number" data-line-number="284"></td>
-        <td id="LC284" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">//                        }</span></td>
+        <td id="LC284" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L285" class="blob-num js-line-number" data-line-number="285"></td>
-        <td id="LC285" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">// Check the height to see if its stale</span></td>
-      </tr>
-      <tr>
-        <td id="L286" class="blob-num js-line-number" data-line-number="286"></td>
-        <td id="LC286" class="blob-code blob-code-inner js-file-line">                        <span class="pl-k">if</span> share.height <span class="pl-k">!=</span> <span class="pl-c1">self</span>.job.height {</td>
-      </tr>
-      <tr>
-        <td id="L287" class="blob-num js-line-number" data-line-number="287"></td>
-        <td id="LC287" class="blob-code blob-code-inner js-file-line">                            <span class="pl-c">// Its stale</span></td>
-      </tr>
-      <tr>
-        <td id="L288" class="blob-num js-line-number" data-line-number="288"></td>
-        <td id="LC288" class="blob-code blob-code-inner js-file-line">                            <span class="pl-c1">warn!</span>(LOGGER, <span class="pl-s">&quot;Share is stale {} vs {}&quot;</span>, share.height, <span class="pl-c1">self</span>.job.height);</td>
-      </tr>
-      <tr>
-        <td id="L289" class="blob-num js-line-number" data-line-number="289"></td>
-        <td id="LC289" class="blob-code blob-code-inner js-file-line">                            worker.status.stale <span class="pl-k">+=</span> <span class="pl-c1">1</span>;</td>
-      </tr>
-      <tr>
-        <td id="L290" class="blob-num js-line-number" data-line-number="290"></td>
-        <td id="LC290" class="blob-code blob-code-inner js-file-line">                            worker.block_status.stale <span class="pl-k">+=</span> <span class="pl-c1">1</span>;</td>
-      </tr>
-      <tr>
-        <td id="L291" class="blob-num js-line-number" data-line-number="291"></td>
-        <td id="LC291" class="blob-code blob-code-inner js-file-line">                            worker.<span class="pl-en">send_err</span>(<span class="pl-s">&quot;submit&quot;</span>.<span class="pl-en">to_string</span>(), <span class="pl-s">&quot;Solution submitted too late&quot;</span>.<span class="pl-en">to_string</span>(), <span class="pl-k">-</span><span class="pl-c1">32503</span>);</td>
-      </tr>
-      <tr>
-        <td id="L292" class="blob-num js-line-number" data-line-number="292"></td>
-        <td id="LC292" class="blob-code blob-code-inner js-file-line">                            <span class="pl-k">continue</span>; <span class="pl-c">// Dont process this share anymore</span></td>
-      </tr>
-      <tr>
-        <td id="L293" class="blob-num js-line-number" data-line-number="293"></td>
-        <td id="LC293" class="blob-code blob-code-inner js-file-line">                        }</td>
-      </tr>
-      <tr>
-        <td id="L294" class="blob-num js-line-number" data-line-number="294"></td>
-        <td id="LC294" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">// We check the difficulty here</span></td>
-      </tr>
-      <tr>
-        <td id="L295" class="blob-num js-line-number" data-line-number="295"></td>
-        <td id="LC295" class="blob-code blob-code-inner js-file-line">                        <span class="pl-k">let</span> proof <span class="pl-k">=</span> Proof {</td>
-      </tr>
-      <tr>
-        <td id="L296" class="blob-num js-line-number" data-line-number="296"></td>
-        <td id="LC296" class="blob-code blob-code-inner js-file-line">                            edge_bits: share.edge_bits <span class="pl-k">as</span> <span class="pl-k">u8</span>,</td>
-      </tr>
-      <tr>
-        <td id="L297" class="blob-num js-line-number" data-line-number="297"></td>
-        <td id="LC297" class="blob-code blob-code-inner js-file-line">                            nonces: share.pow.<span class="pl-en">clone</span>().<span class="pl-en">to_vec</span>(),</td>
-      </tr>
-      <tr>
-        <td id="L298" class="blob-num js-line-number" data-line-number="298"></td>
-        <td id="LC298" class="blob-code blob-code-inner js-file-line">                        };</td>
-      </tr>
-      <tr>
-        <td id="L299" class="blob-num js-line-number" data-line-number="299"></td>
-        <td id="LC299" class="blob-code blob-code-inner js-file-line">                        <span class="pl-k">let</span> difficulty <span class="pl-k">=</span> proof.<span class="pl-en">to_difficulty_unscaled</span>().<span class="pl-en">to_num</span>();</td>
-      </tr>
-      <tr>
-        <td id="L300" class="blob-num js-line-number" data-line-number="300"></td>
-        <td id="LC300" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c1">warn!</span>(LOGGER, <span class="pl-s">&quot;Difficulty: {}&quot;</span>, difficulty);</td>
-      </tr>
-      <tr>
-        <td id="L301" class="blob-num js-line-number" data-line-number="301"></td>
-        <td id="LC301" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">// Check if this meets worker difficulty</span></td>
-      </tr>
-      <tr>
-        <td id="L302" class="blob-num js-line-number" data-line-number="302"></td>
-        <td id="LC302" class="blob-code blob-code-inner js-file-line">                        <span class="pl-k">if</span> difficulty <span class="pl-k">&lt;</span> <span class="pl-c1">1</span> {</td>
-      </tr>
-      <tr>
-        <td id="L303" class="blob-num js-line-number" data-line-number="303"></td>
-        <td id="LC303" class="blob-code blob-code-inner js-file-line">                            worker.status.rejected <span class="pl-k">+=</span> <span class="pl-c1">1</span>;</td>
-      </tr>
-      <tr>
-        <td id="L304" class="blob-num js-line-number" data-line-number="304"></td>
-        <td id="LC304" class="blob-code blob-code-inner js-file-line">                            worker.block_status.rejected <span class="pl-k">+=</span> <span class="pl-c1">1</span>;</td>
-      </tr>
-      <tr>
-        <td id="L305" class="blob-num js-line-number" data-line-number="305"></td>
-        <td id="LC305" class="blob-code blob-code-inner js-file-line">                            worker.<span class="pl-en">send_err</span>(<span class="pl-s">&quot;submit&quot;</span>.<span class="pl-en">to_string</span>(), <span class="pl-s">&quot;Rejected low difficulty solution&quot;</span>.<span class="pl-en">to_string</span>(), <span class="pl-k">-</span><span class="pl-c1">32502</span>);</td>
-      </tr>
-      <tr>
-        <td id="L306" class="blob-num js-line-number" data-line-number="306"></td>
-        <td id="LC306" class="blob-code blob-code-inner js-file-line">                            <span class="pl-k">continue</span>; <span class="pl-c">// Dont process this share anymore</span></td>
-      </tr>
-      <tr>
-        <td id="L307" class="blob-num js-line-number" data-line-number="307"></td>
-        <td id="LC307" class="blob-code blob-code-inner js-file-line">                        }</td>
-      </tr>
-      <tr>
-        <td id="L308" class="blob-num js-line-number" data-line-number="308"></td>
-        <td id="LC308" class="blob-code blob-code-inner js-file-line">                        <span class="pl-k">if</span> difficulty <span class="pl-k">&lt;</span> worker.status.difficulty {</td>
-      </tr>
-      <tr>
-        <td id="L309" class="blob-num js-line-number" data-line-number="309"></td>
-        <td id="LC309" class="blob-code blob-code-inner js-file-line">                            worker.status.rejected <span class="pl-k">+=</span> <span class="pl-c1">1</span>;</td>
-      </tr>
-      <tr>
-        <td id="L310" class="blob-num js-line-number" data-line-number="310"></td>
-        <td id="LC310" class="blob-code blob-code-inner js-file-line">                            worker.block_status.rejected <span class="pl-k">+=</span> <span class="pl-c1">1</span>;</td>
-      </tr>
-      <tr>
-        <td id="L311" class="blob-num js-line-number" data-line-number="311"></td>
-        <td id="LC311" class="blob-code blob-code-inner js-file-line">                            worker.<span class="pl-en">send_err</span>(<span class="pl-s">&quot;submit&quot;</span>.<span class="pl-en">to_string</span>(), <span class="pl-s">&quot;Failed to validate solution&quot;</span>.<span class="pl-en">to_string</span>(), <span class="pl-k">-</span><span class="pl-c1">32502</span>);</td>
-      </tr>
-      <tr>
-        <td id="L312" class="blob-num js-line-number" data-line-number="312"></td>
-        <td id="LC312" class="blob-code blob-code-inner js-file-line">                            <span class="pl-k">continue</span>; <span class="pl-c">// Dont process this share anymore</span></td>
-      </tr>
-      <tr>
-        <td id="L313" class="blob-num js-line-number" data-line-number="313"></td>
-        <td id="LC313" class="blob-code blob-code-inner js-file-line">                        }</td>
-      </tr>
-      <tr>
-        <td id="L314" class="blob-num js-line-number" data-line-number="314"></td>
-        <td id="LC314" class="blob-code blob-code-inner js-file-line">                        <span class="pl-k">if</span> difficulty <span class="pl-k">&gt;=</span> worker.status.difficulty {</td>
-      </tr>
-      <tr>
-        <td id="L315" class="blob-num js-line-number" data-line-number="315"></td>
-        <td id="LC315" class="blob-code blob-code-inner js-file-line">                            worker.status.accepted <span class="pl-k">+=</span> <span class="pl-c1">1</span>;</td>
-      </tr>
-      <tr>
-        <td id="L316" class="blob-num js-line-number" data-line-number="316"></td>
-        <td id="LC316" class="blob-code blob-code-inner js-file-line">                            worker.block_status.accepted <span class="pl-k">+=</span> <span class="pl-c1">1</span>;</td>
-      </tr>
-      <tr>
-        <td id="L317" class="blob-num js-line-number" data-line-number="317"></td>
-        <td id="LC317" class="blob-code blob-code-inner js-file-line">                            worker.<span class="pl-en">send_ok</span>(<span class="pl-s">&quot;submit&quot;</span>.<span class="pl-en">to_string</span>());</td>
-      </tr>
-      <tr>
-        <td id="L318" class="blob-num js-line-number" data-line-number="318"></td>
-        <td id="LC318" class="blob-code blob-code-inner js-file-line">                        }</td>
-      </tr>
-      <tr>
-        <td id="L319" class="blob-num js-line-number" data-line-number="319"></td>
-        <td id="LC319" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">// This is a good share, send it to grin server to be submitted</span></td>
-      </tr>
-      <tr>
-        <td id="L320" class="blob-num js-line-number" data-line-number="320"></td>
-        <td id="LC320" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c">// XXX TODO: Only send high power shares</span></td>
-      </tr>
-      <tr>
-        <td id="L321" class="blob-num js-line-number" data-line-number="321"></td>
-        <td id="LC321" class="blob-code blob-code-inner js-file-line">                        <span class="pl-k">let</span> message_id: <span class="pl-k">String</span> <span class="pl-k">=</span> <span class="pl-c1">format!</span>(<span class="pl-s">&quot;{}-{}&quot;</span>, worker.<span class="pl-en">id</span>(), worker.<span class="pl-en">rig_id</span>());</td>
-      </tr>
-      <tr>
-        <td id="L322" class="blob-num js-line-number" data-line-number="322"></td>
-        <td id="LC322" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c1">self</span>.server.<span class="pl-en">submit_share</span>(<span class="pl-k">&amp;</span>share.<span class="pl-en">clone</span>(), message_id.<span class="pl-en">clone</span>());</td>
-      </tr>
-      <tr>
-        <td id="L323" class="blob-num js-line-number" data-line-number="323"></td>
-        <td id="LC323" class="blob-code blob-code-inner js-file-line">                        <span class="pl-c1">warn!</span>(LOGGER, <span class="pl-s">&quot;{} - Got share at height {} with nonce {} with difficulty {} from worker {}&quot;</span>,</td>
-      </tr>
-      <tr>
-        <td id="L324" class="blob-num js-line-number" data-line-number="324"></td>
-        <td id="LC324" class="blob-code blob-code-inner js-file-line">                                <span class="pl-c1">self</span>.id,</td>
-      </tr>
-      <tr>
-        <td id="L325" class="blob-num js-line-number" data-line-number="325"></td>
-        <td id="LC325" class="blob-code blob-code-inner js-file-line">                                share.height,</td>
-      </tr>
-      <tr>
-        <td id="L326" class="blob-num js-line-number" data-line-number="326"></td>
-        <td id="LC326" class="blob-code blob-code-inner js-file-line">                                share.nonce,</td>
-      </tr>
-      <tr>
-        <td id="L327" class="blob-num js-line-number" data-line-number="327"></td>
-        <td id="LC327" class="blob-code blob-code-inner js-file-line">                                worker.status.difficulty,</td>
-      </tr>
-      <tr>
-        <td id="L328" class="blob-num js-line-number" data-line-number="328"></td>
-        <td id="LC328" class="blob-code blob-code-inner js-file-line">                                message_id,</td>
-      </tr>
-      <tr>
-        <td id="L329" class="blob-num js-line-number" data-line-number="329"></td>
-        <td id="LC329" class="blob-code blob-code-inner js-file-line">                        );</td>
-      </tr>
-      <tr>
-        <td id="L330" class="blob-num js-line-number" data-line-number="330"></td>
-        <td id="LC330" class="blob-code blob-code-inner js-file-line">                    }</td>
-      </tr>
-      <tr>
-        <td id="L331" class="blob-num js-line-number" data-line-number="331"></td>
-        <td id="LC331" class="blob-code blob-code-inner js-file-line">                }</td>
-      </tr>
-      <tr>
-        <td id="L332" class="blob-num js-line-number" data-line-number="332"></td>
-        <td id="LC332" class="blob-code blob-code-inner js-file-line">            }</td>
-      </tr>
-      <tr>
-        <td id="L333" class="blob-num js-line-number" data-line-number="333"></td>
-        <td id="LC333" class="blob-code blob-code-inner js-file-line">        }</td>
-      </tr>
-      <tr>
-        <td id="L334" class="blob-num js-line-number" data-line-number="334"></td>
-        <td id="LC334" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L335" class="blob-num js-line-number" data-line-number="335"></td>
-        <td id="LC335" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L336" class="blob-num js-line-number" data-line-number="336"></td>
-        <td id="LC336" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">fn</span> <span class="pl-en">broadcast_job</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>) -&gt; <span class="pl-k">Result</span>&lt;(), <span class="pl-k">String</span>&gt; {</td>
-      </tr>
-      <tr>
-        <td id="L337" class="blob-num js-line-number" data-line-number="337"></td>
-        <td id="LC337" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">let</span> <span class="pl-k">mut</span> w_m <span class="pl-k">=</span> <span class="pl-c1">self</span>.workers.<span class="pl-en">lock</span>().<span class="pl-en">unwrap</span>();</td>
-      </tr>
-      <tr>
-        <td id="L338" class="blob-num js-line-number" data-line-number="338"></td>
-        <td id="LC338" class="blob-code blob-code-inner js-file-line">        <span class="pl-c1">debug!</span>(</td>
-      </tr>
-      <tr>
-        <td id="L339" class="blob-num js-line-number" data-line-number="339"></td>
-        <td id="LC339" class="blob-code blob-code-inner js-file-line">            LOGGER,</td>
-      </tr>
-      <tr>
-        <td id="L340" class="blob-num js-line-number" data-line-number="340"></td>
-        <td id="LC340" class="blob-code blob-code-inner js-file-line">            <span class="pl-s">&quot;{} - broadcasting a job to {} workers&quot;</span>,</td>
-      </tr>
-      <tr>
-        <td id="L341" class="blob-num js-line-number" data-line-number="341"></td>
-        <td id="LC341" class="blob-code blob-code-inner js-file-line">            <span class="pl-c1">self</span>.id,</td>
-      </tr>
-      <tr>
-        <td id="L342" class="blob-num js-line-number" data-line-number="342"></td>
-        <td id="LC342" class="blob-code blob-code-inner js-file-line">            w_m.<span class="pl-en">len</span>(),</td>
-      </tr>
-      <tr>
-        <td id="L343" class="blob-num js-line-number" data-line-number="343"></td>
-        <td id="LC343" class="blob-code blob-code-inner js-file-line">        );</td>
-      </tr>
-      <tr>
-        <td id="L344" class="blob-num js-line-number" data-line-number="344"></td>
-        <td id="LC344" class="blob-code blob-code-inner js-file-line">        <span class="pl-c">// XXX TODO: To do this I need to deserialize the block header</span></td>
-      </tr>
-      <tr>
-        <td id="L345" class="blob-num js-line-number" data-line-number="345"></td>
-        <td id="LC345" class="blob-code blob-code-inner js-file-line">        <span class="pl-c">// XXX TODO: need to randomize the nonce (just in case a miner forgets)</span></td>
-      </tr>
-      <tr>
-        <td id="L346" class="blob-num js-line-number" data-line-number="346"></td>
-        <td id="LC346" class="blob-code blob-code-inner js-file-line">        <span class="pl-c">// XXX TODO: need to set a unique timestamp and record it in the worker struct</span></td>
-      </tr>
-      <tr>
-        <td id="L347" class="blob-num js-line-number" data-line-number="347"></td>
-        <td id="LC347" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">for</span> (worker_id, worker) <span class="pl-k">in</span> w_m.<span class="pl-en">iter_mut</span>() {</td>
-      </tr>
-      <tr>
-        <td id="L348" class="blob-num js-line-number" data-line-number="348"></td>
-        <td id="LC348" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">if</span> worker.authenticated {</td>
-      </tr>
-      <tr>
-        <td id="L349" class="blob-num js-line-number" data-line-number="349"></td>
-        <td id="LC349" class="blob-code blob-code-inner js-file-line">                worker.<span class="pl-en">set_difficulty</span>(<span class="pl-c1">1</span>); <span class="pl-c">// XXX TODO: this get from config?</span></td>
-      </tr>
-      <tr>
-        <td id="L350" class="blob-num js-line-number" data-line-number="350"></td>
-        <td id="LC350" class="blob-code blob-code-inner js-file-line">                worker.<span class="pl-en">set_height</span>(<span class="pl-c1">self</span>.job.height);</td>
-      </tr>
-      <tr>
-        <td id="L351" class="blob-num js-line-number" data-line-number="351"></td>
-        <td id="LC351" class="blob-code blob-code-inner js-file-line">                worker.<span class="pl-en">send_job</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>.job.<span class="pl-en">clone</span>());</td>
-      </tr>
-      <tr>
-        <td id="L352" class="blob-num js-line-number" data-line-number="352"></td>
-        <td id="LC352" class="blob-code blob-code-inner js-file-line">            }</td>
-      </tr>
-      <tr>
-        <td id="L353" class="blob-num js-line-number" data-line-number="353"></td>
-        <td id="LC353" class="blob-code blob-code-inner js-file-line">        }</td>
-      </tr>
-      <tr>
-        <td id="L354" class="blob-num js-line-number" data-line-number="354"></td>
-        <td id="LC354" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">return</span> <span class="pl-c1">Ok</span>(());</td>
-      </tr>
-      <tr>
-        <td id="L355" class="blob-num js-line-number" data-line-number="355"></td>
-        <td id="LC355" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L356" class="blob-num js-line-number" data-line-number="356"></td>
-        <td id="LC356" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L357" class="blob-num js-line-number" data-line-number="357"></td>
-        <td id="LC357" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">// Purge dead/sick workers - remove all workers marked in error state</span></td>
-      </tr>
-      <tr>
-        <td id="L358" class="blob-num js-line-number" data-line-number="358"></td>
-        <td id="LC358" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">fn</span> <span class="pl-en">clean_workers</span>(<span class="pl-k">&amp;</span><span class="pl-k">mut</span> <span class="pl-c1">self</span>) -&gt; <span class="pl-k">usize</span> {</td>
-      </tr>
-      <tr>
-        <td id="L359" class="blob-num js-line-number" data-line-number="359"></td>
-        <td id="LC359" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">let</span> <span class="pl-k">mut</span> dead_workers: <span class="pl-k">Vec</span><span class="pl-k">&lt;</span><span class="pl-k">String</span><span class="pl-k">&gt;</span> <span class="pl-k">=</span> <span class="pl-c1">vec!</span>[];</td>
-      </tr>
-      <tr>
-        <td id="L360" class="blob-num js-line-number" data-line-number="360"></td>
-        <td id="LC360" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">let</span> <span class="pl-k">mut</span> w_m <span class="pl-k">=</span> <span class="pl-c1">self</span>.workers.<span class="pl-en">lock</span>().<span class="pl-en">unwrap</span>();</td>
-      </tr>
-      <tr>
-        <td id="L361" class="blob-num js-line-number" data-line-number="361"></td>
-        <td id="LC361" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">for</span> (worker_id, worker) <span class="pl-k">in</span> w_m.<span class="pl-en">iter_mut</span>() {</td>
-      </tr>
-      <tr>
-        <td id="L362" class="blob-num js-line-number" data-line-number="362"></td>
-        <td id="LC362" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">if</span> worker.<span class="pl-en">error</span>() <span class="pl-k">==</span> <span class="pl-c1">true</span> {</td>
-      </tr>
-      <tr>
-        <td id="L363" class="blob-num js-line-number" data-line-number="363"></td>
-        <td id="LC363" class="blob-code blob-code-inner js-file-line">                <span class="pl-c1">warn!</span>(</td>
-      </tr>
-      <tr>
-        <td id="L364" class="blob-num js-line-number" data-line-number="364"></td>
-        <td id="LC364" class="blob-code blob-code-inner js-file-line">                    LOGGER,</td>
-      </tr>
-      <tr>
-        <td id="L365" class="blob-num js-line-number" data-line-number="365"></td>
-        <td id="LC365" class="blob-code blob-code-inner js-file-line">                    <span class="pl-s">&quot;{} - Dropping worker: {}-{}&quot;</span>,</td>
-      </tr>
-      <tr>
-        <td id="L366" class="blob-num js-line-number" data-line-number="366"></td>
-        <td id="LC366" class="blob-code blob-code-inner js-file-line">                    <span class="pl-c1">self</span>.id,</td>
-      </tr>
-      <tr>
-        <td id="L367" class="blob-num js-line-number" data-line-number="367"></td>
-        <td id="LC367" class="blob-code blob-code-inner js-file-line">                    worker.<span class="pl-en">id</span>(),</td>
-      </tr>
-      <tr>
-        <td id="L368" class="blob-num js-line-number" data-line-number="368"></td>
-        <td id="LC368" class="blob-code blob-code-inner js-file-line">                    worker.<span class="pl-en">rig_id</span>(),</td>
-      </tr>
-      <tr>
-        <td id="L369" class="blob-num js-line-number" data-line-number="369"></td>
-        <td id="LC369" class="blob-code blob-code-inner js-file-line">                );</td>
-      </tr>
-      <tr>
-        <td id="L370" class="blob-num js-line-number" data-line-number="370"></td>
-        <td id="LC370" class="blob-code blob-code-inner js-file-line">                dead_workers.<span class="pl-en">push</span>(worker_id.<span class="pl-en">clone</span>());</td>
-      </tr>
-      <tr>
-        <td id="L371" class="blob-num js-line-number" data-line-number="371"></td>
-        <td id="LC371" class="blob-code blob-code-inner js-file-line">            }</td>
-      </tr>
-      <tr>
-        <td id="L372" class="blob-num js-line-number" data-line-number="372"></td>
-        <td id="LC372" class="blob-code blob-code-inner js-file-line">        }</td>
-      </tr>
-      <tr>
-        <td id="L373" class="blob-num js-line-number" data-line-number="373"></td>
-        <td id="LC373" class="blob-code blob-code-inner js-file-line">        <span class="pl-c">// Remove the dead workers</span></td>
-      </tr>
-      <tr>
-        <td id="L374" class="blob-num js-line-number" data-line-number="374"></td>
-        <td id="LC374" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">for</span> worker_id <span class="pl-k">in</span> dead_workers {</td>
-      </tr>
-      <tr>
-        <td id="L375" class="blob-num js-line-number" data-line-number="375"></td>
-        <td id="LC375" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">let</span> _ <span class="pl-k">=</span> w_m.<span class="pl-en">remove</span>(<span class="pl-k">&amp;</span>worker_id);</td>
-      </tr>
-      <tr>
-        <td id="L376" class="blob-num js-line-number" data-line-number="376"></td>
-        <td id="LC376" class="blob-code blob-code-inner js-file-line">        }</td>
-      </tr>
-      <tr>
-        <td id="L377" class="blob-num js-line-number" data-line-number="377"></td>
-        <td id="LC377" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">return</span> w_m.<span class="pl-en">len</span>();</td>
-      </tr>
-      <tr>
-        <td id="L378" class="blob-num js-line-number" data-line-number="378"></td>
-        <td id="LC378" class="blob-code blob-code-inner js-file-line">    }</td>
-      </tr>
-      <tr>
-        <td id="L379" class="blob-num js-line-number" data-line-number="379"></td>
-        <td id="LC379" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L380" class="blob-num js-line-number" data-line-number="380"></td>
-        <td id="LC380" class="blob-code blob-code-inner js-file-line">}</td>
+        <td id="LC285" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
 </table>
 
@@ -2400,7 +2036,7 @@
       <ul class="BlobToolbar-dropdown dropdown-menu dropdown-menu-se mt-2" style="width:185px">
         <li><clipboard-copy role="menuitem" class="dropdown-item" id="js-copy-lines" style="cursor:pointer;" data-original-text="Copy lines">Copy lines</clipboard-copy></li>
         <li><clipboard-copy role="menuitem" class="dropdown-item" id="js-copy-permalink" style="cursor:pointer;" data-original-text="Copy permalink">Copy permalink</clipboard-copy></li>
-        <li><a class="dropdown-item js-update-url-with-hash" id="js-view-git-blame" role="menuitem" href="/grin-pool/grin-pool/blame/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/pool.rs">View git blame</a></li>
+        <li><a class="dropdown-item js-update-url-with-hash" id="js-view-git-blame" role="menuitem" href="/grin-pool/grin-pool/blame/e422e94ec92425835ddff79ea3ac00b7b0ca9fef/stratum/src/pool/consensus.rs">View git blame</a></li>
           <li><a class="dropdown-item" id="js-new-issue" role="menuitem" href="/grin-pool/grin-pool/issues/new">Reference in new issue</a></li>
       </ul>
     </details-menu>
@@ -2437,7 +2073,7 @@
 <div class="footer container-lg px-3" role="contentinfo">
   <div class="position-relative d-flex flex-justify-between pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
     <ul class="list-style-none d-flex flex-wrap ">
-      <li class="mr-3">&copy; 2019 <span title="0.33537s from unicorn-6d79556d67-4xk8q">GitHub</span>, Inc.</li>
+      <li class="mr-3">&copy; 2019 <span title="0.27165s from unicorn-6d79556d67-sfpfw">GitHub</span>, Inc.</li>
         <li class="mr-3"><a data-ga-click="Footer, go to terms, text:terms" href="https://github.com/site/terms">Terms</a></li>
         <li class="mr-3"><a data-ga-click="Footer, go to privacy, text:privacy" href="https://github.com/site/privacy">Privacy</a></li>
         <li class="mr-3"><a data-ga-click="Footer, go to security, text:security" href="https://github.com/security">Security</a></li>
