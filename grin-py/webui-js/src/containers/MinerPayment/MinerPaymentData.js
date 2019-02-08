@@ -57,7 +57,7 @@ export class MinerPaymentDataComponent extends Component {
             </tr>
             <tr>
               <td>Immature Balance</td>
-              <td id={faderStyleId}>{minerImmatureBalanceSyntax}</td>
+              <td id={faderStyleId}>{minerImmatureBalanceSyntax} XBG</td>
             </tr>
             <tr>
               <td>Payout Address</td>

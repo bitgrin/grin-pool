@@ -237,7 +237,7 @@ export class MinerPaymentComponent extends Component {
                   {isFormShown && (
                     <div style={{ marginTop: '30px' }}>
                       <div style={{ textAlign: 'center' }}>
-                        {/* <button className="btn btn-outline-primary account__btn account__btn--small" onClick={this.onClear}>{'Clear'}</button> */ }ß
+                        {/* <button className="btn btn-outline-primary account__btn account__btn--small" onClick={this.onClear}>{'Clear'}</button> */ }
                         <button className="btn btn-primary account__btn account__btn--small" style={{ width: '104px' }} onClick={this.onSubmit} disabled={isPaymentSettingProcessing}>
                           {isPaymentSettingProcessing ? this.renderSpinner('21px') : 'Submit'}
                         </button>
