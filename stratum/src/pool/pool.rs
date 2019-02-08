@@ -161,7 +161,7 @@ impl Pool {
             // Delete workers in error state
             let _num_active_workers = self.clean_workers();
 
-            thread::sleep(time::Duration::from_millis(10));
+            thread::sleep(time::Duration::from_micros(10));
         }
     }
 
