@@ -1,1 +1,1 @@
-export const API_URL = 'https://api.mwgrinpool.com/' // enter your own endpoint here
+export const API_URL = 'https://api.pool.bitgrin.io/' // enter your own endpoint here
