@@ -6,6 +6,8 @@ metadata:
   labels:
     run: poolapi
 spec:
+  type: LoadBalancer
+  loadBalancerIP: 35.205.118.112
   ports:
   - port: 13423
     protocol: TCP
@@ -26,7 +28,7 @@ spec:
     spec:
       containers:
       - name: poolapi
-        image: docker.mwgrinpool.com:5001/services:latest
+        image: bitgrinmining/services:latest
         #command: ["/usr/local/bin/api/api.py"]
         #command: ["sleep", "9999"]
         command: ["gunicorn", "-w", "8", "--timeout", "999", "-b", "0.0.0.0:13423", "api.api:app"]
@@ -48,5 +50,3 @@ spec:
             secretKeyRef:
               name: mysql-pass
               key: password
-      imagePullSecrets:
-      - name: regsecret
