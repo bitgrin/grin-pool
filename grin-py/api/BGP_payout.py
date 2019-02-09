@@ -24,35 +24,35 @@ from datetime import datetime
 
 def print_banner():
     print(" ")
-    print("############# MWGrinPool Payout Request Script #############")
+    print("############# BitGrinPool Payout Request Script #############")
     print("## Started: {} ".format(datetime.now()))
     print("## ")
 
 def print_footer():
     print("## ")
     print("## Complete: {} ".format(datetime.now()))
-    print("############# MWGrinPool Payout Request Complete #############")
+    print("############# BitGrinPool Payout Request Complete #############")
     print(" ")
 
 ##
 # Get configuration - either from commandline or by prompting the user
 parser = argparse.ArgumentParser()
-parser.add_argument("--pool_user", help="Username on MWGrinPool")
-parser.add_argument("--pool_pass", help="Password on MWGrinPool")
-parser.add_argument("--wallet_pass", help="Your grin wallet password")
+parser.add_argument("--pool_user", help="Username on BitGrinPool")
+parser.add_argument("--pool_pass", help="Password on BitGrinPool")
+parser.add_argument("--wallet_pass", help="Your bitgrin wallet password")
 args = parser.parse_args()
 
 print_banner()
 prompted = False
 
 if args.pool_user is None:
-    username = input("   MWGrinPool Username: ")
+    username = input("   BitGrinPool Username: ")
     prompted = True
 else:
     username = args.pool_user
 
 if args.pool_pass is None:
-    password = getpass.getpass("   MWGrinPool Password: ")
+    password = getpass.getpass("   BitGrinPool Password: ")
     prompted = True
 else:
     password = args.pool_pass
@@ -71,7 +71,7 @@ if prompted:
 # End of User Configuration section
 ## --------------------------------
 
-mwURL = "https://api.mwgrinpool.com"
+mwURL = "https://api.pool.bitgrin.io"
 POOL_MINIMUM_PAYOUT = 0.25
 tmpfile = "unsigned_slate.txt"
 
@@ -85,13 +85,13 @@ if os.path.exists(tmpfile):
 
 ##
 # Find Grin Wallet Command
-grin_cmd = "grin"
+grin_cmd = "bitgrin"
 cwd = os.getcwd()
 path = os.environ.get('PATH')
-path = cwd + ":" + cwd + "/grin:" + path
+path = cwd + ":" + cwd + "/bitgrin:" + path
 for directory in path.split(":"):
-    if os.path.isfile(directory + "/grin"):
-        grin_cmd = directory + "/grin"
+    if os.path.isfile(directory + "/bitgrin"):
+        grin_cmd = directory + "/bitgrin"
 
 ##
 # Wallet Sanity Check
@@ -132,7 +132,7 @@ r = requests.get(
 )
 if r.status_code != 200:
     print(" ")
-    print("   *** Failed to get your account information from MWGrinPool: {}".format(r.text))
+    print("   *** Failed to get your account information from BitGrinPool: {}".format(r.text))
     print_footer()
     sys.exit(1)
 user_id = str(r.json()["id"])
@@ -158,7 +158,7 @@ if r.json() is None:
 else:
     balance_nanogrin = r.json()["amount"]
 balance = balance_nanogrin / 1000000000.0
-print("{} Grin".format(balance))
+print("{} XBG".format(balance))
 
 
 ##
@@ -197,14 +197,14 @@ print("Ok.")
 ##
 # Call the wallet CLI to receive and sign the slate
 recv_cmd = [
-    "grin",
+    "bitgrin",
       "wallet",
         "-p", wallet_pass,
       "receive",
         "-i", tmpfile,
 ]
 try:
-    sys.stdout.write("   ... Running the grin wallet receive command to sign the slate: ")
+    sys.stdout.write("   ... Running the bitgrin wallet receive command to sign the slate: ")
     #sys.stdout.write("   ... Debug: {} ".format(recv_cmd))
     sys.stdout.flush()
     output = subprocess.check_output(recv_cmd, stderr=subprocess.STDOUT, shell=False)
@@ -231,8 +231,8 @@ except Exception as e:
 
 
 ##
-# Submit the signed slate back to MWGrinPool to be finalized and posted to the network
-sys.stdout.write("   ... Submitting the signed slate back to GrinPool: ")
+# Submit the signed slate back to BitGrinPool to be finalized and posted to the network
+sys.stdout.write("   ... Submitting the signed slate back to BitGrinPool: ")
 sys.stdout.flush()
 submit_tx_slate_url = mwURL + "/pool/payment/submit_tx_slate/"+user_id
 r = requests.post(

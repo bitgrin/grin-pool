@@ -11,6 +11,6 @@ COPY services/*.py /usr/local/bin/
 COPY services/config.ini /usr/local/bin/
 COPY services/config.ini /services/
 COPY api/ /usr/local/bin/api/
-COPY api/MWGP_payout.py /content/
+COPY api/BGP_payout.py /content/
 
 CMD ["/bin/sh"]

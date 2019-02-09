@@ -949,10 +949,10 @@ class PoolAPI_paymentrequest(Resource):
             ##
             # Not really a payout request, rather, a request for payout automation script code
             LOGGER.warn("Get Payout Script: {}".format(id))
-            #file = open("/content/MWGP_payout.py", "r")
+            #file = open("/content/BGP_payout.py", "r")
             #payout_script = file.read() 
             #return payout_script
-            return send_from_directory('/content', 'MWGP_payout.py')
+            return send_from_directory('/content', 'BGP_payout.py')
         else:
             LOGGER.warn("Invalid Payment Type requested")
             response = jsonify({ 'message': 'Error, must specify valid payment request method.  Method {} is not valid.'.format(function) })

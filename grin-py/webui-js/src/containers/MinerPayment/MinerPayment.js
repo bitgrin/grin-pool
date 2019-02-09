@@ -67,7 +67,7 @@ export class MinerPaymentComponent extends Component {
     const element = document.createElement('a')
     const file = new Blob([payoutScript], { type: 'text/plain' })
     element.href = URL.createObjectURL(file)
-    element.download = `MWGP_payout.py`
+    element.download = `BGP_payout.py`
     document.body.appendChild(element)
     element.click()
     setTimeout(() => {
