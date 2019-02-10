@@ -21,7 +21,8 @@ use rand::Rng;
 
 use pool::config::{Config, NodeConfig, PoolConfig, WorkerConfig};
 use pool::logger::LOGGER;
-use pool::proto::{JobTemplate, RpcError, SubmitParams};
+use pool::proto::{JobTemplate, RpcError, SubmitParams, WorkerStatus};
+
 use pool::server::Server;
 use pool::worker::Worker;
 use pool::consensus::Proof;
@@ -92,6 +93,7 @@ pub struct Pool {
     job: JobTemplate,
     config: Config,
     server: Server,
+    difficulty: u64,
     workers: Arc<Mutex<HashMap<String, Worker>>>,
     duplicates: HashMap<Vec<u64>, usize>, // pow vector, worker id who first submitted it
 }
@@ -104,6 +106,7 @@ impl Pool {
             job: JobTemplate::new(),
             config: config.clone(),
             server: Server::new(config.clone()),
+            difficulty: 5,
             workers: Arc::new(Mutex::new(HashMap::new())),
             duplicates: HashMap::new(),
         }
@@ -111,17 +114,18 @@ impl Pool {
 
     /// Run the Pool
     pub fn run(&mut self) {
-        // Start a thread for each listen port to accept new worker connections
-        for port_difficulty in &self.config.workers.port_difficulty {
-            let mut workers_th = self.workers.clone();
-            let id_th = self.id.clone();
-            let address_th = self.config.workers.listen_address.clone() + ":"
-                + &port_difficulty.port.to_string();
-            let difficulty_th = port_difficulty.difficulty;
-            let _listener_th = thread::spawn(move || {
-                accept_workers(id_th, address_th, difficulty_th, &mut workers_th);
-            });
-        }
+        // Start a thread to listen on port and accept new worker connections
+        let mut workers_th = self.workers.clone();
+        let id_th = self.id.clone();
+        let address_th = self.config.workers.listen_address.clone() + ":"
+            + &self.config.workers.port_difficulty.port.to_string();
+        let difficulty_th = self.config.workers.port_difficulty.difficulty;
+        let _listener_th = thread::spawn(move || {
+            accept_workers(id_th, address_th, difficulty_th, &mut workers_th);
+        });
+
+        // Set default pool difficulty
+        self.difficulty = self.config.workers.port_difficulty.difficulty;
 
         // ------------
         // Main loop
@@ -154,14 +158,12 @@ impl Pool {
             let _ = self.process_shares();
 
             // Send jobs to needy workers
-//            if self.server.job.height > 0 {
             let _ = self.send_jobs();
-//            }
 
             // Delete workers in error state
             let _num_active_workers = self.clean_workers();
 
-            thread::sleep(time::Duration::from_micros(10));
+            thread::sleep(time::Duration::from_millis(10));
         }
     }
 
@@ -200,7 +202,8 @@ impl Pool {
             if worker_id != &*worker.full_id() {
                 // User id changed - probably because they logged in
                 id_changed.push(worker_id.clone());
-                error!( LOGGER, "id changed:  full_id {} - {:?}", worker.full_id().clone(), res );
+                debug!( LOGGER, "id changed:  full_id {} - {:?}", worker.full_id().clone(), res );
+                worker.set_block_status(self.job.height, self.difficulty);
             }
         }
         // Rehash the worker using updated id
@@ -222,8 +225,11 @@ impl Pool {
                 warn!( LOGGER, "job to: {} - needs_job: {}, requested_job: {}, authenticated: {}", worker_id, worker.needs_job, worker.requested_job, worker.authenticated );
                 // Randomize the nonce
                 // XXX TODO (Need to know block header format and deserialize it
-                worker.set_difficulty(1); // XXX TODO: this get from config?
+                worker.set_difficulty(self.difficulty);
                 worker.set_height(self.job.height);
+                // Print this workers block_status for logstash to send to rmq
+                error!(LOGGER, "{:?}", worker.block_status);
+                worker.set_block_status(self.job.height, self.difficulty);
                 worker.send_job(&mut self.server.job.clone());
             }
         }
@@ -346,9 +352,12 @@ impl Pool {
         // XXX TODO: need to set a unique timestamp and record it in the worker struct
         for (worker_id, worker) in w_m.iter_mut() {
             if worker.authenticated {
-                worker.set_difficulty(1); // XXX TODO: this get from config?
+                worker.set_difficulty(5); // XXX TODO: this get from config?
                 worker.set_height(self.job.height);
+                // Print this workers block_status for logstash to send to rmq
+                error!(LOGGER, "{:?}", worker.block_status);
                 worker.send_job(&mut self.job.clone());
+                worker.set_block_status(self.job.height, self.difficulty);
             }
         }
         return Ok(());

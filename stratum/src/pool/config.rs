@@ -40,7 +40,7 @@ pub struct PoolConfig {
 #[derive(Debug, Deserialize, Clone)]
 pub struct WorkerConfig {
     pub listen_address: String,
-    pub port_difficulty: Vec<PortDifficulty>,
+    pub port_difficulty: PortDifficulty,
 }
 
 #[derive(Debug, Deserialize, Clone)]

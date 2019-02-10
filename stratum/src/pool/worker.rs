@@ -127,6 +127,16 @@ impl Worker {
         self.status.height = new_height;
     }
 
+    /// Set block_status
+    pub fn set_block_status(&mut self, height: u64, difficulty: u64) {
+        self.block_status.id = self.full_id();
+        self.block_status.height = height;
+        self.block_status.difficulty = difficulty;
+        self.block_status.accepted = 0;
+        self.block_status.rejected = 0;
+        self.block_status.stale = 0;
+    }
+
     // This handles both a get_job_template response, and a job request
     /// Send a job to the worker
     pub fn send_job(&mut self, job: &mut JobTemplate) -> Result<(), String> {

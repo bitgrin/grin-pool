@@ -14,9 +14,7 @@ log_dir = "/stratum"
 
 [workers]
 listen_address = "0.0.0.0"
-port_difficulty = [
- [3333, 1],
-]
+port_difficulty = [3333, 5]
 
 #
 # Configuration for access to upstream grin node
