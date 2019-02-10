@@ -167,7 +167,7 @@ if balance <= POOL_MINIMUM_PAYOUT:
     print(" ")
     print("   *** Not enough funds available to request a payment.")
     print(" ")
-    print("       Note: If you have recently attempted a payment request that did not complete, the pool will return your funds within 30 minutes.")
+    print("       Note: If you have recently attempted a payment request that did not complete, the pool will return your funds within 60 minutes.")
     print("       Please try again later.")
     print_footer()
     sys.exit(0)
@@ -197,7 +197,7 @@ print("Ok.")
 ##
 # Call the wallet CLI to receive and sign the slate
 recv_cmd = [
-    "bitgrin",
+    grin_cmd,
       "wallet",
         "-p", wallet_pass,
       "receive",

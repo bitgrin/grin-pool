@@ -37,9 +37,6 @@ from grinbase.model.worker_shares import Worker_shares
 from grinbase.model.gps import Gps
 
 
-# XXX TODO: Move to config
-POOL_MIN_DIFF = 29
-
 def estimate_gps_for_all_sizes(window):
     print("estimate_gps_for_all_sizes across all workers")
     sys.stdout.flush()

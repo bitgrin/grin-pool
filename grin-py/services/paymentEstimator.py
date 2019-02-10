@@ -36,7 +36,7 @@ PROCESS = "paymentEstimator"
 LOGGER = None
 CONFIG = None
 
-check_interval = 300
+check_interval = 60
 
 def main():
     CONFIG = lib.get_config()

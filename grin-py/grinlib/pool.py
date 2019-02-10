@@ -38,6 +38,7 @@ from grinbase.model.worker_shares import Worker_shares
 # XXX TODO: MOVE THIS TO CONFIG
 PPLNS_WINDOW = 60 # blocks
 BLOCK_REWARD = 4.5 # bitgrin - this is valid for the first 4 years
+MINIMUM_DIFFICULTY = 5 # MUST MATCH STRATUM SERVERS
 
 # Globals
 NANOGRIN = 1000000000 # 1 and 9 zeros
@@ -51,7 +52,7 @@ def calculate_graph_rate(difficulty, ts1, ts2, n):
     timedelta = (ts2 - ts1).total_seconds()
     if n == 0 or timedelta == 0:
       return 0
-    gps = (42.0 * float(n)) / float(timedelta)
+    gps = (42.0 * float(MINIMUM_DIFFICULTY) * float(n)) / float(timedelta)
     return gps
 
 # Verify / Update / Create Special Users

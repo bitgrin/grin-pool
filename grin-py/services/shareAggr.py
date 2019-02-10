@@ -48,6 +48,8 @@ PROCESS = "shareAggr"
 SHARE_EXPIRETIME = None
 
 
+
+
 class Share:
     def __init__(self, timestamp, height, nonce, found_by, edge_bits=0, worker_difficulty=1, hash=None, share_difficulty=None, network_difficulty=None, is_solution=None, is_valid=False, invalid_reason="None"):
         self.timestamp = timestamp
@@ -110,6 +112,11 @@ class Share:
         if self.is_solution is None:
             self.is_solution = share.is_solution
 
+#        # enforce minimum difficulty
+#        if self.share_difficulty < 4000:
+#            self.is_valid = True
+#            self.invalid_reason = "Low difficulty"
+
 
 # Accept shares from both pool and grin logs.
 # Add or merge (validate) them into a hash table
@@ -124,25 +131,31 @@ class WorkerShares:
         self.shares = {}
         # rmq info for acking committed shares
         self.rmq_ack = {}
+        # Mutex to protect self.shares 
+        self.mutex = threading.Lock()
 
     # Add or merge a share
     def add(self, share, sharetype, rmq_channel, rmq_delivery_tag):
-        # Hash by height, user_id, then nonce
-        if share.height not in self.shares:
-            self.LOGGER.warn("New Share Height: {}".format(share.height))
-            self.shares[share.height] = {}
-        if share.nonce not in self.shares[share.height]:
-            # self.LOGGER.warn("New Share: {}".format(share.nonce))
-            self.shares[share.height][share.nonce] = share
-        else: # A version of this share already exists, merge them
-            # self.LOGGER.warn("Mergeing share: {}".format(self.shares[share.height][share.nonce]))
-            self.shares[share.height][share.nonce].merge(share, sharetype)
-        # Record the message info so we can ack it when we commit
-        if share.height not in self.rmq_ack:
-            self.rmq_ack[share.height] = {}
-        if rmq_channel not in self.rmq_ack[share.height]:
-            self.rmq_ack[share.height][rmq_channel] = []
-        self.rmq_ack[share.height][rmq_channel].append(rmq_delivery_tag)
+        self.mutex.acquire()
+        try:
+            # Hash by height, user_id, then nonce
+            if share.height not in self.shares:
+                self.LOGGER.warn("New Share Height: {}".format(share.height))
+                self.shares[share.height] = {}
+            if share.nonce not in self.shares[share.height]:
+                # self.LOGGER.warn("New Share: {}".format(share.nonce))
+                self.shares[share.height][share.nonce] = share
+            else: # A version of this share already exists, merge them
+                # self.LOGGER.warn("Mergeing share: {}".format(self.shares[share.height][share.nonce]))
+                self.shares[share.height][share.nonce].merge(share, sharetype)
+            # Record the message info so we can ack it when we commit
+            if share.height not in self.rmq_ack:
+                self.rmq_ack[share.height] = {}
+            if rmq_channel not in self.rmq_ack[share.height]:
+                self.rmq_ack[share.height][rmq_channel] = []
+            self.rmq_ack[share.height][rmq_channel].append(rmq_delivery_tag)
+        finally:
+            self.mutex.release()
 
 
     # Add a Pool_block (for full solutions)
@@ -160,151 +173,158 @@ class WorkerShares:
     #   Create a worker_shares record + a shares record for each pow type submitted, and write it to the db
     def commit(self, height=None):
         global HEIGHT
-        if height is None:
-            block_heights = list(self.shares.keys())
-            try:
-                # Process all heights, except
-                # Dont process shares from current block or newer
-                block_heights = [h for h in block_heights if h < HEIGHT]
-            except ValueError as e:
-                pass
-        else:
-            block_heights = [height]
+        self.mutex.acquire()
+        try:
+            if height is None:
+                block_heights = list(self.shares.keys())
+                try:
+                    # Process all heights, except
+                    # Dont process shares from current block or newer
+                    block_heights = [h for h in block_heights if h < HEIGHT]
+                except ValueError as e:
+                    pass
+            else:
+                block_heights = [height]
 
-        #pp.pprint(self.shares)
-
-        if len(block_heights) > 0:
-            self.LOGGER.warn("Committing shares for blocks: {}".format(block_heights))
- 
-        for height in block_heights:
-            if height not in self.shares or len(self.shares[height]) == 0:
-                # XXX TODO: Only create filler record if no records already exist for this height
-                self.LOGGER.warn("Processed 0 shares in block {} - Creating filler record".format(height))
-                # Even if there are no shares in the pool at all for this block, we still need to create a filler record at this height
-                filler_worker_shares_rec = Worker_shares(
-                        height = height,
-                        user_id = 1,
-                        timestamp = datetime.utcnow(),
-                    )
-                database.db.createDataObj(filler_worker_shares_rec)
-                return 
-        
-            # Sort the shares by worker and graph size
-            # byWorker is multi-level structure:
-            # 1) hash by worker id
-            # 2) hash by graph size
-            # 3) List of shares
-            byWorker = {}
-            for hash in self.shares[height]:
-                share = self.shares[height][hash]
-                # Sort shares by worker
-                if share.found_by not in byWorker:
-                    byWorker[share.found_by] = {}
-                if share.edge_bits not in byWorker[share.found_by]:
-                    byWorker[share.found_by][share.edge_bits] = []
-                #print("XXX Adding share to workerShares: {}".format(share))
-                byWorker[share.found_by][share.edge_bits].append(share)
-                # Create Pool_blocks for full solution shares
-                if share.is_solution:
-                    self.addPoolBlock(share)
-
-            #pp.pprint(byWorker)
-            # Create/update a Worker_shares record for each user and commit to DB
-            # XXX TODO: Bulk Insert - will be needed when the pool has hundredes or thousands of workers
-            for worker in byWorker:
-                if worker == 0:
-                    continue
-                workerShares = byWorker[worker]
-                #print("workerShares for {} = {}".format(worker, workerShares))
-                # Count them (just for logging)
-                num_valid_shares = 0
-                num_invalid_shares = 0
-                num_stale_shares = 0
-                for graph_size in workerShares:
-                    for share in workerShares[graph_size]:
-                        if share.is_valid:
-                            num_valid_shares += 1
-                        elif share.is_valid == False and share.invalid_reason == 'too late':
-                            num_stale_shares += 1
-                        elif share.is_valid == False:
-                            num_invalid_shares += 1
-                self.LOGGER.warn("Processed {} shares in block {} for user_id {}: Valid: {}, stale: {}, invalid: {}".format(len(workerShares), height, worker, num_valid_shares, num_stale_shares, num_invalid_shares))
-                pp.pprint(workerShares)
-
-# xxx
-
-                # Get any existing record for this worker at this height
-                worker_shares_rec = Worker_shares.get_by_height_and_id(height, worker)
-                existing = True
-                if worker_shares_rec is None or len(worker_shares_rec) == 0:
-                    # No existing record, create it
-                    self.LOGGER.warn("This is a new share record for worker: {}".format(worker))
-                    worker_shares_rec = Worker_shares(
+            #pp.pprint(self.shares)
+    
+            if len(block_heights) > 0:
+                self.LOGGER.warn("Committing shares for blocks: {}".format(block_heights))
+     
+            for height in block_heights:
+                if height not in self.shares or len(self.shares[height]) == 0:
+                    # XXX TODO: Only create filler record if no records already exist for this height
+                    self.LOGGER.warn("Processed 0 shares in block {} - Creating filler record".format(height))
+                    # Even if there are no shares in the pool at all for this block, we still need to create a filler record at this height
+                    filler_worker_shares_rec = Worker_shares(
                             height = height,
-                            user_id = worker,
+                            user_id = 1,
                             timestamp = datetime.utcnow(),
                         )
-                    database.db.createDataObj(worker_shares_rec)
-                    existing = False
-                else:
-                    print("XXXXXXXXXXXXXXXXXXXXX")
-                    pp.pprint(worker_shares_rec)
-                    worker_shares_rec = worker_shares_rec[0]
-                # Create/update Shares records - one per graph size mined in this block
-                #pp.pprint(workerShares)
-                for a_share_list in workerShares.values():
-                    for a_share in a_share_list:
-                        if a_share.edge_bits == 0:
-                            # We dont actually know what size this share was since we
-                            # only got the pools half.  Its invalid anyway, so just ignore
-                            # for now. XXX TODO something better
-                            continue
-                        #print("a_share = {}".format(a_share))
-                        edge_bits = a_share.edge_bits
-                        difficulty = a_share.share_difficulty
-                        valid = 0
-                        stale = 0
-                        invalid = 0
-                        if share.is_valid:
-                            valid = 1
-                        elif share.is_valid == False and share.invalid_reason == 'too late':
-                            stale = 1
-                        else:
-                            invalid = 1
-                        worker_shares_rec.add_shares(a_share.edge_bits, a_share.share_difficulty, valid, invalid, stale)
-                try:
-                    database.db.getSession().commit()
-                    # After we commit share data we need to ack the rmq messages and clear the committed shares
-                    self.ack_and_clear(height)
-                    # We added new worker share data, so if a Pool_stats record already exists at this height,
-                    # we mark it dirty so it gets recalulated by thre shareValidator service
-                    stats_rec = Pool_stats.get_by_height(height)
-                    if stats_rec is not None:
-                        stats_rec.dirty = True
-                    # Commit any changes
-                    if existing == True:
-                        self.LOGGER.warn("XXX UPDATED worker share record: {}".format(worker_shares_rec))
+                    database.db.createDataObj(filler_worker_shares_rec)
+                    return 
+        
+                # Sort the shares by worker and graph size
+                # byWorker is multi-level structure:
+                # 1) hash by worker id
+                # 2) hash by graph size
+                # 3) List of shares
+                byWorker = {}
+                for hash in self.shares[height]:
+                    share = self.shares[height][hash]
+                    # Sort shares by worker
+                    if share.found_by not in byWorker:
+                        byWorker[share.found_by] = {}
+                    if share.edge_bits not in byWorker[share.found_by]:
+                        byWorker[share.found_by][share.edge_bits] = []
+                    #print("XXX Adding share to workerShares: {}".format(share))
+                    byWorker[share.found_by][share.edge_bits].append(share)
+                    # Create Pool_blocks for full solution shares
+                    if share.is_solution:
+                        self.addPoolBlock(share)
+    
+                #pp.pprint(byWorker)
+                # Create/update a Worker_shares record for each user and commit to DB
+                # XXX TODO: Bulk Insert - will be needed when the pool has hundredes or thousands of workers
+                for worker in byWorker:
+                    if worker == 0:
+                        continue
+                    workerShares = byWorker[worker]
+                    #print("workerShares for {} = {}".format(worker, workerShares))
+                    # Count them (just for logging)
+                    num_valid_shares = 0
+                    num_invalid_shares = 0
+                    num_stale_shares = 0
+                    for graph_size in workerShares:
+                        for share in workerShares[graph_size]:
+                            if share.is_valid:
+                                num_valid_shares += 1
+                            elif share.is_valid == False and share.invalid_reason == 'too late':
+                                num_stale_shares += 1
+                            elif share.is_valid == False:
+                                num_invalid_shares += 1
+                    self.LOGGER.warn("Processed {} shares in block {} for user_id {}: Valid: {}, stale: {}, invalid: {}".format(len(workerShares), height, worker, num_valid_shares, num_stale_shares, num_invalid_shares))
+                    #pp.pprint(workerShares)
+    
+    # xxx
+    
+                    # Get any existing record for this worker at this height
+                    worker_shares_rec = Worker_shares.get_by_height_and_id(height, worker)
+                    existing = True
+                    if worker_shares_rec is None or len(worker_shares_rec) == 0:
+                        # No existing record, create it
+                        self.LOGGER.warn("This is a new share record for worker: {}".format(worker))
+                        worker_shares_rec = Worker_shares(
+                                height = height,
+                                user_id = worker,
+                                timestamp = datetime.utcnow(),
+                            )
+                        database.db.createDataObj(worker_shares_rec)
+                        existing = False
                     else:
-                        self.LOGGER.warn("XXX NEW worker share record: {}".format(worker_shares_rec))
-                    database.db.getSession().commit()
-                except Exception as e:
-                    self.LOGGER.error("Failed to commit worker shares for {} at height {} - {}".format(worker, height, e))
+                        print("XXXXXXXXXXXXXXXXXXXXX")
+                        #pp.pprint(worker_shares_rec)
+                        worker_shares_rec = worker_shares_rec[0]
+                    # Create/update Shares records - one per graph size mined in this block
+                    #pp.pprint(workerShares)
+                    for a_share_list in workerShares.values():
+                        for a_share in a_share_list:
+                            if a_share.edge_bits == 0:
+                                # We dont actually know what size this share was since we
+                                # only got the pools half.  Its invalid anyway, so just ignore
+                                # for now. XXX TODO something better
+                                continue
+                            #print("a_share = {}".format(a_share))
+                            edge_bits = a_share.edge_bits
+                            difficulty = a_share.share_difficulty
+                            valid = 0
+                            stale = 0
+                            invalid = 0
+                            if share.is_valid:
+                                valid = 1
+                            elif share.is_valid == False and share.invalid_reason == 'too late':
+                                stale = 1
+                            else:
+                                invalid = 1
+                            worker_shares_rec.add_shares(a_share.edge_bits, a_share.share_difficulty, valid, invalid, stale)
+                    try:
+                        database.db.getSession().commit()
+                        # After we commit share data we need to ack the rmq messages and clear the committed shares
+                        self.ack_and_clear(height)
+                        # We added new worker share data, so if a Pool_stats record already exists at this height,
+                        # we mark it dirty so it gets recalulated by thre shareValidator service
+                        stats_rec = Pool_stats.get_by_height(height)
+                        if stats_rec is not None:
+                            stats_rec.dirty = True
+                        # Commit any changes
+                        if existing == True:
+                            self.LOGGER.warn("XXX UPDATED worker share record: {}".format(worker_shares_rec))
+                        else:
+                            self.LOGGER.warn("XXX NEW worker share record: {}".format(worker_shares_rec))
+                        database.db.getSession().commit()
+                    except Exception as e:
+                        self.LOGGER.error("Failed to commit worker shares for {} at height {} - {}".format(worker, height, repr(e)))
+        finally:
+            self.mutex.release()
+            self.LOGGER.warn("--- Completed share commit")
     
     def ack_and_clear(self, height):
+        # XXX dont need a utex here because its covered byt the caller
         shares = self.shares.pop(height, None)
-        pp.pprint(shares)
+        #pp.pprint(shares)
         if shares is None:
             return
         rmq_ack = self.rmq_ack.pop(height, None)
         if rmq_ack is None:
             return
-        print("RMQ ACK LIST: {}".format(rmq_ack))
+        # print("RMQ ACK LIST: {}".format(rmq_ack))
         for channel, tags in rmq_ack.items():
             # Option 1, ack individual messages
             #for tag in tags:
             #    channel.basic_ack(delivery_tag = tag)
             # Option 2, bulk-ack up to the latest message we processed
-            channel.basic_ack(delivery_tag=max(tags), multiple=True)
+            #channel.basic_ack(delivery_tag=max(tags), multiple=True)
+            channel.basic_ack(delivery_tag=0, multiple=1)
             # Option 3, (not implemented) make sure we have processed all the messages
             #  up to the latest message we processed, and if not, 
             #  do all the accounting necessary to bulk ack as much as possible
@@ -317,14 +337,13 @@ def share_handler(ch, method, properties, body):
     global POOLSHARE_HEIGHT
     global SHARE_EXPIRETIME
 
-    LOGGER.warn("= Starting ShareHandler")
-    sys.stdout.flush()
-    print("{}".format(body.decode("utf-8") ))
-    sys.stdout.flush()
+#    LOGGER.warn("= Starting ShareHandler")
+#    sys.stdout.flush()
+#    print("{}".format(body.decode("utf-8") ))
+#    sys.stdout.flush()
     content = json.loads(body.decode("utf-8"))
-    LOGGER.warn("Processing new {} message".format(content["type"]))
-    # LOGGER.warn("PUT message: {}".format(content))
-    LOGGER.warn("Current Share -  Height: {} - Nonce: {}".format(content["height"], content["nonce"]))
+#    LOGGER.warn("PUT message: {}".format(content))
+#    LOGGER.warn("Current Share -  Height: {} - Type: {} - Nonce: {}".format(content["height"], content["type"], content["nonce"]))
 
     # Dont process very old shares
     if (HEIGHT - int(content["height"])) > SHARE_EXPIRETIME:
@@ -349,12 +368,14 @@ def share_handler(ch, method, properties, body):
         SHARES.add(new_share, content["type"], ch, method.delivery_tag)
         POOLSHARE_HEIGHT = s_height
     elif content["type"] == "grinshare":
+        s_valid = True
         s_timestamp = dateutil.parser.parse(content["log_timestamp"])
         try:
             s_hash = content["hash"]
         except KeyError:
             # invalid shares may not have a hash field
             s_hash = 0
+            s_valid = False
         s_height = int(content["height"])
         # Special Case - round edge_bits up to our minimum C29, and C31
         s_edge_bits = int(content["edge_bits"])
@@ -373,14 +394,14 @@ def share_handler(ch, method, properties, body):
         except KeyError:
             s_share_difficulty = 0
             s_network_difficulty = 0
+            s_valid = False
         try:
             s_error = content["error"]
             s_valid = False
         except KeyError:
             s_error = None
-            s_valid = True
         s_worker = 1 # int(content["worker"])
-        s_share_is_solution = int(s_share_difficulty) >= int(s_network_difficulty)
+        s_share_is_solution = s_valid and int(s_share_difficulty) >= int(s_network_difficulty)
         new_share = Share(
                 hash=s_hash, 
                 height=s_height, 
@@ -429,7 +450,7 @@ def ShareCommitScheduler(interval, database):
             time.sleep(interval)
     except Exception as e:
         LOGGER.error("Something went wrong: {}\n{}".format(e, traceback.format_exc().splitlines()))
-        time.sleep(interval)
+        time.sleep(1)
     lib.teardown_db()
     
 def RmqConsumer(host):
@@ -454,7 +475,7 @@ def RmqConsumer(host):
         except Exception as e:
             LOGGER.error("Something went wrong: {}\n{}".format(e, traceback.format_exc().splitlines()))
             sys.stdout.flush()
-            time.sleep(10)
+            time.sleep(1)
 
             
 def main():

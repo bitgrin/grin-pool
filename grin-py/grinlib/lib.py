@@ -37,6 +37,7 @@ from grinbase.model.blocks import Blocks
 
 # XXX TODO: Get from config
 REDIS_HOST = "redis-master"
+MINIMUM_DIFFICULTY = 5
 
 LOGGER = None
 CONFIG = None
@@ -142,7 +143,7 @@ def calculate_graph_rate(ts1, ts2, n):
     print("Calculate gps: timedelta: {}, num_shares {}".format(timedelta, n))
     if n == 0 or timedelta == 0:
       return 0
-    gps = (42.0 * float(n)) / float(timedelta)
+    gps = (42.0 * float(MINIMUM_DIFFICULTY) * float(n)) / float(timedelta)
     return gps
 
 
