@@ -140,7 +140,7 @@ impl Worker {
     // This handles both a get_job_template response, and a job request
     /// Send a job to the worker
     pub fn send_job(&mut self, job: &mut JobTemplate) -> Result<(), String> {
-        error!(LOGGER, "Worker {} - Sending a job downstream: requested = {}", self.full_id(), self.requested_job);
+        trace!(LOGGER, "Worker {} - Sending a job downstream: requested = {}", self.full_id(), self.requested_job);
         // Set the difficulty
         job.difficulty = self.status.difficulty;
         let requested = self.requested_job;
@@ -269,12 +269,12 @@ impl Worker {
             None => {}
         }
         if self.id != 0 {
-            debug!(LOGGER, "User login found in cache: {}", self.id.clone());
+            trace!(LOGGER, "User login found in cache: {}", self.id.clone());
             // We accepted the login
             return Ok(());
         }
         // Didnt find user in the redis, try the database
-        debug!(LOGGER, "Calling pool api to get userid");
+        error!(LOGGER, "Calling pool api to get userid");
         // Call the pool API server to Try to get the users ID based on login
         let client = reqwest::Client::new(); // api request client
         let mut response = client
@@ -284,7 +284,7 @@ impl Worker {
             Ok(r) => r,
             Err(e) => {
                 self.error = true;
-                debug!(LOGGER, "Worker {} - Failed to contact API server", self.id);
+                error!(LOGGER, "Worker {} - Failed to contact API server", self.id);
                 return self.send_err(
                     "login".to_string(),
                     "Failed to contatct API server for user lookup".to_string(),
@@ -294,52 +294,53 @@ impl Worker {
         };
         if result.status().is_success() {
             let userid_json: Value = result.json().unwrap();
-            debug!(LOGGER, "Got ID from database: {}", userid_json.clone());
+            trace!(LOGGER, "Got ID from database: {}", userid_json.clone());
             self.id = userid_json["id"].as_u64().unwrap() as usize;
             // We still need to validate the password if one is provided
             debug!(LOGGER, "Password length: {}", login_params.pass.chars().count());
-            if login_params.pass.chars().count() > 0 {
-                let mut response = client
-                    .get("http://poolapi:13423/pool/users/id")
-                    .basic_auth(login_params.login.clone(), Some(login_params.pass.clone()))
-                    .send(); // This could be Err
-                let mut result = match response {
-                    Ok(r) => r,
-                    Err(e) => {
-                        self.error = true;
-                        debug!(LOGGER, "Worker {} - Failed to contact API server", self.id);
-                        return self.send_err(
-                            "login".to_string(),
-                            "Failed to contatct API server for user lookup".to_string(),
-                            -32500,
-                        );
-                        //return Err("Login Failed to contatct API server for user lookup".to_string());
-                    }
-                };
-                if ! result.status().is_success() {
-                    self.error = true;
-                    debug!(LOGGER, "Worker {} - Failed to log in", self.id);
-                    return self.send_err(
-                        "login".to_string(),
-                        "Failed to log in".to_string(),
-                        -32500,
-                    );
-                }
-            }
+// XXX TODO:  Skipping password chaeck for now
+//            if login_params.pass.chars().count() > 0 {
+//                let mut response = client
+//                    .get("http://poolapi:13423/pool/users/id")
+//                    .basic_auth(login_params.login.clone(), Some(login_params.pass.clone()))
+//                    .send(); // This could be Err
+//                let mut result = match response {
+//                    Ok(r) => r,
+//                    Err(e) => {
+//                        self.error = true;
+//                        debug!(LOGGER, "Worker {} - Failed to contact API server", self.id);
+//                        return self.send_err(
+//                            "login".to_string(),
+//                            "Failed to contatct API server for user lookup".to_string(),
+//                            -32500,
+//                        );
+//                        //return Err("Login Failed to contatct API server for user lookup".to_string());
+//                    }
+//                };
+//                if ! result.status().is_success() {
+//                    self.error = true;
+//                    debug!(LOGGER, "Worker {} - Failed to log in", self.id);
+//                    return self.send_err(
+//                        "login".to_string(),
+//                        "Failed to log in".to_string(),
+//                        -32500,
+//                    );
+//                }
+//            }
             // Cache the user id in redis
-            debug!(LOGGER, "Attempting to cache userid A: {} {}", userid_key.clone(), self.id.clone());
+            trace!(LOGGER, "Attempting to cache userid A: {} {}", userid_key.clone(), self.id.clone());
             match self.redis {
                 Some(ref mut redis) => {
                     let _ : () = redis.set(userid_key.clone(), self.id.clone()).unwrap();
                 },
                 None => {
-                    debug!(LOGGER, "Worker {} - No redis connection, cant cache id", self.id);
+                    error!(LOGGER, "Worker {} - No redis connection, cant cache id", self.id);
                 },
             }
         } else {
             //
             // No account exists.
-            debug!(LOGGER, "Could not find user in the database: {}", result.status());
+            trace!(LOGGER, "Could not find user in the database: {}", result.status());
             // If we have been given a password, create an account now
             if ! login_params.pass.is_empty() {
                 let mut auth_data = HashMap::new();
@@ -353,7 +354,7 @@ impl Worker {
                     Ok(r) => r,
                     Err(e) => {
                         self.error = true;
-                        debug!(LOGGER, "Worker {} - Failed contatct API server for user lookup", self.id);
+                        error!(LOGGER, "Worker {} - Failed contatct API server for user lookup", self.id);
                         return self.send_err(
                             "login".to_string(),
                             "Failed contatct API server for user lookup".to_string(),
@@ -367,7 +368,7 @@ impl Worker {
                     debug!(LOGGER, "Created ID in database: {}", worker_json);
                     self.id = worker_json["id"].as_u64().unwrap() as usize
                 } else {
-                    debug!(LOGGER, "Failed to create user: {}", result.status());
+                    error!(LOGGER, "Failed to create user: {}", result.status());
                     self.error = true;
                     return self.send_err(
                         "login".to_string(),
@@ -499,12 +500,12 @@ impl Worker {
                                 }
                             }
                             "getjobtemplate" => {
-                                debug!(LOGGER, "Worker {} - Accepting request for job", self.full_id());
+                                trace!(LOGGER, "Worker {} - Accepting request for job", self.full_id());
                                 self.needs_job = true;
                                 self.requested_job = true;
                             }
                             "submit" => {
-                                debug!(LOGGER, "Worker {} - Accepting share", self.id);
+                                trace!(LOGGER, "Worker {} - Accepting share", self.id);
                                 match serde_json::from_value(req.params.unwrap()) {
 				  	Result::Ok(share) => {
                            			self.shares.push(share);

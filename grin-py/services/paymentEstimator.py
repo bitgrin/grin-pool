@@ -36,7 +36,7 @@ PROCESS = "paymentEstimator"
 LOGGER = None
 CONFIG = None
 
-check_interval = 60
+check_interval = 10
 
 def main():
     CONFIG = lib.get_config()
@@ -44,25 +44,33 @@ def main():
     LOGGER.warn("=== Starting {}".format(PROCESS))
     # Connect to DB
     database = lib.get_db()
-    database.db.initializeSession()
+    esitmated = []  # Blocks we know have already been estimated - XXX TODO: Clean paid blocks out of this list
 
     while True:
         # Generate pool block reward estimates for all new and unlocked blocks
         try:
+            database.db.initializeSession()
             unlocked_blocks = Pool_blocks.get_all_unlocked()
-            unlocked_blocks_h = [blk.height for blk in unlocked_blocks]
             new_blocks = Pool_blocks.get_all_new()
+            unlocked_blocks_h = [blk.height for blk in unlocked_blocks]
             new_blocks_h = [blk.height for blk in new_blocks]
-            LOGGER.warn("Will ensure estimate for blocks: {}".format(unlocked_blocks_h + new_blocks_h))
-    
-            # Generate Estimate
+
+            need_estimates = []
             for height in unlocked_blocks_h + new_blocks_h:
-                LOGGER.warn("Ensure estimate for block: {}".format(height))
-                payout_map = pool.calculate_block_payout_map(height, 60, LOGGER, True)
-                LOGGER.warn("Completed estimate for block: {}".format(height))
+                if height not in esitmated:
+                    need_estimates.append(height)
+            if need_estimates:
+                LOGGER.warn("Will ensure estimate for blocks: {}".format(need_estimates))
     
-            #database.db.getSession().commit()
-            LOGGER.warn("Completed estimates")
+                # Generate Estimate
+                for height in need_estimates:
+                    LOGGER.warn("Ensure estimate for block: {}".format(height))
+                    payout_map = pool.calculate_block_payout_map(height, 60, LOGGER, True)
+                    esitmated.append(height)
+                    LOGGER.warn("Completed estimate for block: {}".format(height))
+    
+                LOGGER.warn("Completed estimates")
+            database.db.destroySession()
             sleep(check_interval)
         except Exception as e:  # AssertionError as e:
             LOGGER.error("Something went wrong: {} - {}".format(e, traceback.print_stack()))

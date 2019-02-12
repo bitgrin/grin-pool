@@ -62,6 +62,7 @@ fn accept_workers(
                         let mut worker = Worker::new(0, BufStream::new(stream));
                         worker.set_difficulty(difficulty);
                         let initial_id = rng.gen::<u32>();
+                        thread::sleep(time::Duration::from_secs(5));
                         workers.lock().unwrap().insert(initial_id.to_string(), worker);
                         // The new worker is now added to the workers list
                     }
@@ -163,7 +164,7 @@ impl Pool {
             // Delete workers in error state
             let _num_active_workers = self.clean_workers();
 
-            thread::sleep(time::Duration::from_millis(10));
+            thread::sleep(time::Duration::from_millis(1));
         }
     }
 

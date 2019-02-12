@@ -324,7 +324,8 @@ class WorkerShares:
             #    channel.basic_ack(delivery_tag = tag)
             # Option 2, bulk-ack up to the latest message we processed
             #channel.basic_ack(delivery_tag=max(tags), multiple=True)
-            channel.basic_ack(delivery_tag=0, multiple=1)
+#            channel.basic_ack(delivery_tag=0, multiple=1)
+            pass
             # Option 3, (not implemented) make sure we have processed all the messages
             #  up to the latest message we processed, and if not, 
             #  do all the accounting necessary to bulk ack as much as possible
@@ -467,10 +468,10 @@ def RmqConsumer(host):
             channel.basic_qos(prefetch_size=0, prefetch_count=0, all_channels=True)
             channel.basic_consume(share_handler,
                                   queue='grinshares',
-                                  no_ack=False)
+                                  no_ack=True)
             channel.basic_consume(share_handler,
                                   queue='poolshares',
-                                  no_ack=False)
+                                  no_ack=True)
             channel.start_consuming()
         except Exception as e:
             LOGGER.error("Something went wrong: {}\n{}".format(e, traceback.format_exc().splitlines()))

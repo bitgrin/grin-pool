@@ -79,8 +79,8 @@ spec:
           name: keybase
       - name: api
         image: bitgrinmining/services:latest
-        command: ["sleep", "9999999999"]
-        #command: ["/usr/local/bin/api/payment_api.py"]
+        #command: ["sleep", "9999999999"]
+        command: ["/usr/local/bin/api/payment_api.py"]
         env:
         - name: WALLET_OWNER_API_USER
           valueFrom:

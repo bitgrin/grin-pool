@@ -131,7 +131,7 @@ impl Server {
                     agent: self.id.clone(),
                 };
                 let params_value = serde_json::to_value(login_params).unwrap();
-                debug!(LOGGER, "{} - Requesting Login", self.id);
+                trace!(LOGGER, "{} - Requesting Login", self.id);
                 return self.protocol.send_request(
                     stream,
                     "login".to_string(),
@@ -147,7 +147,7 @@ impl Server {
     fn request_job(&mut self) -> Result<(), String> {
         match self.stream {
             Some(ref mut stream) => {
-                debug!(LOGGER, "{} - Requesting Job Template", self.id);
+                trace!(LOGGER, "{} - Requesting Job Template", self.id);
                 return self.protocol.send_request(
                     stream,
                     "getjobtemplate".to_string(),
@@ -168,7 +168,7 @@ impl Server {
         match self.stream {
             Some(ref mut stream) => {
                 let params_value = serde_json::to_value(solution).unwrap();
-                debug!(LOGGER, "{} - Submitting a share", self.id);
+                trace!(LOGGER, "{} - Submitting a share", self.id);
                 return self.protocol.send_request(
                     stream,
                     "submit".to_string(),
@@ -184,7 +184,7 @@ impl Server {
     pub fn send_keepalive(&mut self) -> Result<(), String> {
         match self.stream {
             Some(ref mut stream) => {
-                debug!(LOGGER, "{} - Sending Keepalive", self.id);
+                trace!(LOGGER, "{} - Sending Keepalive", self.id);
                 return self.protocol.send_request(
                     stream,
                     "keepalive".to_string(),
@@ -276,7 +276,7 @@ impl Server {
                                     // We need to process the responses the pool cares about,
                                     // The pool made this request and it will handle responses (so return the results back up)
                                     let res: RpcResponse = serde_json::from_str(&message).unwrap();
-                                    debug!(LOGGER, "{} - Received response {:?}", self.id, res);
+                                    trace!(LOGGER, "{} - Received response {:?}", self.id, res);
                                     // Get the worker this response is for
                                     let worker_id = match res.id.parse::<String>() {
                                         Ok(id) => id,
@@ -290,7 +290,7 @@ impl Server {
                                     };
                                     // First check if this message is for us, rather than a worker
                                     if worker_id == self.id {
-                                        debug!(LOGGER, "RESPOPNSE for MWGRINPOOL: {}", worker_id);
+                                        trace!(LOGGER, "RESPOPNSE for MWGRINPOOL: {}", worker_id);
                                         match res.method.as_str() {
                                             "getjobtemplate" => {
                                                 // The upstream stratum server has sent us a new job
@@ -306,7 +306,7 @@ impl Server {
                                                 return Ok(res.method.clone());
                                             }
                                             "login" => {
-                                                debug!(
+                                                trace!(
                                                     LOGGER,
                                                     "{} - Upstream server accepted our login",
                                                     self.id,
@@ -340,7 +340,7 @@ impl Server {
                                     //    debug!(LOGGER, "worker: {}", worker_id);
                                     //}
                                     // Debug print this method
-                                    debug!(LOGGER, "rpc method: {}", res.method.as_str());
+                                    trace!(LOGGER, "rpc method: {}", res.method.as_str());
                                     let mut worker = match w_m.get_mut(&worker_id) {
                                         Some(mut w) => w,
                                         _ => {
@@ -355,7 +355,7 @@ impl Server {
                                         }
                                     };
                                     // Debug
-                                    debug!(LOGGER, "This worker: {}", worker.full_id());
+                                    trace!(LOGGER, "This worker: {}", worker.full_id());
                                     match res.method.as_str() {
                                         // This is a response to a getjobtemplate request made by the pool
                                         "getjobtemplate" => {
@@ -406,7 +406,7 @@ impl Server {
                                         "submit" => {
                                             // XXX TODO: Error checking
                                             // Debug print this method
-                                            debug!(LOGGER, "IN rpc method: {}", res.method.as_str());
+                                            trace!(LOGGER, "IN rpc method: {}", res.method.as_str());
                                             match res.result {
                                                 Some(response) => {
                                                     // The share was accepted
@@ -415,7 +415,7 @@ impl Server {
                                                         "setting stats for worker id {:?}", res.id
                                                     );
                                                     self.status.accepted += 1;
-                                                    debug!(LOGGER, "Upstream Server accepted our share");
+                                                    trace!(LOGGER, "Upstream Server accepted our share");
                                                     // share response is now sent from pool.rs
                                                     // after difficulty validation
                                                     // worker.send_ok(res.method.clone());
