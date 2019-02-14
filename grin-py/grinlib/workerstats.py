@@ -38,7 +38,6 @@ from grinbase.model.pool_payment import Pool_payment
 from grinbase.model.gps import Gps
 
 # XXX TODO: Move to config
-POOL_MIN_DIFF = 29
 BATCHSZ = 100  # Bulk commit size
 SECONDARY_SIZE = 29
 

@@ -37,7 +37,7 @@ from grinbase.model.blocks import Blocks
 
 # XXX TODO: Get from config
 REDIS_HOST = "redis-master"
-MINIMUM_DIFFICULTY = 5
+MINIMUM_DIFFICULTY = 8 # XXX MUST MATCH STRATUM SERVER
 
 LOGGER = None
 CONFIG = None
@@ -115,11 +115,15 @@ def teardown_db():
     database.db.destroySession()
 
 def get_redis_db():
-    print("INIT REDIS")
-    r = redis.Redis(
-            host='redis-master',
-    )
-    return r
+    global REDIS 
+    rlock = threading.RLock()
+    with rlock:
+        if REDIS is None:
+            print("INIT REDIS")
+            REDIS = redis.Redis(
+                    host='redis-master',
+            )
+    return REDIS
 
 def get_grin_api_url():
     config = get_config()

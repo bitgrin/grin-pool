@@ -38,11 +38,10 @@ from grinbase.model.worker_shares import Worker_shares
 # XXX TODO: MOVE THIS TO CONFIG
 PPLNS_WINDOW = 60 # blocks
 BLOCK_REWARD = 4.5 # bitgrin - this is valid for the first 4 years
-MINIMUM_DIFFICULTY = 5 # MUST MATCH STRATUM SERVERS
+MINIMUM_DIFFICULTY = 8 # MUST MATCH STRATUM SERVERS
 
 # Globals
 NANOGRIN = 1000000000 # 1 and 9 zeros
-reward_estimate_mutex = threading.Lock()
 
 # Share graph rate
 def calculate_graph_rate(difficulty, ts1, ts2, n):
@@ -194,8 +193,6 @@ def get_block_payout_map_estimate(height, logger):
 
 # Calculate Payout due to each miner with shares in the shares_count_map
 def calculate_block_payout_map(height, window_size, logger, estimate=False):
-    global reward_estimate_mutex
-    reward_estimate_mutex.acquire()
     try:
         if estimate == True:
             cached_map = get_block_payout_map_estimate(height, logger)
@@ -270,8 +267,6 @@ def calculate_block_payout_map(height, window_size, logger, estimate=False):
                 logger.warn("block_payout_map cache insert failed: {} - {}".format(payout_estimate_map_key, repr(e)))
     except Exception as e:
         logger.error("Estimate went wrong: {} - {}".format(e, traceback.print_stack()))
-    finally:
-        reward_estimate_mutex.release()
     #logger.warn("calculate_map: {}".format(block_payout_map))
     return block_payout_map
 
