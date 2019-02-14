@@ -32,10 +32,10 @@ lazy_static! {
       /// A static reference to the logger itself, accessible from all crates
     pub static ref LOGGER: Logger = {
 
-        let config = config::read_config();
-        let log_file_path = config.grin_pool.log_dir + "/" + "grin-pool.log";
+    let config = config::read_config();
+    let log_file_path = config.grin_pool.log_dir + "/" + "grin-pool.log";
     let slog_level_stdout = Level::Debug;
-    let slog_level_file = Level::Trace;
+    let slog_level_file = Level::Warning;
 
     // Terminal output drain
     let terminal_decorator = slog_term::TermDecorator::new().build();

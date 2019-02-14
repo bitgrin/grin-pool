@@ -148,7 +148,7 @@ impl Worker {
         // Get the request_id for this response
         // XXX TODO: Better matching of method?
         let req_id = self.request_ids.remove().unwrap(); // XXX TODO: verify unwrap
-        error!(
+        trace!(
             LOGGER,
             "XXX SENDING RESPONSE: method: {}, result: {}, id: {}",
             method.clone(),
