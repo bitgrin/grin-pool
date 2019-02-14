@@ -26,6 +26,7 @@ use redis::{Client, Commands, Connection, RedisResult};
 use std::iter;
 use rand::{Rng, thread_rng};
 use rand::distributions::Alphanumeric;
+use queues::*;
 
 use pool::logger::LOGGER;
 use pool::proto::{RpcRequest, RpcError};
@@ -55,6 +56,7 @@ pub struct Worker {
     pub status: WorkerStatus,       // Runing totals
     pub block_status: WorkerStatus, // Totals for current block
     shares: Vec<SubmitParams>,
+    request_ids: Queue<String>,     // Queue of request message ID's
     pub needs_job: bool,
     pub requested_job: bool,
     redis: Option<redis::Connection>
@@ -79,6 +81,7 @@ impl Worker {
             status: WorkerStatus::new(id.to_string()),
             block_status: WorkerStatus::new(id.to_string()),
             shares: Vec::new(),
+            request_ids: queue![],
             needs_job: false,
             requested_job: false,
             redis: None,
@@ -137,6 +140,30 @@ impl Worker {
         self.block_status.stale = 0;
     }
 
+    /// Send a response
+    pub fn send_response(&mut self,
+                         method: String,
+                         result: Value,
+                 ) -> Result<(), String> {
+        // Get the request_id for this response
+        // XXX TODO: Better matching of method?
+        let req_id = self.request_ids.remove().unwrap(); // XXX TODO: verify unwrap
+        error!(
+            LOGGER,
+            "XXX SENDING RESPONSE: method: {}, result: {}, id: {}",
+            method.clone(),
+            result.clone(),
+            req_id.clone(),
+        );
+        return self.protocol.send_response(
+                &mut self.stream,
+                method,
+                result,
+                Some(req_id),
+            );
+    }
+
+
     // This handles both a get_job_template response, and a job request
     /// Send a job to the worker
     pub fn send_job(&mut self, job: &mut JobTemplate) -> Result<(), String> {
@@ -146,29 +173,19 @@ impl Worker {
         let requested = self.requested_job;
         self.needs_job = false;
         self.requested_job = false;
-        let job_value = serde_json::to_value(job).unwrap();
+        let job_value = serde_json::to_value(job.clone()).unwrap();
         let full_id = self.full_id();
         if requested {
-            return self.protocol.send_response(
-                &mut self.stream,
+            return self.send_response(
                 "getjobtemplate".to_string(),
                 job_value,
-                Some(full_id),
             );
         } else {
-            // XXX UGLY - We should just be able to send the "getjobtemplate" response but grin-miner is
-            // broken so we need to also send a "job" request at the same time
-            let _ = self.protocol.send_request(
+            return self.protocol.send_request(
                 &mut self.stream,
                 "job".to_string(),
                 Some(job_value.clone()),
-                Some(full_id.clone()),
-            );
-            return self.protocol.send_response(
-                &mut self.stream,
-                "getjobtemplate".to_string(),
-                job_value,
-                Some(full_id),
+                Some("Stratum".to_string()),
             );
         }
     }
@@ -177,24 +194,18 @@ impl Worker {
     pub fn send_status(&mut self, status: WorkerStatus) -> Result<(), String> {
         trace!(LOGGER, "Worker {} - Sending worker status", self.id);
         let status_value = serde_json::to_value(status).unwrap();
-        let full_id = self.full_id();
-        return self.protocol.send_response(
-            &mut self.stream,
+        return self.send_response(
             "status".to_string(),
             status_value,
-            Some(full_id),
         );
     }
 
     /// Send OK Response
     pub fn send_ok(&mut self, method: String) -> Result<(), String> {
         trace!(LOGGER, "Worker {} - sending OK Response", self.id);
-        let full_id = self.full_id();
-        return self.protocol.send_response(
-            &mut self.stream,
+        return self.send_response(
             method.to_string(),
             serde_json::to_value("ok".to_string()).unwrap(),
-            Some(full_id),
         );
     }
 
@@ -448,6 +459,8 @@ impl Worker {
                             self.id,
                             req.method
                         );
+                        // Add this request id to the queue
+                        self.request_ids.add(req.id.clone());
                         match req.method.as_str() {
                             "login" => {
                                 debug!(LOGGER, "Worker {} - Accepting Login request", self.id);
@@ -507,11 +520,11 @@ impl Worker {
                             "submit" => {
                                 trace!(LOGGER, "Worker {} - Accepting share", self.id);
                                 match serde_json::from_value(req.params.unwrap()) {
-				  	Result::Ok(share) => {
-                           			self.shares.push(share);
-					},
-					Result::Err(err) => { }
-				};
+                                    Result::Ok(share) => {
+                           			    self.shares.push(share);
+                                    },
+                                    Result::Err(err) => { }
+                                    };
 					
                             }
                             "status" => {

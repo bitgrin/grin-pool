@@ -225,10 +225,10 @@ impl StratumProtocol {
         stream: &mut BufStream<TcpStream>,
         method: String,
         result: Value,
-        worker_id: Option<String>,
+        id: Option<String>,
     ) -> Result<(), String> {
         let res = RpcResponse {
-            id: worker_id.clone().unwrap(),
+            id: id.clone().unwrap(),
             jsonrpc: "2.0".to_string(),
             method: method,
             result: Some(result),
@@ -239,7 +239,7 @@ impl StratumProtocol {
             LOGGER,
             "{} for {} - Responding: {}",
             self.id,
-            worker_id.unwrap(),
+            id.unwrap(),
             res_str
         );
         return self.write_message(res_str, stream);

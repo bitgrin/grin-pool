@@ -33,6 +33,7 @@ extern crate redis;
 extern crate blake2_rfc as blake2;
 extern crate byteorder;
 extern crate rand;
+extern crate queues;
 
 use bufstream::BufStream;
 use std::error::Error;

@@ -107,7 +107,7 @@ impl Pool {
             job: JobTemplate::new(),
             config: config.clone(),
             server: Server::new(config.clone()),
-            difficulty: 5,
+            difficulty: 8,
             workers: Arc::new(Mutex::new(HashMap::new())),
             duplicates: HashMap::new(),
         }
@@ -353,7 +353,7 @@ impl Pool {
         // XXX TODO: need to set a unique timestamp and record it in the worker struct
         for (worker_id, worker) in w_m.iter_mut() {
             if worker.authenticated {
-                worker.set_difficulty(5); // XXX TODO: this get from config?
+                worker.set_difficulty(8); // XXX TODO: this get from config?
                 worker.set_height(self.job.height);
                 // Print this workers block_status for logstash to send to rmq
                 error!(LOGGER, "{:?}", worker.block_status);
