@@ -34,7 +34,7 @@ lazy_static! {
 
     let config = config::read_config();
     let log_file_path = config.grin_pool.log_dir + "/" + "grin-pool.log";
-    let slog_level_stdout = Level::Debug;
+    let slog_level_stdout = Level::Trace;
     let slog_level_file = Level::Warning;
 
     // Terminal output drain

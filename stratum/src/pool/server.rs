@@ -42,6 +42,7 @@ pub struct Server {
     error: bool,
     pub job: JobTemplate,
     status: WorkerStatus,
+    buffer: String,
 }
 
 impl Server {
@@ -55,6 +56,7 @@ impl Server {
             error: false,
             job: JobTemplate::new(),
             status: WorkerStatus::new("MWGrinPool".to_string()),
+            buffer: String::with_capacity(4096),
         }
     }
 
@@ -216,7 +218,7 @@ impl Server {
         // XXX TODO: Complete adding RPC error results (especially still syncing error)
         match self.stream {
             Some(ref mut stream) => {
-                match self.protocol.get_message(stream) {
+                match self.protocol.get_message(stream, &mut self.buffer) {
                     Ok(rpc_msg) => {
                         match rpc_msg {
                             Some(message) => {

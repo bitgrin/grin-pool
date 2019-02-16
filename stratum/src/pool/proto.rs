@@ -131,17 +131,15 @@ impl StratumProtocol {
     fn read_message(
         &mut self,
         stream: &mut BufStream<TcpStream>,
+        buffer: &mut String,
     ) -> Result<Option<String>, String> {
-        // Read and return a single message or None
-        let mut line = String::new();
-        match stream.read_line(&mut line) {
+        // Read and return a single message or None or Err
+        match stream.read_line(buffer) {
             Ok(_) => {
                 // warn!(LOGGER, "XXX DEBUG - line read: {:?}", line);
-                // stream is not returning a proper error on disconnect
-                if line == "" {
-                    return Err(format!("{} - Connection Error 1: Disconnected", self.id));
-                }
-                return Ok(Some(line));
+                let res = buffer.clone();
+                buffer.clear();
+                return Ok(Some(res));
             }
             Err(ref e) if e.kind() == ErrorKind::WouldBlock => {
                 // Not an error, just no messages ready
@@ -149,6 +147,7 @@ impl StratumProtocol {
             }
             Err(e) => {
                 error!(LOGGER, "{} - Connection Error 1a: {}", self.id, e);
+                buffer.clear();
                 return Err(format!("{}", e));
             }
         }
@@ -184,9 +183,10 @@ impl StratumProtocol {
     pub fn get_message(
         &mut self,
         stream: &mut BufStream<TcpStream>,
+        buffer: &mut String,
     ) -> Result<Option<String>, String> {
         // XXX TODO: Verify this is a valid message before returning it
-        return self.read_message(stream);
+        return self.read_message(stream, buffer);
     }
 
     /// Send a Request
@@ -199,7 +199,7 @@ impl StratumProtocol {
         worker_id: Option<String>,
     ) -> Result<(), String> {
         let request_id = match worker_id {
-            None => "".to_string(),
+            None => "0".to_string(),
             Some(id) => id,
         };
         let req = RpcRequest {
