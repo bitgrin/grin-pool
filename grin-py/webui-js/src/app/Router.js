@@ -34,6 +34,7 @@ class WrappedRoutes extends Component {
         <Layout/>
         <div className='container__wrap'>
           <Alert color='danger' style={{ fontSize: '1.1rem', textAlign: 'center', position: 'relative' }}>To mine on BitGrin Pool, please use the following stratum and port: stratum.pool.bitgrin.io:3333</Alert>
+          <Alert color='danger' style={{ fontSize: '1.1rem', textAlign: 'center', position: 'relative' }}>Notice: BitGrin Pool will add a 2% fee to support hosting costs effective Feb 25</Alert>
           <Route exact path='/' component={HomepageConnector}/>
           <Route path='/pages' component={Pages}/>
           <Route path='/about' component={AboutComponent}/>
