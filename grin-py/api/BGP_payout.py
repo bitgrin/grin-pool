@@ -72,7 +72,7 @@ if prompted:
 ## --------------------------------
 
 mwURL = "https://api.pool.bitgrin.io"
-POOL_MINIMUM_PAYOUT = 0.25
+POOL_MINIMUM_PAYOUT = 0.1
 tmpfile = "unsigned_slate.txt"
 
 dont_clean = False
