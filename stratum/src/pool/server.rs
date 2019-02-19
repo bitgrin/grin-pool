@@ -233,6 +233,8 @@ impl Server {
                                 let v: serde_json::Value = match serde_json::from_str(&message) {
                                     Ok(r) => r,
                                     Err(e) => {
+                                        // Likely caused by broken connection
+                                        self.error = true;
                                         let err_msg = format!("Invalid message from server: {}", e);
                                         let err = RpcError {
                                             code: -32600,
@@ -242,7 +244,6 @@ impl Server {
                                     }
                                 };
                                 // Is this a response or request?
-                                // XXX TODO: Is there a better way? Introspection? Check Value for field?
                                 if v["method"] == String::from("job") {
                                     // This is a REQUEST to start a new JOB
                                     let req: RpcRequest = match serde_json::from_str(&message) {
@@ -287,7 +288,7 @@ impl Server {
                                             return Ok(req.method.clone());
                                         }
                                         _ => {
-                                            // XXX TODO: Unknown request type from the upstream stratum server - log it and continue
+                                            // Unknown request type from the upstream stratum server - log it and continue
                                             error!(
                                                 LOGGER,
                                                 "{} - Pool server got unknown request type: {}",
@@ -338,6 +339,7 @@ impl Server {
                                         match res.method.as_str() {
                                             "getjobtemplate" => {
                                                 // The upstream stratum server has sent us a new job
+                                                // XXX TODO:  This could be an error result - ex: "Node is syncing - Please wait"
                                                 let job: JobTemplate = match serde_json::from_value(res.result.unwrap()) {
                                                     Ok(r) => r,
                                                     Err(e) => {
@@ -380,9 +382,6 @@ impl Server {
                                                         );
                                                         self.status.accepted += 1;
                                                         trace!(LOGGER, "Upstream Server accepted our share");
-                                                        // share response is now sent from pool.rs
-                                                        // after difficulty validation
-                                                        // worker.send_ok(res.method.clone());
                                                     }
                                                     None => {
                                                         // The share was not accepted, check RpcError.code for reason
@@ -394,17 +393,14 @@ impl Server {
                                                         let e: RpcError = serde_json::from_value(res.error.unwrap()).unwrap();
                                                         match e.code {
                                                             -32503 => {
-                                                                // share response is now sent from pool.rs
-                                                                // after difficulty validation
-                                                                // workers_l[w_id].status.stale += 1;
+                                                                self.status.stale += 1;
                                                                 debug!(
                                                                     LOGGER,
                                                                     "Server rejected share as stale"
                                                                 );
                                                             }
                                                             _ => {
-                                                                // after difficulty validation
-                                                                // workers_l[w_id].status.rejected += 1;
+                                                                self.status.rejected += 1;
                                                                 debug!(
                                                                     LOGGER,
                                                                     "Server rejected share as invalid"
