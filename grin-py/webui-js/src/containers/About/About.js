@@ -17,7 +17,7 @@ export class AboutComponent extends Component {
               <li>Supports Linux and Windows miners: mimblewimble/bitgrin/grin-miner and mozkomor/GrinGoldMiner</li>
               <li><a href="https://bitgrin.io/bitgrinpool-cpu-mining-tutorial/">CPU Mining Guide</a></li>
               <li><a href="https://bitgrin.io/bitgrinpool-gpu-mining-tutorial/">GPU Mining Guide</a></li>
-              <li><a href="https://medium.com/@blade.doyle/configure-payments-on-mwgrinpool-com-how-to-7b84163ec467">Payment Configuration Guide</a></li>
+              <li><a href="https://bitgrin.io/bitgrin-pool-payments-guide/">Payment Configuration Guide</a></li>
               <li><a href="https://t.me/BitGrinCommunity">BitGrin Telegram Group</a></li>
             </ul>
           </CardBody>
