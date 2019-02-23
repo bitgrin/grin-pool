@@ -38,11 +38,11 @@ export class InstructionsComponent extends Component {
             <Row>
               <Col xs={12} md={9} lg={9} xl={9}>
                 <h2>How to Configure Pool Payouts</h2>
-                <p style={{ fontSize: '1.1rem' }}>To learn how to properly inititate pool payments, please read our tutorial <a href='https://medium.com/@blade.doyle/configure-payments-on-mwgrinpool-com-how-to-7b84163ec467' rel='noopener noreferrer' target='_blank'>here</a></p>
+                <p style={{ fontSize: '1.1rem' }}>To learn how to properly inititate pool payments, please read our tutorial <a href='https://bitgrin.io/bitgrin-pool-payments-guide/' rel='noopener noreferrer' target='_blank'>here</a></p>
               </Col>
               <Col xs={12} md={3} lg={3} xl={3}>
                 <div className='article-tutorial-thumbnail'>
-                  <a href='https://medium.com/@blade.doyle/configure-payments-on-mwgrinpool-com-how-to-7b84163ec467'><img src='/img/payments-medium-article-overlayed.png' /></a>
+                  <a href='https://bitgrin.io/bitgrin-pool-payments-guide/'><img src='/img/payments-medium-article-overlayed.png' /></a>
                 </div>
               </Col>
             </Row>
