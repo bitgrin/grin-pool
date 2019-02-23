@@ -228,7 +228,6 @@ export class MinerPaymentComponent extends Component {
                     <Label for='paymentType'>Payment Type:</Label>
                     <Input defaultValue={paymentType} type='select' name='paymentType' id='paymentSelect' onChange={this.onPaymentTypeChange}>
                       <option value='null'>------------</option>
-                      <option value='scheduled'>Scheduled Payout</option>
                       <option value='manual'>Manual Payout</option>
                     </Input>
                   </FormGroup>
