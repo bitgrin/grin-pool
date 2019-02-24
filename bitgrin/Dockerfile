@@ -81,11 +81,11 @@ RUN sed -i 's/^db_root = .*$/db_root = "\/server\/.grin"/' /usr/src/grin/bitgrin
     sed -i 's/^run_test_miner = .*$/run_test_miner = false/' /usr/src/grin/bitgrin-server.toml && \
     sed -i 's/^host = .*$/host = "0.0.0.0"/' /usr/src/grin/bitgrin-server.toml && \
     sed -i 's/^port = .*$/port = 13414/' /usr/src/grin/bitgrin-server.toml && \
-    sed -i 's/^?peer_max_count = .*$/peer_max_count = 75/' /usr/src/grin/bitgrin-server.toml && \
-    sed -i 's/^?peer_min_preferred_count = .*$/peer_min_preferred_count = 15/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^#peer_max_count = .*$/peer_max_count = 250/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^#peer_min_preferred_count = .*$/peer_min_preferred_count = 16/' /usr/src/grin/bitgrin-server.toml && \
     sed -i 's/^enable_stratum_server = .*$/enable_stratum_server = true/' /usr/src/grin/bitgrin-server.toml && \
     sed -i 's/^stratum_server_addr = .*$/stratum_server_addr = "0.0.0.0:13416"/' /usr/src/grin/bitgrin-server.toml && \
-    sed -i 's/^attempt_time_per_block = .*$/attempt_time_per_block = 15/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^attempt_time_per_block = .*$/attempt_time_per_block = 300/' /usr/src/grin/bitgrin-server.toml && \
     sed -i 's/^minimum_share_difficulty = .*$/minimum_share_difficulty = 1/' /usr/src/grin/bitgrin-server.toml && \
     sed -i 's/^wallet_listener_url = .*$/wallet_listener_url = "http:\/\/grinwallet:13415"/' /usr/src/grin/bitgrin-server.toml && \
     sed -i 's/^burn_reward = .*$/burn_reward = false/' /usr/src/grin/bitgrin-server.toml && \
