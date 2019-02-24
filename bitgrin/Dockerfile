@@ -28,7 +28,7 @@ RUN cargo build --release
 RUN touch asxxyyzzzzqyxxxy
 RUN git fetch && \
     git pull && \
-    git checkout v1.0.0
+    git checkout 1.0.0
 
 # Monkey Patch
 RUN sed -i -e 's/127\.0\.0\.1:13420/0.0.0.0:13420/g' wallet/src/command.rs
