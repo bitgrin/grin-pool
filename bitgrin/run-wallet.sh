@@ -5,13 +5,13 @@
 cd /wallet
 
 # Copy in updated config
-cp /usr/src/grin/grin-wallet.toml /wallet/grin-wallet.toml
+cp /usr/src/grin/bitgrin-wallet.toml /wallet/bitgrin-wallet.toml
 
 # Create new wallet if none exists
 if [ ! -f /wallet/wallet_data/wallet.seed ]; then
     echo ${WALLET_PASSWORD} > /password.txt
     echo ${WALLET_PASSWORD} >> /password.txt
-    grin ${NET_FLAG} wallet init < /password.txt
+    bitgrin ${NET_FLAG} wallet init < /password.txt
     rm /password.txt
 fi
 
@@ -29,8 +29,10 @@ if [ $MODE == "private" ]; then
     sleep 30 # Let the public wallet start first
     keybase login
     echo "Starting wallet owner_api"
-    grin ${NET_FLAG} wallet -p ${WALLET_PASSWORD} owner_api
+    bitgrin ${NET_FLAG} wallet -p ${WALLET_PASSWORD} owner_api
 else
+    echo "Backup Wallet DB"
+    tar czf wallet_db.backup.$(date "+%F-%T" |tr : '_').tgz wallet_data
     echo "Starting public wallet listener"
-    grin ${NET_FLAG} wallet -p ${WALLET_PASSWORD} listen
+    bitgrin ${NET_FLAG} wallet -p ${WALLET_PASSWORD} listen
 fi

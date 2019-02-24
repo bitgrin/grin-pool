@@ -1,5 +1,5 @@
 # GRIN
-CONTAINER := grin
+CONTAINER := bitgrin
 REGISTRY := bitgrinmining
 TAG := latest
 

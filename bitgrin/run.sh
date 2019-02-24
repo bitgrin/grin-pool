@@ -1,5 +1,8 @@
 #!/bin/bash
 
-cp /usr/src/grin/grin-server.toml /server/grin-server.toml
+cp /usr/src/grin/bitgrin-server.toml /server/bitgrin-server.toml
 cd /server
-grin ${NET_FLAG} server run
+echo "Backup Chain Data"
+tar czf grin.backup.$(date "+%F-%T" |tr : '_').tgz .grin
+echo "Start Bitgrin Server"
+bitgrin server run

@@ -28,31 +28,26 @@ RUN cargo build --release
 RUN touch asxxyyzzzzqyxxxy
 RUN git fetch && \
     git pull && \
-    git checkout master
+    git checkout v1.0.0
 
 # Monkey Patch
 RUN sed -i -e 's/127\.0\.0\.1:13420/0.0.0.0:13420/g' wallet/src/command.rs
-#COPY stratumserver.rs servers/src/mining/stratumserver.rs
+COPY stratumserver.rs servers/src/mining/stratumserver.rs
 
 RUN cargo build --release
 
 # Generate configuration
 RUN mkdir -p /root/.grin && \
     cd /root/.grin && \
-    ln -s . floo && \
     ln -s . main
-RUN target/release/grin ${NET_FLAG} server config && \
+RUN target/release/bitgrin server config && \
     echo dummy > dummy && \
     echo dummy >> dummy && \
-    target/release/grin ${NET_FLAG} wallet init  < dummy
+    target/release/bitgrin wallet init  < dummy
 
 
 # runtime stage
-FROM docker.mwgrinpool.com:5001/keybase:latest
-
-# XXX TODO: REMOVE FOR MAINNET
-ENV NET_FLAG "--floonet"
-
+FROM bitgrinmining/keybase:latest
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     locales \
@@ -72,51 +67,51 @@ RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
 
 ENV LANG en_US.UTF-8
 
-COPY --from=builder /usr/src/grin/target/release/grin /usr/local/bin/grin
-COPY --from=builder /usr/src/grin/grin-server.toml /usr/src/grin/grin-server.toml
-COPY --from=builder /root/.grin/grin-wallet.toml /usr/src/grin/grin-wallet.toml
+COPY --from=builder /usr/src/grin/target/release/bitgrin /usr/local/bin/bitgrin
+COPY --from=builder /usr/src/grin/bitgrin-server.toml /usr/src/grin/bitgrin-server.toml
+COPY --from=builder /root/.bitgrin/main/bitgrin-wallet.toml /usr/src/grin/bitgrin-wallet.toml
 
 # Update grin-server config
-RUN sed -i 's/^db_root = .*$/db_root = "\/server\/.grin"/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^api_http_addr = .*$/api_http_addr = "0.0.0.0:13413"/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^api_secret_path = .*$/api_secret_path = "\/root\/.grin\/.api_secret"/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^archive_mode = .*$/archive_mode = true/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^skip_sync_wait = .*$/skip_sync_wait = false/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^run_tui = .*$/run_tui = false/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^run_test_miner = .*$/run_test_miner = false/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^host = .*$/host = "0.0.0.0"/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^port = .*$/port = 13414/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^?peer_max_count = .*$/peer_max_count = 75/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^?peer_min_preferred_count = .*$/peer_min_preferred_count = 15/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^enable_stratum_server = .*$/enable_stratum_server = true/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^stratum_server_addr = .*$/stratum_server_addr = "0.0.0.0:13416"/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^attempt_time_per_block = .*$/attempt_time_per_block = 300/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^minimum_share_difficulty = .*$/minimum_share_difficulty = 1/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^wallet_listener_url = .*$/wallet_listener_url = "http:\/\/grinwallet:13415"/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^burn_reward = .*$/burn_reward = false/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^log_to_stdout = .*$/log_to_stdout = true/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^stdout_log_level = .*$/stdout_log_level = "Debug"/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^log_to_file = .*$/log_to_file = true/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^file_log_level = .*$/file_log_level = "Debug"/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^log_file_path = .*$/log_file_path = "\/server\/grin.log"/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^log_file_append = .*$/log_file_append = true/' /usr/src/grin/grin-server.toml && \
-    sed -i 's/^log_max_size = .*$/log_max_size = 16777216/' /usr/src/grin/grin-server.toml
+RUN sed -i 's/^db_root = .*$/db_root = "\/server\/.grin"/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^api_http_addr = .*$/api_http_addr = "0.0.0.0:13413"/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^api_secret_path = .*$/api_secret_path = "\/root\/.grin\/.api_secret"/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^archive_mode = .*$/archive_mode = true/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^skip_sync_wait = .*$/skip_sync_wait = false/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^run_tui = .*$/run_tui = false/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^run_test_miner = .*$/run_test_miner = false/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^host = .*$/host = "0.0.0.0"/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^port = .*$/port = 13414/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^?peer_max_count = .*$/peer_max_count = 75/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^?peer_min_preferred_count = .*$/peer_min_preferred_count = 15/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^enable_stratum_server = .*$/enable_stratum_server = true/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^stratum_server_addr = .*$/stratum_server_addr = "0.0.0.0:13416"/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^attempt_time_per_block = .*$/attempt_time_per_block = 15/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^minimum_share_difficulty = .*$/minimum_share_difficulty = 1/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^wallet_listener_url = .*$/wallet_listener_url = "http:\/\/grinwallet:13415"/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^burn_reward = .*$/burn_reward = false/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^log_to_stdout = .*$/log_to_stdout = true/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^stdout_log_level = .*$/stdout_log_level = "Debug"/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^log_to_file = .*$/log_to_file = true/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^file_log_level = .*$/file_log_level = "Debug"/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^log_file_path = .*$/log_file_path = "\/server\/grin.log"/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^log_file_append = .*$/log_file_append = true/' /usr/src/grin/bitgrin-server.toml && \
+    sed -i 's/^log_max_size = .*$/log_max_size = 16777216/' /usr/src/grin/bitgrin-server.toml
 
 # Update grin-wallet config
-RUN sed -i 's/^api_listen_interface = .*$/api_listen_interface = "0.0.0.0"/' /usr/src/grin/grin-wallet.toml && \
-    sed -i 's/^api_listen_port = .*$/api_listen_port = 13415/' /usr/src/grin/grin-wallet.toml && \
-    sed -i 's/^api_secret_path = .*$/api_secret_path = "\/root\/.grin\/.api_secret"/' /usr/src/grin/grin-wallet.toml && \
-    sed -i 's/^node_api_secret_path = .*$/node_api_secret_path = "\/root\/.grin\/.api_secret"/' /usr/src/grin/grin-wallet.toml && \
-    sed -i 's/^check_node_api_http_addr = .*$/check_node_api_http_addr = "http:\/\/grin:13413"/' /usr/src/grin/grin-wallet.toml && \
-    sed -i 's/^data_file_dir = .*$/data_file_dir = "\/wallet\/wallet_data"/' /usr/src/grin/grin-wallet.toml && \
-    sed -i 's/^keybase_notify_ttl = .*$/keybase_notify_ttl = 1440/' /usr/src/grin/grin-wallet.toml && \
-    sed -i 's/^log_to_stdout = .*$/log_to_stdout = true/' /usr/src/grin/grin-wallet.toml && \
-    sed -i 's/^stdout_log_level = .*$/stdout_log_level = "Debug"/' /usr/src/grin/grin-wallet.toml && \
-    sed -i 's/^log_to_file = .*$/log_to_file = true/' /usr/src/grin/grin-wallet.toml && \
-    sed -i 's/^file_log_level = .*$/file_log_level = "Debug"/' /usr/src/grin/grin-wallet.toml && \
-    sed -i 's/^log_file_path = .*$/log_file_path = "\/wallet\/grin-wallet.log"/' /usr/src/grin/grin-wallet.toml && \
-    sed -i 's/^log_file_append = .*$/log_file_append = true/' /usr/src/grin/grin-wallet.toml && \
-    sed -i 's/^log_max_size = .*$/log_max_size = 16777216/' /usr/src/grin/grin-wallet.toml 
+RUN sed -i 's/^api_listen_interface = .*$/api_listen_interface = "0.0.0.0"/' /usr/src/grin/bitgrin-wallet.toml && \
+    sed -i 's/^api_listen_port = .*$/api_listen_port = 13415/' /usr/src/grin/bitgrin-wallet.toml && \
+    sed -i 's/^api_secret_path = .*$/api_secret_path = "\/root\/.grin\/.api_secret"/' /usr/src/grin/bitgrin-wallet.toml && \
+    sed -i 's/^node_api_secret_path = .*$/node_api_secret_path = "\/root\/.grin\/.api_secret"/' /usr/src/grin/bitgrin-wallet.toml && \
+    sed -i 's/^check_node_api_http_addr = .*$/check_node_api_http_addr = "http:\/\/grin:13413"/' /usr/src/grin/bitgrin-wallet.toml && \
+    sed -i 's/^data_file_dir = .*$/data_file_dir = "\/wallet\/wallet_data"/' /usr/src/grin/bitgrin-wallet.toml && \
+    sed -i 's/^keybase_notify_ttl = .*$/keybase_notify_ttl = 1440/' /usr/src/grin/bitgrin-wallet.toml && \
+    sed -i 's/^log_to_stdout = .*$/log_to_stdout = true/' /usr/src/grin/bitgrin-wallet.toml && \
+    sed -i 's/^stdout_log_level = .*$/stdout_log_level = "Debug"/' /usr/src/grin/bitgrin-wallet.toml && \
+    sed -i 's/^log_to_file = .*$/log_to_file = true/' /usr/src/grin/bitgrin-wallet.toml && \
+    sed -i 's/^file_log_level = .*$/file_log_level = "Debug"/' /usr/src/grin/bitgrin-wallet.toml && \
+    sed -i 's/^log_file_path = .*$/log_file_path = "\/wallet\/grin-wallet.log"/' /usr/src/grin/bitgrin-wallet.toml && \
+    sed -i 's/^log_file_append = .*$/log_file_append = true/' /usr/src/grin/bitgrin-wallet.toml && \
+    sed -i 's/^log_max_size = .*$/log_max_size = 16777216/' /usr/src/grin/bitgrin-wallet.toml 
     
 
 # floonet ports
