@@ -16,6 +16,11 @@ spec:
         env:
         - name: DEBUG_HOLD
           value: 
+        - name: GRIN_POOL_ADMIN_USER
+          valueFrom:
+            secretKeyRef:
+              name: grinpool-admin
+              key: username.txt
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:

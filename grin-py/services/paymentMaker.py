@@ -39,16 +39,22 @@ from grinbase.model.pool_utxo import Pool_utxo
 from grinbase.model.worker_stats import Worker_stats
 
 # NOTE:  All calculations are in nanogrin
-# XXX TODO: Get from config
-PPLNS_WINDOW = 60 # blocks
+
 
 PROCESS = "paymentMaker"
 LOGGER = None
+CONFIG = None
 
 def main():
     global LOGGER
+    global CONFIG
+    CONFIG = lib.get_config()
     LOGGER = lib.get_logger(PROCESS)
     LOGGER.warn("=== Starting {}".format(PROCESS))
+
+    # Get Config settings
+    pool_fee = float(CONFIG[PROCESS]["pool_fee"])
+    pplns_window = float(CONFIG[PROCESS]["pplns_window"])
 
     # Connect to DB
     database = lib.get_db()
@@ -61,7 +67,7 @@ def main():
         try:
             LOGGER.warn("Processing unlocked block: {}".format(height))
             # Call the library routine to get this blocks payout map
-            payout_map = pool.calculate_block_payout_map(height, PPLNS_WINDOW, LOGGER, False)
+            payout_map = pool.calculate_block_payout_map(height, pplns_window, pool_fee, LOGGER, False)
             #print("payout_map = {}".format(payout_map))
             # Make payments based on the workers total share_value
             Pool_blocks.setState(height, "paid")

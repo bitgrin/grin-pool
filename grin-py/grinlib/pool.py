@@ -36,9 +36,10 @@ from grinbase.model.worker_shares import Worker_shares
 
 
 # XXX TODO: MOVE THIS TO CONFIG
-PPLNS_WINDOW = 60 # blocks
-BLOCK_REWARD = 4.5 # bitgrin - this is valid for the first 4 years
 MINIMUM_DIFFICULTY = 8 # MUST MATCH STRATUM SERVERS
+
+# XXX TODO: Get this from blockchain
+BLOCK_REWARD = 4.5 # bitgrin - this is valid for the first 4 years
 
 # Globals
 NANOGRIN = 1000000000 # 1 and 9 zeros
@@ -192,7 +193,18 @@ def get_block_payout_map_estimate(height, logger):
         logger.warn("block_payout_map Lookup Error: {} - {}".format(payout_estimate_map_key, repr(e)))
 
 # Calculate Payout due to each miner with shares in the shares_count_map
-def calculate_block_payout_map(height, window_size, logger, estimate=False):
+def calculate_block_payout_map(height, window_size, pool_fee, logger, estimate=False):
+    block_payout_map = {}
+    # Get the grinpool admin user ID for pool fee
+    pool_admin_user_id = None
+    try:
+        admin_user = os.environ["GRIN_POOL_ADMIN_USER"]
+        admin_user_record = User.get_id_by_username(admin_user)
+        pool_admin_user_id = admin_user_record.id
+    except:
+        pool_admin_user_id = 1
+        logger.warn("We dont have Admin account info, using default id=1")
+    # Create the payout map
     try:
         if estimate == True:
             cached_map = get_block_payout_map_estimate(height, logger)
@@ -216,10 +228,15 @@ def calculate_block_payout_map(height, window_size, logger, estimate=False):
         shares = Worker_shares.get_by_height(height, window_size)
         print("share data in window = {}".format(shares))
         sys.stdout.flush()
-        # Get total value of this block: reward + fees
+        # Get total value of this block: reward + tx fees
         reward = get_reward_by_block(height)
         print("Reward for block {} = {}".format(height, reward))
         sys.stdout.flush()
+        # The Pools Fee
+        the_pools_fee = reward * pool_fee
+        block_payout_map[pool_admin_user_id] = the_pools_fee
+        reward = reward - the_pools_fee
+        logger.warn("Pool Fee = {}".format(block_payout_map))
         # Get the "secondary_scaling" value for this block
         scale = get_scale_by_block(height)
         print("Secondary Scaling value for block = {}".format(scale))
@@ -243,7 +260,6 @@ def calculate_block_payout_map(height, window_size, logger, estimate=False):
         total_value = calculate_total_share_value(shares_count_map, scale)
         print("total share value in payment window: {}".format(total_value))
         sys.stdout.flush()
-        block_payout_map = {}
         # For each user with shares in the window, calculate payout and add to block_payout_map
         for user_id, worker_shares_count in shares_count_map.items():
             print("xxx: {} {}".format(user_id, worker_shares_count))

@@ -39,12 +39,18 @@ CONFIG = None
 check_interval = 10
 
 def main():
+    global CONFIG
+    global LOGGER
     CONFIG = lib.get_config()
     LOGGER = lib.get_logger(PROCESS)
     LOGGER.warn("=== Starting {}".format(PROCESS))
     # Connect to DB
     database = lib.get_db()
     esitmated = []  # Blocks we know have already been estimated - XXX TODO: Clean paid blocks out of this list
+
+    # Get Config settings
+    pool_fee = float(CONFIG[PROCESS]["pool_fee"])
+    pplns_window = float(CONFIG[PROCESS]["pplns_window"])
 
     while True:
         # Generate pool block reward estimates for all new and unlocked blocks
@@ -65,7 +71,7 @@ def main():
                 # Generate Estimate
                 for height in need_estimates:
                     LOGGER.warn("Ensure estimate for block: {}".format(height))
-                    payout_map = pool.calculate_block_payout_map(height, 60, LOGGER, True)
+                    payout_map = pool.calculate_block_payout_map(height, pplns_window, pool_fee, LOGGER, True)
                     esitmated.append(height)
                     LOGGER.warn("Completed estimate for block: {}".format(height))
     
