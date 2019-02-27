@@ -269,7 +269,10 @@ def calculate_block_payout_map(height, window_size, pool_fee, logger, estimate=F
             worker_payment = total_worker_value / total_value * reward
             print("worker_payment: {}".format(worker_payment/1000000000))
             sys.stdout.flush()
-            block_payout_map[user_id] = worker_payment
+            if user_id in block_payout_map:
+                block_payout_map[user_id] += worker_payment
+            else:
+                block_payout_map[user_id] = worker_payment
         #print("block_payout_map = {}".format(block_payout_map))
         #sys.stdout.flush()
         if estimate == True:
