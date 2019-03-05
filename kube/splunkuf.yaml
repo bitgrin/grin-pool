@@ -1,20 +1,3 @@
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: splunk-forwarder-config
-data:
-  outputs.conf: |
-     # Send logs to splunk
-     [tcpout:group1]
-     server=splunk:9997
-  inputs.conf: |
-     # watch all files in <path>
-     [monitor:///var/log/containers/*.log]
-     # extract `host` from the first group in the filename
-     host_regex = /var/log/containers/(.*)_.*_.*\.log
-     # set source type to Kubernetes
-     sourcetype = kubernetes
---- 
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
@@ -27,17 +10,19 @@ spec:
     spec:
       containers:
       - name: splunkuf
-        image: docker.io/grinpool/universalforwarder:latest
+        image: bitgrinmining/universalforwarder
+        command: ["/run.sh"]
+        #command: ["sleep", "9999"]
         env:
         - name: SPLUNK_START_ARGS
-          value: "--accept-license"
+          value: "--accept-license --answer-yes"
         - name: SPLUNK_USER
-          value: "root"
+          value: root
         - name: SPLUNK_PASSWORD
           valueFrom:
             secretKeyRef:
               name: splunk
-              key: password.txt
+              key: password
         volumeMounts:
         - mountPath: /var/run/docker.sock
           readOnly: true
@@ -48,8 +33,6 @@ spec:
         - mountPath: /var/lib/docker/containers
           readOnly: true
           name: docker-container-logs
-        - mountPath: /configmap/
-          name: splunk-config
         - mountPath: /var/log/pods
           readOnly: true
           name: pod-logs
@@ -66,6 +49,6 @@ spec:
         - name: pod-logs
           hostPath:
             path: /var/log/pods
-        - name: splunk-config
-          configMap:
-            name: splunk-forwarder-config
+      imagePullSecrets:
+        - name: regsecret
+
