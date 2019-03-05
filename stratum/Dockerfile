@@ -36,7 +36,11 @@ RUN set -ex && \
     apt-get update && \
     apt-get --no-install-recommends --yes install \
         libssl-dev \
-        libssl1.1
+        libssl1.1 \
+        procps \
+        htop \
+        net-tools \
+        vim
 
 WORKDIR /stratum
 COPY --from=builder /stratum/target/*/grin-pool /usr/local/bin/

@@ -45,6 +45,45 @@ use pool::proto::{JobTemplate, LoginParams, StratumProtocol, SubmitParams, Worke
 #[derive(Debug)]
 pub struct WorkerConfig {}
 
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub struct Shares {
+    pub edge_bits: u32,
+    pub accepted: u64,
+    pub rejected: u64,
+    pub stale: u64,
+}
+
+impl Shares {
+    pub fn new(edge_bits: u32) -> Shares {
+        Shares {
+            edge_bits: edge_bits,
+            accepted: 0,
+            rejected: 0,
+            stale: 0,
+        }
+    }
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub struct WorkerShares {
+    pub id: String,
+    pub height: u64,
+    pub difficulty: u64,
+    pub shares: HashMap<u32, Shares>,
+}
+
+impl WorkerShares {
+    pub fn new(id: String) -> WorkerShares {
+        WorkerShares {
+            id: id,
+            height: 0,
+            difficulty: 0,
+            shares: HashMap::new(),
+        }
+    }
+}
+
+
 pub struct Worker {
     pub id: usize,
     pub rig_id: String,
@@ -53,8 +92,8 @@ pub struct Worker {
     protocol: StratumProtocol,
     error: bool,
     pub authenticated: bool,
-    pub status: WorkerStatus,       // Runing totals
-    pub block_status: WorkerStatus, // Totals for current block
+    pub status: WorkerStatus,        // Runing totals - reported with stratum status message
+    pub worker_shares: WorkerShares, // Share Counts for current block
     shares: Vec<SubmitParams>,
     request_ids: Queue<String>,     // Queue of request message ID's
     pub needs_job: bool,
@@ -80,7 +119,7 @@ impl Worker {
             error: false,
             authenticated: false,
             status: WorkerStatus::new(id.to_string()),
-            block_status: WorkerStatus::new(id.to_string()),
+            worker_shares: WorkerShares::new(id.to_string()),
             shares: Vec::new(),
             request_ids: queue![],
             needs_job: false,
@@ -132,16 +171,36 @@ impl Worker {
         self.status.height = new_height;
     }
 
-    /// Set block_status
-    pub fn set_block_status(&mut self, height: u64, difficulty: u64) {
-        self.block_status.id = self.full_id();
-        self.block_status.height = height;
-        self.block_status.difficulty = difficulty;
-        self.block_status.accepted = 0;
-        self.block_status.rejected = 0;
-        self.block_status.stale = 0;
+    /// Reset worker_shares for a new block
+    pub fn reset_worker_shares(&mut self, height: u64, difficulty: u64) {
+        self.worker_shares.id = self.full_id();
+        self.worker_shares.height = height;
+        self.worker_shares.difficulty = difficulty;
+        self.worker_shares.shares = HashMap::new();
     }
-
+    
+    /// Add a share to the worker_shares
+    pub fn add_shares(&mut self, size: u32, accepted: u64, rejected: u64, stale: u64) {
+        if self.worker_shares.shares.contains_key(&size) {
+            match self.worker_shares.shares.get_mut(&size) {
+                Some(mut shares) => {
+                    shares.accepted += accepted;
+                    shares.rejected += rejected;
+                    shares.stale += stale;
+                },
+                None => {
+                    // This cant happen
+                }
+            }
+        } else {
+            let mut shares: Shares = Shares::new(size);
+            shares.accepted = accepted;
+            shares.rejected = rejected;
+            shares.stale = stale;
+            self.worker_shares.shares.insert(size, shares);
+        }
+    }
+    
     /// Send a response
     pub fn send_response(&mut self,
                          method: String,
@@ -184,17 +243,6 @@ impl Worker {
                 job_value,
             );
         } else {
-            // XXX UGLY: workaround for nbminer and NiceHash bugs
-            let mut nbminerJob = job.clone();
-            nbminerJob.job_id = 999;
-            nbminerJob.height = nbminerJob.height - 1;
-            let nbminerJob_value = serde_json::to_value(nbminerJob.clone()).unwrap();
-            let _ = self.protocol.send_request(
-                &mut self.stream,
-                "job".to_string(),
-                Some(nbminerJob_value),
-                Some("Stratum".to_string()),    // XXX UGLY
-            );
             result = self.protocol.send_request(
                 &mut self.stream,
                 "job".to_string(),

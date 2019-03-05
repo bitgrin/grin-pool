@@ -26,6 +26,15 @@ from grinlib import lib
 from grinbase.model.blocks import Blocks
 from grinbase.model.grin_stats import Grin_stats
 
+# GLOBALS - Tromps magic numbers
+SECONDARY_SIZE = 29
+BASE_EDGE_BITS = 24 # HARD FORK TO CHANGE
+
+
+
+def get_secondary_size():
+    return SECONDARY_SIZE
+
 def get_api_url():
     config = lib.get_config()
     grin_api_url = "http://" + config["grin_node"]["address"] + ":" + config["grin_node"]["api_port"]
@@ -90,20 +99,46 @@ def calculate_graph_rate(difficulty, edge_bits=29):
     print("G/s  = {}".format(gps))
     return gps
 
+# Network Difficulty
+def get_network_difficulty(height):
+    latest_blocks = Blocks.get_by_height(height, 2)
+    return latest_blocks[1].total_difficulty - latest_blocks[0].total_difficulty
+
 # Compute weight of a graph as number of siphash bits defining the graph
 # Must be made dependent on height to phase out smaller size over the years
 # This can wait until end of 2019 at latest
 # https://github.com/mimblewimble/grin/blob/6980278b95d266f6a420b64052ab6231a6e1c466/core/src/consensus.rs#L157
 def graph_weight(edge_bits):
-    BASE_EDGE_BITS = 24 # HARD FORK TO CHANGE
     return (2 << (edge_bits - BASE_EDGE_BITS)) * edge_bits
 
+# The following is from
+# https://github.com/mimblewimble/grin-explorer/blob/01b5fc1ebecdb7ec842be241b725675497419ccc/grinexplorer/blockchain/models.py
+def scaled_difficulty(hash, graph_weight):
+    # Difficulty achieved by this proof with given scaling factor
+    diff = ((graph_weight) << 64) / int(hash[:16], 16)
+    return min(diff, 0xffffffffffffffff)
 
-# Network Difficulty
-def get_network_difficulty(height):
-    latest_blocks = Blocks.get_range_by_height(height-1, height)
-    return latest_blocks[1].total_difficulty - latest_blocks[0].total_difficulty
+def from_proof_adjusted(hash, edge_bits):
+    # Computes the difficulty from a hash. Divides the maximum target by the
+    # provided hash and applies the Cuck(at)oo size adjustment factor
+    # scale with natural scaling factor
+    return scaled_difficulty(hash, graph_weight(edge_bits))
 
+def from_proof_scaled(hash, secondary_scaling):
+    # Same as `from_proof_adjusted` but instead of an adjustment based on
+    # cycle size, scales based on a provided factor. Used by dual PoW system
+    # to scale one PoW against the other.
+    # Scaling between 2 proof of work algos
+    return scaled_difficulty(hash, secondary_scaling)
+
+def difficulty(hash, edge_bits, secondary_scaling):
+    # Maximum difficulty this proof of work can achieve
+    # 2 proof of works, Cuckoo29 (for now) and Cuckoo30+, which are scaled
+    # differently (scaling not controlled for now)
+    if (edge_bits == SECONDARY_SIZE):
+        return int(from_proof_scaled(hash, secondary_scaling))
+    else:
+        return int(from_proof_adjusted(hash, edge_bits))
 
 
 

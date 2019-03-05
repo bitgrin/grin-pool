@@ -36,7 +36,7 @@ from grinbase.model.worker_shares import Worker_shares
 
 
 # XXX TODO: MOVE THIS TO CONFIG
-MINIMUM_DIFFICULTY = 8 # MUST MATCH STRATUM SERVERS
+MINIMUM_DIFFICULTY = 1
 
 # XXX TODO: Get this from blockchain
 BLOCK_REWARD = 4.5 # bitgrin - this is valid for the first 4 years
@@ -197,6 +197,8 @@ def calculate_block_payout_map(height, window_size, pool_fee, logger, estimate=F
     block_payout_map = {}
     # Get the grinpool admin user ID for pool fee
     pool_admin_user_id = None
+    # Total the payments for sanity check
+    total_payments_this_block = 0
     try:
         admin_user = os.environ["GRIN_POOL_ADMIN_USER"]
         admin_user_record = User.get_id_by_username(admin_user)
@@ -267,12 +269,14 @@ def calculate_block_payout_map(height, window_size, pool_fee, logger, estimate=F
             # Calcualte the total share value from this worker
             total_worker_value = calculate_total_share_value({user_id:worker_shares_count}, scale)
             worker_payment = total_worker_value / total_value * reward
+            total_payments_this_block += worker_payment
             print("worker_payment: {}".format(worker_payment/1000000000))
             sys.stdout.flush()
             if user_id in block_payout_map:
                 block_payout_map[user_id] += worker_payment
             else:
                 block_payout_map[user_id] = worker_payment
+        logger.warn("Total Grin Paid Out this block: {}".format(total_payments_this_block))
         #print("block_payout_map = {}".format(block_payout_map))
         #sys.stdout.flush()
         if estimate == True:

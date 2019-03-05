@@ -72,6 +72,7 @@ def main():
                 for height in need_estimates:
                     LOGGER.warn("Ensure estimate for block: {}".format(height))
                     payout_map = pool.calculate_block_payout_map(height, pplns_window, pool_fee, LOGGER, True)
+                    # Double check the total paid is correct
                     esitmated.append(height)
                     LOGGER.warn("Completed estimate for block: {}".format(height))
     

@@ -56,6 +56,8 @@ def estimate_all_gps(window):
     height = window[-1].height
     # Get the difficulty of the most recent block
     difficulty = window[-1].total_difficulty - window[-2].total_difficulty
+    # Time Delta (as float, in minutes) for this window
+    time_delta = float((window[-1].timestamp - window[0].timestamp).total_seconds()) / float(len(window))
     # Get secondary_scaling value for the most recent block
     secondary_scaling = window[-1].secondary_scaling
     if secondary_scaling == 0:
@@ -82,12 +84,12 @@ def estimate_all_gps(window):
     for edge_bits in counts:
         gps = 0
         if edge_bits == SECONDARY_SIZE:
-            gps = 42 * difficulty * q / secondary_scaling / 60
+            gps = 42.0 * float(difficulty) * float(q) / float(secondary_scaling) / time_delta
         else:
             count_ratio = counts[edge_bits] / count_primary
             print("count_ratio={}".format(count_ratio))
-            print("gps = 42 * {} * {} * {} / {} / 60".format(difficulty, r, count_ratio, graph_weight(edge_bits)))
-            gps = 42 * difficulty * r * count_ratio / graph_weight(edge_bits) / 60
+            print("gps = 42 * {} * {} * {} / {} / {}".format(difficulty, r, count_ratio, graph_weight(edge_bits), time_delta))
+            gps = 42.0 * float(difficulty) * float(r) * float(count_ratio) / float(graph_weight(edge_bits)) / time_delta
         all_gps.append((edge_bits, gps, ))
     return all_gps
 

@@ -23,18 +23,26 @@ spec:
     name: nginxssl
   - port: 3301
     name: stratumprivate
-  - port: 3401
-    name: stratumsslprivate
   - port: 3333
     name: stratum
   - port: 3332
     name: stratuma
   - port: 13416
     name: stratumb
+  - port: 3416
+    name: stratumgrinmint
+  - port: 3401
+    name: stratumsslprivate
   - port: 3334
     name: stratumssl
+  - port: 4416
+    name: stratumsslgrinment
   - port: 23416
     name: stratumssla
+  - port: 4443
+    name: stratumhd
+  - port: 4444
+    name: stratumhdssl
   selector:
     run: nginx
 ---

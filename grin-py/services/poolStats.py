@@ -71,7 +71,7 @@ def main():
                 latest = Blocks.get_latest().height
                 while height > Worker_shares.get_latest_height():
                     LOGGER.warn("Waiting for shares records to catch up: {} vs {}".format(latest, Worker_shares.get_latest_height()))
-                    sleep(30)
+                    sleep(3)
                 while latest > height+2:
                     new_stats = poolstats.calculate(height, avg_over_range)
                     # Batch new stats when possible, but commit at reasonable intervals

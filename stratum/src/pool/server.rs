@@ -339,8 +339,19 @@ impl Server {
                                         match res.method.as_str() {
                                             "getjobtemplate" => {
                                                 // The upstream stratum server has sent us a new job
-                                                // XXX TODO:  This could be an error result - ex: "Node is syncing - Please wait"
-                                                let job: JobTemplate = match serde_json::from_value(res.result.unwrap()) {
+                                                // This could be an error result - ex: "Node is syncing - Please wait"
+                                                let result: Value = match res.result {
+                                                    Some(r) => r,
+                                                    None => {
+                                                        let err_msg = format!("Error result: {}", res.error.unwrap());
+                                                        let err = RpcError {
+                                                            code: -32600,
+                                                            message: err_msg,
+                                                        };
+                                                        return Err(err);
+                                                    }
+                                                };
+                                                let job: JobTemplate = match serde_json::from_value(result) {
                                                     Ok(r) => r,
                                                     Err(e) => {
                                                         let err_msg = format!("Invalid jobtemplate from server: {}", e);

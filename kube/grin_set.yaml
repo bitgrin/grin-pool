@@ -62,7 +62,7 @@ spec:
           mountPath: /server
       - name: sharewatcher
         image: bitgrinmining/logstash:latest
-        command: ["/run.sh", "grinsharefilter.conf"]
+        command: ["/run.sh", "poolblockfilter.conf"]
 #        command: ["sleep", "9999999"]
         env:
         - name: RMQ_USER

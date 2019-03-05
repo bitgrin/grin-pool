@@ -110,12 +110,11 @@ def calculate(height, window_size):
         print("Looking up shares for height {} user {}".format(height, worker))
         this_workers_shares_this_block = Worker_shares.get_by_height_and_id(height, worker)
         print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX {}".format(this_workers_shares_this_block))
-        if this_workers_shares_this_block is None or len(this_workers_shares_this_block) == 0:
+        if this_workers_shares_this_block is None:
             this_workers_valid_shares = 0
             this_workers_invalid_shares = 0
             this_workers_stale_shares = 0
         else:
-            this_workers_shares_this_block = this_workers_shares_this_block[-1]
             this_workers_valid_shares = this_workers_shares_this_block.num_valid()
             this_workers_invalid_shares = this_workers_shares_this_block.num_invalid()
             this_workers_stale_shares = this_workers_shares_this_block.num_stale()

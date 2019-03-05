@@ -19,7 +19,7 @@ kind: Deployment
 metadata:
   name: stratum
 spec:
-  replicas: 1
+  replicas: 5
   template:
     metadata:
       labels:
@@ -36,7 +36,7 @@ spec:
           mountPath: /stratum
       - name: sharewatcher
         image: bitgrinmining/logstash:latest
-        command: ["/run.sh", "poolsharefilter.conf"]
+        command: ["/run.sh", "sharefilter.conf"]
         env:
         - name: RMQ_USER
           valueFrom:

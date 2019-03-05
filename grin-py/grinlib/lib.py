@@ -37,7 +37,7 @@ from grinbase.model.blocks import Blocks
 
 # XXX TODO: Get from config
 REDIS_HOST = "redis-master"
-MINIMUM_DIFFICULTY = 8 # XXX MUST MATCH STRATUM SERVER
+MINIMUM_DIFFICULTY = 1
 
 LOGGER = None
 CONFIG = None

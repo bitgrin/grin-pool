@@ -225,7 +225,7 @@ impl Pool {
                 // User id changed - probably because they logged in
                 id_changed.push(worker_id.clone());
                 debug!( LOGGER, "id changed:  full_id {} - {:?}", worker.full_id().clone(), res );
-                worker.set_block_status(self.job.height, self.difficulty);
+                worker.reset_worker_shares(self.job.height, self.difficulty);
             }
         }
         // Rehash the worker using updated id
@@ -246,13 +246,14 @@ impl Pool {
             if worker.needs_job && worker.authenticated {
                 warn!( LOGGER, "job to: {} - needs_job: {}, requested_job: {}, authenticated: {}", worker_id, worker.needs_job, worker.requested_job, worker.authenticated );
                 // Randomize the nonce
-                // XXX TODO (Need to know block header format and deserialize it
+                // XXX TODO (We do have the deserialized block header code so we can do this now)
                 worker.set_difficulty(self.difficulty);
                 worker.set_height(self.job.height);
-                // Print this workers block_status for logstash to send to rmq
-                error!(LOGGER, "{:?}", worker.block_status);
-                worker.set_block_status(self.job.height, self.difficulty);
-                worker.send_job(&mut self.server.job.clone());
+                // Print this workers worker_shares (previous block) for logstash to send to rmq
+                error!(LOGGER, "{:?}", worker.worker_shares);
+                // Reset the workers current block stats
+                worker.reset_worker_shares(self.job.height, self.difficulty);
+                worker.send_job(&mut self.job.clone());
             }
         }
     }
@@ -262,7 +263,10 @@ impl Pool {
         if self.job.pre_pow != self.server.job.pre_pow {
             debug!(LOGGER, "accept_new_job: {} vs {}", self.job.pre_pow.clone(), self.server.job.pre_pow.clone());
             let new_height: bool = self.job.height != self.server.job.height;
-            self.job = self.server.job.clone();
+            let mut new_job = self.server.job.clone();
+            // Update the new jobs job_id (bminer wants this)
+            new_job.job_id = new_job.height * 1000 + new_job.job_id;
+            self.job = new_job;
             debug!(LOGGER, "accept_new_job broadcasting: {}", self.job.pre_pow.clone());
             // broadcast it to the workers
             let _ = self.broadcast_job();
@@ -285,7 +289,8 @@ impl Pool {
             match worker.get_shares().unwrap() {
                 None => {}
                 Some(shares) => {
-                    for share in shares {
+                    for mut share in shares {
+                        // Get the workers id-rigname
                         let full_worker_id: String = format!("{}-{}", worker.id(), worker.rig_id());
                         //  Check for duplicate or add to duplicate map
                         if self.duplicates.contains_key(&share.pow) {
@@ -297,36 +302,27 @@ impl Pool {
                                 worker.login(),
                             );
                             worker.status.rejected += 1;
-                            worker.block_status.rejected += 1;
-    // For dashboard stats - remove after RMQ change
-    self.server.submit_share(&share.clone(), full_worker_id.clone());
-    warn!(LOGGER, "{} - Got share at height {} with nonce {} with difficulty {} from worker {}",
-            self.id,
-            share.height,
-            share.nonce,
-            worker.status.difficulty,
-            full_worker_id,
-    );
+                            worker.add_shares(share.edge_bits, 0, 1, 0); // Accepted, Rejected, Stale
+                            worker.send_err("submit".to_string(), "Failed to validate solution".to_string(), -32502);
                             continue; // Dont process this share anymore
                         } else {
                             self.duplicates.insert(share.pow.clone(), worker.id());
+                        }
+                        // Check that its a valid pow size
+                        if share.edge_bits < 29 || share.edge_bits == 30 {
+                            // Invalid Size
+                            worker.status.rejected += 1;
+                            // worker.add_shares(share.edge_bits, 0, 1, 0); // Accepted, Rejected, Stale
+                            worker.send_err("submit".to_string(), "Invalid POW size".to_string(), -32502);
+                            continue; // Dont process this share anymore
                         }
                         // Check the height to see if its stale
                         if share.height != self.job.height {
                             // Its stale
                             warn!(LOGGER, "Share is stale {} vs {}", share.height, self.job.height);
                             worker.status.stale += 1;
-                            worker.block_status.stale += 1;
+                            worker.add_shares(share.edge_bits, 0, 0, 1); // Accepted, Rejected, Stale
                             worker.send_err("submit".to_string(), "Solution submitted too late".to_string(), -32503);
-    // For dashboard stats - remove after RMQ change
-    self.server.submit_share(&share.clone(), full_worker_id.clone());
-    warn!(LOGGER, "{} - Got share at height {} with nonce {} with difficulty {} from worker {}",
-            self.id,
-            share.height,
-            share.nonce,
-            worker.status.difficulty,
-            full_worker_id,
-    );
                             continue; // Dont process this share anymore
                         }
                         // Check if the pre-pow matches the job we sent - avoid "constructed solutions"
@@ -334,16 +330,7 @@ impl Pool {
                         match self.job_versions.get(&share.job_id) {
                             None => {
                                 worker.status.rejected += 1;
-                                worker.block_status.rejected += 1;
-    // For dashboard stats - remove after RMQ change
-    self.server.submit_share(&share.clone(), full_worker_id.clone());
-    warn!(LOGGER, "{} - Got share at height {} with nonce {} with difficulty {} from worker {}",
-            self.id,
-            share.height,
-            share.nonce,
-            worker.status.difficulty,
-            full_worker_id,
-    );
+                                worker.add_shares(share.edge_bits, 0, 1, 0); // Accepted, Rejected, Stale
                                 continue // Dont process this share anymore
                             },
                             Some(pre_pow) => {
@@ -355,17 +342,8 @@ impl Pool {
                                     Ok(r) => { r },
                                     Err(e) => { 
                                         worker.status.rejected += 1;
-                                        worker.block_status.rejected += 1;
+                                        worker.add_shares(share.edge_bits, 0, 1, 0); // Accepted, Rejected, Stale
                                         worker.send_err("submit".to_string(), "Failed to validate solution".to_string(), -32502);
-    // For dashboard stats - remove after RMQ change
-    self.server.submit_share(&share.clone(), full_worker_id.clone());
-    warn!(LOGGER, "{} - Got share at height {} with nonce {} with difficulty {} from worker {}",
-            self.id,
-            share.height,
-            share.nonce,
-            worker.status.difficulty,
-            full_worker_id,
-    );
                                         continue; // Dont process this share anymore
 
                                     },
@@ -374,17 +352,8 @@ impl Pool {
                                 let verify_result = grin_core::pow::verify_size(&bh);
                                 if ! verify_result.is_ok() {
                                         worker.status.rejected += 1;
-                                        worker.block_status.rejected += 1;
+                                        worker.add_shares(share.edge_bits, 0, 1, 0); // Accepted, Rejected, Stale
                                         worker.send_err("submit".to_string(), "Failed to validate solution".to_string(), -32502);
-    // For dashboard stats - remove after RMQ change
-    self.server.submit_share(&share.clone(), full_worker_id.clone());
-    warn!(LOGGER, "{} - Got share at height {} with nonce {} with difficulty {} from worker {}",
-            self.id,
-            share.height,
-            share.nonce,
-            worker.status.difficulty,
-            full_worker_id,
-    );
                                         continue; // Dont process this share anymore
                                 }
                                 // For debugging - remove
@@ -405,42 +374,36 @@ impl Pool {
                         // Check if this meets worker difficulty
                         if difficulty < 1 {
                             worker.status.rejected += 1;
-                            worker.block_status.rejected += 1;
+                            worker.add_shares(share.edge_bits, 0, 1, 0); // Accepted, Rejected, Stale
                             worker.send_err("submit".to_string(), "Rejected low difficulty solution".to_string(), -32502);
-    // For dashboard stats - remove after RMQ change
-    self.server.submit_share(&share.clone(), full_worker_id.clone());
-    warn!(LOGGER, "{} - Got share at height {} with nonce {} with difficulty {} from worker {}",
-            self.id,
-            share.height,
-            share.nonce,
-            worker.status.difficulty,
-            full_worker_id,
-    );
                             continue; // Dont process this share anymore
                         }
                         if difficulty < worker.status.difficulty {
                             worker.status.rejected += 1;
-                            worker.block_status.rejected += 1;
+                            worker.add_shares(share.edge_bits, 0, 1, 0); // Accepted, Rejected, Stale
                             worker.send_err("submit".to_string(), "Failed to validate solution".to_string(), -32502);
-    // For dashboard stats - remove after RMQ change
-    self.server.submit_share(&share.clone(), full_worker_id.clone());
-    warn!(LOGGER, "{} - Got share at height {} with nonce {} with difficulty {} from worker {}",
-            self.id,
-            share.height,
-            share.nonce,
-            worker.status.difficulty,
-            full_worker_id,
-    );
                             continue; // Dont process this share anymore
                         }
                         if difficulty >= worker.status.difficulty {
                             worker.status.accepted += 1;
-                            worker.block_status.accepted += 1;
+                            worker.add_shares(share.edge_bits, 1, 0, 0); // Accepted, Rejected, Stale
                             worker.send_ok("submit".to_string());
                         }
                         // This is a good share, send it to grin server to be submitted
-                        // XXX TODO: Only send high power shares
-                        self.server.submit_share(&share.clone(), full_worker_id.clone());
+                        // XXX TODO:  Only send high power shares - minimum difficulty is set by the upstream
+                        // grin stratum server
+//                        if difficulty >= self.job.difficulty { // XXX TODO <---- this compares scaled to unscaled difficulty values - no good XXX TODO
+                            // remove the block height prefix from the job_id
+                            share.job_id = share.job_id % share.height;
+                            self.server.submit_share(&share.clone(), full_worker_id.clone());
+                            warn!(LOGGER, "{} - Submitted share at height {} with nonce {} with difficulty {} from worker {}",
+                                self.id,
+                                share.height,
+                                share.nonce,
+                                worker.status.difficulty,
+                                full_worker_id,
+                            );
+//                        }
                         warn!(LOGGER, "{} - Got share at height {} with nonce {} with difficulty {} from worker {}",
                                 self.id,
                                 share.height,
@@ -467,12 +430,12 @@ impl Pool {
         // XXX TODO: need to set a unique timestamp and record it in the worker struct
         for (worker_id, worker) in w_m.iter_mut() {
             if worker.authenticated {
-                worker.set_difficulty(8); // XXX TODO: this get from config?
+                worker.set_difficulty(self.config.workers.port_difficulty.difficulty);
                 worker.set_height(self.job.height);
                 // Print this workers block_status for logstash to send to rmq
-                error!(LOGGER, "{:?}", worker.block_status);
+                error!(LOGGER, "{:?}", worker.worker_shares);
                 worker.send_job(&mut self.job.clone());
-                worker.set_block_status(self.job.height, self.difficulty);
+                worker.reset_worker_shares(self.job.height, self.difficulty);
             }
         }
         return Ok(());

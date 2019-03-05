@@ -56,7 +56,6 @@ def estimate_gps_for_all_sizes(window):
             valid_cnt[shares.edge_bits] += shares.valid
     print("Valid Share Counts entire window:")
     pp.pprint(valid_cnt)
-    all_worker_shares_this_block = [ws for ws in window if ws.height == last_height]
     all_gps = []
     for sz, cnt in valid_cnt.items():
         gps = lib.calculate_graph_rate(window[0].timestamp, window[-1].timestamp, cnt)

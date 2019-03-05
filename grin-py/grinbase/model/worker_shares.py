@@ -68,22 +68,21 @@ class Worker_shares(Base):
 
     def add_shares(self, edge_bits, difficulty, valid, invalid, stale):
         # First search existing shares to add to, else create new
-        share_records = {}
         for rec in self.shares:
-            share_records[rec.edge_bits] = rec
-        if edge_bits not in share_records:
-            rec = Shares(
-                edge_bits = edge_bits,
-                difficulty = difficulty,
-                valid = valid,
-                invalid = invalid,
-                stale = stale,
-            )
-            self.shares.append(rec)
-            return
-        share_records[edge_bits].valid += valid
-        share_records[edge_bits].invalid += invalid
-        share_records[edge_bits].stale += stale
+            if int(rec.edge_bits) == int(edge_bits):
+                rec.valid += valid
+                rec.invalid += invalid
+                rec.stale += stale
+                return
+        rec = Shares(
+            edge_bits = edge_bits,
+            difficulty = difficulty,
+            valid = valid,
+            invalid = invalid,
+            stale = stale,
+        )
+        self.shares.append(rec)
+        return
         
         
 
@@ -119,7 +118,7 @@ class Worker_shares(Base):
     def get_by_height_and_id(cls, height, id, range=None):
         print("height={}, id={}, range={}".format(height, id, range))
         if range is None:
-            return list(database.db.getSession().query(Worker_shares).filter(and_(Worker_shares.height == height, Worker_shares.user_id == id))) #.one()
+            return database.db.getSession().query(Worker_shares).filter(and_(Worker_shares.height == height, Worker_shares.user_id == id)).one_or_none()
         else:
             h_start = height-(range-1)
             h_end = height

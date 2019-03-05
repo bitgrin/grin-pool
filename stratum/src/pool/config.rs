@@ -15,6 +15,7 @@
 use serde_derive;
 use std::fs::File;
 use std::io::prelude::*;
+use std::env;
 use toml;
 
 const CONFIG_FILE_NAME: &'static str = "grin-pool.toml";
@@ -58,6 +59,25 @@ pub fn read_config() -> Config {
     config_file
         .read_to_string(&mut toml_str)
         .expect("Failure while reading config file");
-    let config: Config = toml::from_str(&toml_str).unwrap();
-    return config;
+    let mut config: Config = toml::from_str(&toml_str).unwrap();
+
+    // Environment Variable Overrides
+    match env::var("DIFFICULTY") {
+        Ok(difficulty) => {
+            config.workers.port_difficulty.difficulty = difficulty.parse().unwrap() ;
+            println!("env difficulty: {:?}", config);
+
+        }
+        Err(e) => {}
+    }
+
+    match env::var("GRIN_ADDRESS") {
+        Ok(address) => {
+            config.grin_node.address = address;
+            println!("env address: {:?}", config);
+        }
+        Err(e) => {}
+    }
+
+    return config.clone();
 }
