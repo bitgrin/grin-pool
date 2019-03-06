@@ -1,39 +1,39 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: stratum
+  name: stratum-hd
   labels:
-    run: stratum
+    run: stratum-hd
 spec:
   type: LoadBalancer
-  loadBalancerIP: 35.195.176.190
+  loadBalancerIP: 34.76.93.175
   ports:
   - port: 3333
-    name: stratum
+    name: stratum-hd
     protocol: TCP
   selector:
-    run: stratum
+    run: stratum-hd
 ---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: stratum
+  name: stratum-hd
 spec:
-  replicas: 5
+  replicas: 1
   template:
     metadata:
       labels:
-        run: stratum
+        run: stratum-hd
     spec:
       containers:
-      - name: stratum
+      - name: stratum-hd
         image: bitgrinmining/stratum:latest
         command: ["/run.sh"]
         env:
         - name: DIFFICULTY
-          value: "8"
+          value: "300"
         - name: GRIN_ADDRESS
-          value: "grin"
+          value: "grin-hd"
         ports:
         - containerPort: 3333
         volumeMounts:

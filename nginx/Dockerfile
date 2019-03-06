@@ -42,15 +42,6 @@ COPY src/nginx.conf /etc/nginx/nginx.conf
 # Proxy Config
 COPY src/stratum_proxy_params  /etc/nginx/stratum_proxy_params
 
-# Cloudflare CA
-COPY src/cloudflare_origin_rsa.pem /etc/ssl/certs/cloudflare_origin_rsa.pem
-COPY src/cloudflare_origin_ecc.pem /etc/ssl/certs/cloudflare_origin_ecc.pem
-RUN cd /etc/ssl/certs/ && \
-    ln -s cloudflare_origin_rsa.pem d947dbd7.0 && \
-    ln -s cloudflare_origin_rsa.pem d947dbd7 && \
-    ln -s cloudflare_origin_ecc.pem 6976c116.0 && \
-    ln -s cloudflare_origin_ecc.pem 6976c116
-
 RUN update-ca-certificates --fresh
 
 
