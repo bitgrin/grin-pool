@@ -1,4 +1,22 @@
 ---
+# P2p port is public
+apiVersion: v1
+kind: Service
+metadata:
+  name: grin-hd-p2p
+  labels:
+    app: grin-hd
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 34.76.143.174
+  ports:
+  - name: ptop
+    port: 8514
+    targetPort: 13414
+    protocol: TCP
+  selector:
+    app: grin
+---
 apiVersion: v1
 kind: Service
 metadata:

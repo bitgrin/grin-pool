@@ -81,8 +81,18 @@ def calculate(height, window_size):
     active_miners = len(list(set([s.user_id for s in window])))
     print("active_miners = {}".format(active_miners))
     # Keep track of share totals - sum counts of all share sizes submitted for this block
-    shares_processed = Worker_shares.get_by_height(height)
-    num_shares_processed = sum([shares.num_shares() for shares in shares_processed])
+    num_shares_processed = 0
+    share_counts = {}
+    for ws in Worker_shares.get_by_height(height):
+        num_shares_processed += ws.num_shares()
+        for size in ws.sizes():
+            size_str = "{}{}".format("C", size)
+            if size_str not in share_counts:
+                share_counts[size_str] = {"valid": 0, "invalid": 0, "stale": 0}
+            share_counts[size_str] = { "valid": share_counts[size_str]["valid"] + ws.num_valid(size),
+                                       "invalid": share_counts[size_str]["invalid"] + ws.num_invalid(size),
+                                       "stale": share_counts[size_str]["stale"] + ws.num_stale(size)
+                                     }
     print("num_shares_processed this block= {}".format(num_shares_processed))
     total_shares_processed = previous_stats_record.total_shares_processed + num_shares_processed
     total_blocks_found = previous_stats_record.total_blocks_found
@@ -94,6 +104,7 @@ def calculate(height, window_size):
             height = height,
             timestamp = timestamp,
             active_miners = active_miners,
+            share_counts = share_counts,
             shares_processed = num_shares_processed,
             total_blocks_found = total_blocks_found,
             total_shares_processed = total_shares_processed,
@@ -130,6 +141,7 @@ def recalculate(start_height, window_size):
         else:
             old_stats.timestamp = new_stats.timestamp
             old_stats.active_miners = new_stats.active_miners
+            old_stats.share_counts = new_stats.share_counts
             old_stats.shares_processed = new_stats.shares_processed
             old_stats.total_blocks_found = new_stats.total_blocks_found
             old_stats.total_shares_processed = new_stats.total_shares_processed

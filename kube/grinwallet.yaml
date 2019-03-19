@@ -5,19 +5,16 @@ metadata:
   labels:
     run: grinwallet
 spec:
-  # XXX TODO: REMOVE THIS BEFORE RELEASE
-#  type: LoadBalancer
+  type: NodePort
   ports:
   - port: 13415
-#    nodePort: 32415
+    nodePort: 30415
     protocol: TCP
     name: public
   - port: 13420
-    # nodePort: 32420
     protocol: TCP
     name: private
   - port: 13425
-    # nodePort: 32425
     protocol: TCP
     name: api
   selector:

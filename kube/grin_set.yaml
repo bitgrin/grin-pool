@@ -8,10 +8,11 @@ metadata:
     app: grin
 spec:
   type: LoadBalancer
-  loadBalancerIP: 35.247.33.125
+  loadBalancerIP: 35.205.149.77
   ports:
   - name: ptop
-    port: 3414
+    port: 8514
+    targetPort: 13414
     protocol: TCP
   selector:
     app: grin

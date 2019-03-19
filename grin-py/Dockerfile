@@ -1,4 +1,4 @@
-FROM docker.mwgrinpool.com:5001/mwdockerbase
+FROM mwdockerbase
 
 COPY requirements.txt /
 RUN pip3 install -r /requirements.txt

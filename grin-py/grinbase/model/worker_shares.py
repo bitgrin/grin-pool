@@ -54,11 +54,17 @@ class Worker_shares(Base):
         else:
             return sum([s.valid for s in self.shares if s.edge_bits == edge_bits])
 
-    def num_invalid(self):
-        return sum([s.invalid for s in self.shares])
+    def num_invalid(self, edge_bits=None):
+        if edge_bits is None:
+            return sum([s.invalid for s in self.shares])
+        else:
+            return sum([s.invalid for s in self.shares if s.edge_bits == edge_bits])
 
-    def num_stale(self):
-        return sum([s.stale for s in self.shares])
+    def num_stale(self, edge_bits=None):
+        if edge_bits is None:
+            return sum([s.stale for s in self.shares])
+        else:
+            return sum([s.stale for s in self.shares if s.edge_bits == edge_bits])
 
     def sizes(self):
         return list(set([s.edge_bits for s in self.shares]))

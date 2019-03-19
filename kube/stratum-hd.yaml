@@ -31,7 +31,7 @@ spec:
         command: ["/run.sh"]
         env:
         - name: DIFFICULTY
-          value: "300"
+          value: "256"
         - name: GRIN_ADDRESS
           value: "grin-hd"
         ports:
