@@ -155,7 +155,7 @@ def verify_password(username_or_token, password=None):
     global database
     #database = lib.get_db()
     LOGGER = lib.get_logger(PROCESS)
-    print("Will Verify User: {}, {}", username_or_token, password)
+    LOGGER.warn("Will Verify User: {}, {}".format(username_or_token, password))
     # First try to verify via token
     user_rec = Users.verify_auth_token(app.config['SECRET_KEY'], username_or_token)
     if user_rec is None:
@@ -192,6 +192,14 @@ class PoolAPI_users(Resource):
             LOGGER.warn("Missing username or password - {}".format(str(e)))
         if username is None or password is None:
             response = jsonify({ 'message': 'Missing arguments: username and pasword required' })
+            response.status_code = 400
+            return response
+        if username == "" or password == "":
+            response = jsonify({ 'message': 'Missing arguments: username and pasword required' })
+            response.status_code = 400
+            return response
+        if "/" in username:
+            response = jsonify({ 'message': 'Invalid Username: May not contain "/"' })
             response.status_code = 400
             return response
         # Check if the username is taken
@@ -364,7 +372,7 @@ class PoolAPI_blocks(Resource):
         else:
             bl = []
             for block in blocks:
-                bl.append(block.to_json(fields))
+                bl = [block.to_json(fields)] + bl
             return bl
 
 api.add_resource(PoolAPI_blocks,
