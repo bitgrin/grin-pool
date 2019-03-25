@@ -357,6 +357,8 @@ class PoolAPI_blocks(Resource):
     #decorators = [limiter.limit("50/minute")]
     @cache.cached(timeout=10)
     def get(self, height=None, range=None, fields=None):
+        LOGGER = lib.get_logger(PROCESS)
+        LOGGER.warn("PoolAPI_blocks get height:{}, range:{}, fields:{}".format(height, range, fields))
         # Enforce range limit
         if range is not None:
             range = min(range, pool_blocks_range_limit)
