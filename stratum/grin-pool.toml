@@ -11,10 +11,13 @@
 # Configuration for the Stratum Pool
 [grin_pool]
 log_dir = "/stratum"
+#log_level_file = "Warning"
+#log_level_stdout = "Trace"
 
 [workers]
 listen_address = "0.0.0.0"
 port_difficulty = [3333, 8]
+
 
 #
 # Configuration for access to upstream grin node

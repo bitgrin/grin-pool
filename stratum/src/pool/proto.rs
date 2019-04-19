@@ -23,8 +23,6 @@ use std::io::BufRead;
 use std::io::{ErrorKind, Write};
 use std::net::TcpStream;
 
-use pool::logger::LOGGER;
-
 // ----------------------------------------
 // RPC Messages
 //
@@ -136,7 +134,7 @@ impl StratumProtocol {
         // Read and return a single message or None or Err
         match stream.read_line(buffer) {
             Ok(_) => {
-                // warn!(LOGGER, "XXX DEBUG - line read: {:?}", line);
+                // warn!("XXX DEBUG - line read: {:?}", line);
                 let res = buffer.clone();
                 buffer.clear();
                 return Ok(Some(res));
@@ -146,7 +144,7 @@ impl StratumProtocol {
                 return Ok(None);
             }
             Err(e) => {
-                error!(LOGGER, "{} - Connection Error 1a: {}", self.id, e);
+                error!("{} - Connection Error 1a: {}", self.id, e);
                 buffer.clear();
                 return Err(format!("{}", e));
             }
@@ -167,12 +165,12 @@ impl StratumProtocol {
             Ok(_) => match stream.flush() {
                 Ok(_) => {}
                 Err(e) => {
-                    error!(LOGGER, "{} - Connection Error 2: {}", self.id, e);
+                    error!("{} - Connection Error 2: {}", self.id, e);
                     return Err(format!("{}", e));
                 }
             },
             Err(e) => {
-                error!(LOGGER, "{} - Connection Error 2a: {}", self.id, e);
+                error!("{} - Connection Error 2a: {}", self.id, e);
                 return Err(format!("{}", e));
             }
         }
@@ -196,9 +194,9 @@ impl StratumProtocol {
         stream: &mut BufStream<TcpStream>,
         method: String,
         params: Option<Value>,
-        worker_id: Option<String>,
+        connection_id: Option<String>,
     ) -> Result<(), String> {
-        let request_id = match worker_id {
+        let request_id = match connection_id {
             None => "0".to_string(),
             Some(id) => id,
         };
@@ -210,7 +208,6 @@ impl StratumProtocol {
         };
         let req_str = serde_json::to_string(&req).unwrap();
         trace!(
-            LOGGER,
             "{} for {} - Requesting: {}",
             self.id,
             request_id,
@@ -236,7 +233,6 @@ impl StratumProtocol {
         };
         let res_str = serde_json::to_string(&res).unwrap();
         trace!(
-            LOGGER,
             "{} for {} - Responding: {}",
             self.id,
             id.unwrap(),
@@ -260,7 +256,7 @@ impl StratumProtocol {
             error: Some(serde_json::to_value(error).unwrap()),
         };
         let res_str = serde_json::to_string(&res).unwrap();
-        trace!(LOGGER, "{} - Responding with Error: {}", self.id, res_str);
+        trace!("{} - Responding with Error: {}", self.id, res_str);
         return self.write_message(res_str, stream);
     }
 }

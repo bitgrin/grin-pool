@@ -26,7 +26,6 @@ use grin_core::core::BlockHeader;
 use grin_core::ser::{deserialize, ser_vec};
 
 use pool::config::{Config, NodeConfig, PoolConfig, WorkerConfig};
-use pool::logger::LOGGER;
 use pool::proto::{JobTemplate, RpcError, SubmitParams, WorkerStatus};
 
 use pool::server::Server;
@@ -39,10 +38,12 @@ use pool::consensus::Proof as MinerProof;
 // Run in a thread. Adds new connections to the workers list
 fn accept_workers(
     stratum_id: String,
-    address: String,
-    difficulty: u64,
+    config: Config,
     workers: &mut Arc<Mutex<HashMap<String, Worker>>>,
 ) {
+    let address = config.workers.listen_address.clone() + ":"
+        + &config.workers.port_difficulty.port.to_string();
+    let difficulty = config.workers.port_difficulty.difficulty;
     let listener = TcpListener::bind(address).expect("Failed to bind to listen address");
     let banned: HashMap<SocketAddr, Instant> = HashMap::new();
     let mut rng = rand::thread_rng();
@@ -58,23 +59,20 @@ fn accept_workers(
                             continue;
                         }
                         warn!(
-                            LOGGER,
                             "Worker Listener - New connection from ip: {}",
                             worker_addr
                         );
                         stream
                             .set_nonblocking(true)
                             .expect("set_nonblocking call failed");
-                        let mut worker = Worker::new(0, BufStream::new(stream));
+                        let mut worker = Worker::new(config.clone(), 0, BufStream::new(stream));
                         worker.set_difficulty(difficulty);
                         let initial_id = rng.gen::<u32>();
-                        thread::sleep(time::Duration::from_secs(1));
                         workers.lock().unwrap().insert(initial_id.to_string(), worker);
                         // The new worker is now added to the workers list
                     }
                     Err(e) => {
                         warn!(
-                            LOGGER,
                             "{} - Worker Listener - Error getting wokers ip address: {:?}", stratum_id, e
                         );
                     }
@@ -82,7 +80,6 @@ fn accept_workers(
             }
             Err(e) => {
                 warn!(
-                    LOGGER,
                     "{} - Worker Listener - Error accepting connection: {:?}", stratum_id, e
                 );
             }
@@ -127,7 +124,7 @@ impl Pool {
             job: JobTemplate::new(),
             config: config.clone(),
             server: Server::new(config.clone()),
-            difficulty: 8,
+            difficulty: 1,
             workers: Arc::new(Mutex::new(HashMap::new())),
             duplicates: HashMap::new(),
             job_versions: HashMap::new(),
@@ -139,11 +136,9 @@ impl Pool {
         // Start a thread to listen on port and accept new worker connections
         let mut workers_th = self.workers.clone();
         let id_th = self.id.clone();
-        let address_th = self.config.workers.listen_address.clone() + ":"
-            + &self.config.workers.port_difficulty.port.to_string();
-        let difficulty_th = self.config.workers.port_difficulty.difficulty;
+        let config_th = self.config.clone();
         let _listener_th = thread::spawn(move || {
-            accept_workers(id_th, address_th, difficulty_th, &mut workers_th);
+            accept_workers(id_th, config_th, &mut workers_th);
         });
 
         // Set default pool difficulty
@@ -159,7 +154,6 @@ impl Pool {
                 Ok(_) => { } // server.connect method also logs in and requests a job
                 Err(e) => {
                     error!(
-                        LOGGER,
                         "{} - Unable to connect to upstream server: {}", self.id, e
                     );
                     thread::sleep(time::Duration::from_secs(1));
@@ -203,7 +197,6 @@ impl Pool {
             Err(e) => {
                 // Log an error
                 error!(
-                    LOGGER,
                     "{} - Error processing upstream message: {:?}", self.id, e
                 );
                 // There are also special case(s) where we want to do something for a specific
@@ -221,10 +214,10 @@ impl Pool {
         let mut w_m = self.workers.lock().unwrap();
         for (worker_id, worker) in w_m.iter_mut() {
             let res = worker.process_messages();
-            if worker_id != &*worker.full_id() {
+            if worker_id != &*worker.connection_id() {
                 // User id changed - probably because they logged in
                 id_changed.push(worker_id.clone());
-                debug!( LOGGER, "id changed:  full_id {} - {:?}", worker.full_id().clone(), res );
+                debug!("id changed:  connection_id {} - {:?}", worker.connection_id().clone(), res );
                 worker.reset_worker_shares(self.job.height, self.difficulty);
             }
         }
@@ -234,7 +227,7 @@ impl Pool {
             match worker_o {
                 None => {},
                 Some(worker) => {
-                    w_m.insert(worker.full_id(), worker);
+                    w_m.insert(worker.connection_id(), worker);
                 }
             }
         }
@@ -244,13 +237,13 @@ impl Pool {
         let mut w_m = self.workers.lock().unwrap();
         for (worker_id, worker) in w_m.iter_mut() {
             if worker.needs_job && worker.authenticated {
-                warn!( LOGGER, "job to: {} - needs_job: {}, requested_job: {}, authenticated: {}", worker_id, worker.needs_job, worker.requested_job, worker.authenticated );
+                warn!("job to: {} - needs_job: {}, requested_job: {}, authenticated: {}", worker_id, worker.needs_job, worker.requested_job, worker.authenticated );
                 // Randomize the nonce
                 // XXX TODO (We do have the deserialized block header code so we can do this now)
                 worker.set_difficulty(self.difficulty);
                 worker.set_height(self.job.height);
                 // Print this workers worker_shares (previous block) for logstash to send to rmq
-                error!(LOGGER, "{:?}", worker.worker_shares);
+                error!("{:?}", worker.worker_shares);
                 // Reset the workers current block stats
                 worker.reset_worker_shares(self.job.height, self.difficulty);
                 worker.send_job(&mut self.job.clone());
@@ -261,13 +254,13 @@ impl Pool {
     fn accept_new_job(&mut self) {
         // Use the new job
         if self.job.pre_pow != self.server.job.pre_pow {
-            debug!(LOGGER, "accept_new_job: {} vs {}", self.job.pre_pow.clone(), self.server.job.pre_pow.clone());
+            debug!("accept_new_job: {} vs {}", self.job.pre_pow.clone(), self.server.job.pre_pow.clone());
             let new_height: bool = self.job.height != self.server.job.height;
             let mut new_job = self.server.job.clone();
             // Update the new jobs job_id (bminer wants this)
             new_job.job_id = new_job.height * 1000 + new_job.job_id;
             self.job = new_job;
-            debug!(LOGGER, "accept_new_job broadcasting: {}", self.job.pre_pow.clone());
+            debug!("accept_new_job broadcasting: {}", self.job.pre_pow.clone());
             // broadcast it to the workers
             let _ = self.broadcast_job();
             if new_height {
@@ -291,11 +284,10 @@ impl Pool {
                 Some(shares) => {
                     for mut share in shares {
                         // Get the workers id-rigname
-                        let full_worker_id: String = format!("{}-{}", worker.id(), worker.rig_id());
+                        let full_worker_id: String = format!("{}-{}", worker.id(), worker.connection_id());
                         //  Check for duplicate or add to duplicate map
                         if self.duplicates.contains_key(&share.pow) {
                             debug!(
-                                LOGGER,
                                 "{} - Rejected duplicate share from worker {} with login {}",
                                 self.id,
                                 worker.id(),
@@ -319,7 +311,7 @@ impl Pool {
                         // Check the height to see if its stale
                         if share.height != self.job.height {
                             // Its stale
-                            warn!(LOGGER, "Share is stale {} vs {}", share.height, self.job.height);
+                            warn!("Share is stale {} vs {}", share.height, self.job.height);
                             worker.status.stale += 1;
                             worker.add_shares(share.edge_bits, 0, 0, 1); // Accepted, Rejected, Stale
                             worker.send_err("submit".to_string(), "Solution submitted too late".to_string(), -32503);
@@ -358,7 +350,6 @@ impl Pool {
                                 }
                                 // For debugging - remove
                                 // error!(
-                                //     LOGGER,
                                 //     "Verify Result: {}",
                                 //     verify_result.is_ok(),
                                 // );
@@ -370,7 +361,7 @@ impl Pool {
                             nonces: share.pow.clone().to_vec(),
                         };
                         let difficulty = proof.to_difficulty_unscaled().to_num();
-                        // warn!(LOGGER, "Difficulty: {}", difficulty);
+                        // warn!("Difficulty: {}", difficulty);
                         // Check if this meets worker difficulty
                         if difficulty < 1 {
                             worker.status.rejected += 1;
@@ -390,21 +381,21 @@ impl Pool {
                             worker.send_ok("submit".to_string());
                         }
                         // This is a good share, send it to grin server to be submitted
-                        // XXX TODO:  Only send high power shares - minimum difficulty is set by the upstream
+                        // Only send high power shares - minimum difficulty is set by the upstream
                         // grin stratum server
-//                        if difficulty >= self.job.difficulty { // XXX TODO <---- this compares scaled to unscaled difficulty values - no good XXX TODO
+                        if difficulty >= self.job.difficulty { // XXX TODO <---- this compares scaled to unscaled difficulty values - no good XXX TODO
                             // remove the block height prefix from the job_id
                             share.job_id = share.job_id % share.height;
                             self.server.submit_share(&share.clone(), full_worker_id.clone());
-                            warn!(LOGGER, "{} - Submitted share at height {} with nonce {} with difficulty {} from worker {}",
+                            warn!("{} - Submitted share at height {} with nonce {} with difficulty {} from worker {}",
                                 self.id,
                                 share.height,
                                 share.nonce,
                                 worker.status.difficulty,
                                 full_worker_id,
                             );
-//                        }
-                        warn!(LOGGER, "{} - Got share at height {} with nonce {} with difficulty {} from worker {}",
+                        }
+                        warn!("{} - Got share at height {} with nonce {} with difficulty {} from worker {}",
                                 self.id,
                                 share.height,
                                 share.nonce,
@@ -420,7 +411,6 @@ impl Pool {
     fn broadcast_job(&mut self) -> Result<(), String> {
         let mut w_m = self.workers.lock().unwrap();
         debug!(
-            LOGGER,
             "{} - broadcasting a job to {} workers",
             self.id,
             w_m.len(),
@@ -433,7 +423,7 @@ impl Pool {
                 worker.set_difficulty(self.config.workers.port_difficulty.difficulty);
                 worker.set_height(self.job.height);
                 // Print this workers block_status for logstash to send to rmq
-                error!(LOGGER, "{:?}", worker.worker_shares);
+                error!("{:?}", worker.worker_shares);
                 worker.send_job(&mut self.job.clone());
                 worker.reset_worker_shares(self.job.height, self.difficulty);
             }
@@ -448,11 +438,10 @@ impl Pool {
         for (worker_id, worker) in w_m.iter_mut() {
             if worker.error() == true {
                 warn!(
-                    LOGGER,
                     "{} - Dropping worker: {}-{}",
                     self.id,
                     worker.id(),
-                    worker.rig_id(),
+                    worker.connection_id(),
                 );
                 dead_workers.push(worker_id.clone());
             }

@@ -26,7 +26,6 @@ use std::collections::HashMap;
 
 
 use pool::config::{Config, NodeConfig, PoolConfig, WorkerConfig};
-use pool::logger::LOGGER;
 use pool::proto::{JobTemplate, LoginParams, RpcError, StratumProtocol, SubmitParams, WorkerStatus};
 use pool::proto::{RpcRequest, RpcResponse};
 use pool::worker::Worker;
@@ -70,7 +69,6 @@ impl Server {
         let grin_stratum_url = self.config.grin_node.address.clone() + ":"
             + &self.config.grin_node.stratum_port.to_string();
         warn!(
-            LOGGER,
             "{} - Connecting to upstream stratum server at {}",
             self.id,
             grin_stratum_url.to_string()
@@ -112,7 +110,7 @@ impl Server {
 //    pub fn request_status(&mut self, stream: &mut BufStream<TcpStream>) -> Result<(), String> {
 //        match self.stream {
 //            Some(ref mut stream) => {
-//                trace!(LOGGER, "{} - Requesting status", self.id);
+//                trace!("{} - Requesting status", self.id);
 //                return self.protocol.send_request(
 //                    stream,
 //                    "status".to_string(),
@@ -134,7 +132,7 @@ impl Server {
                     agent: self.id.clone(),
                 };
                 let params_value = serde_json::to_value(login_params).unwrap();
-                trace!(LOGGER, "{} - Requesting Login", self.id);
+                trace!("{} - Requesting Login", self.id);
                 return self.protocol.send_request(
                     stream,
                     "login".to_string(),
@@ -150,7 +148,7 @@ impl Server {
     fn request_job(&mut self) -> Result<(), String> {
         match self.stream {
             Some(ref mut stream) => {
-                trace!(LOGGER, "{} - Requesting Job Template", self.id);
+                trace!("{} - Requesting Job Template", self.id);
                 return self.protocol.send_request(
                     stream,
                     "getjobtemplate".to_string(),
@@ -171,7 +169,7 @@ impl Server {
         match self.stream {
             Some(ref mut stream) => {
                 let params_value = serde_json::to_value(solution).unwrap();
-                trace!(LOGGER, "{} - Submitting a share", self.id);
+                trace!("{} - Submitting a share", self.id);
                 return self.protocol.send_request(
                     stream,
                     "submit".to_string(),
@@ -188,7 +186,7 @@ impl Server {
 //    pub fn send_keepalive(&mut self) -> Result<(), String> {
 //        match self.stream {
 //            Some(ref mut stream) => {
-//                trace!(LOGGER, "{} - Sending Keepalive", self.id);
+//                trace!("{} - Sending Keepalive", self.id);
 //                return self.protocol.send_request(
 //                    stream,
 //                    "keepalive".to_string(),
@@ -225,7 +223,6 @@ impl Server {
                         match rpc_msg {
                             Some(message) => {
                                 trace!(
-                                    LOGGER,
                                     "{} - Got Message from upstream Server: {:?}",
                                     self.id,
                                     message
@@ -258,7 +255,6 @@ impl Server {
                                         }
                                     };
                                     trace!(
-                                        LOGGER,
                                         "{} - Received request type: {}",
                                         self.id,
                                         req.method
@@ -278,7 +274,6 @@ impl Server {
                                                 }
                                             };
                                             debug!(
-                                                LOGGER,
                                                 "{} - Setting new job for height {} job_id {}",
                                                 self.id,
                                                 job.height,
@@ -290,7 +285,6 @@ impl Server {
                                         _ => {
                                             // Unknown request type from the upstream stratum server - log it and continue
                                             error!(
-                                                LOGGER,
                                                 "{} - Pool server got unknown request type: {}",
                                                 self.id,
                                                 req.method.as_str()
@@ -307,7 +301,7 @@ impl Server {
                                 } else {
                                     // This is a RESPONSE from the upstream Grin Stratum Server
                                     // Here, we are accepting responses to requests we sent on behalf of a worker
-                                    // The messages 'id' field contains the worker.id+worker.rig_id this response is for
+                                    // The messages 'id' field contains the worker.id+worker.worker_id this response is for
                                     // We need to process the responses the pool cares about,
                                     // The pool made this request and it will handle responses (so return the results back up)
                                     let res: RpcResponse = match serde_json::from_str(&message) {
@@ -321,7 +315,7 @@ impl Server {
                                             return Err(err);
                                         }
                                     };
-                                    trace!(LOGGER, "{} - Received response {:?}", self.id, res);
+                                    trace!("{} - Received response {:?}", self.id, res);
                                     // Get the worker this response is for
                                     let worker_id = match res.id.parse::<String>() {
                                         Ok(id) => id,
@@ -335,7 +329,7 @@ impl Server {
                                     };
                                     // First check if this message is for us, rather than a worker
                                     if worker_id == self.id {
-                                        trace!(LOGGER, "RESPOPNSE for MWGRINPOOL: {}", worker_id);
+                                        trace!("RESPOPNSE for MWGRINPOOL: {}", worker_id);
                                         match res.method.as_str() {
                                             "getjobtemplate" => {
                                                 // The upstream stratum server has sent us a new job
@@ -363,7 +357,6 @@ impl Server {
                                                     }
                                                 };
                                                 debug!(
-                                                    LOGGER,
                                                     "{} - Setting new job for height {} job_id {}",
                                                     self.id,
                                                     job.height,
@@ -374,7 +367,6 @@ impl Server {
                                             }
                                             "login" => {
                                                 trace!(
-                                                    LOGGER,
                                                     "{} - Upstream server accepted our login",
                                                     self.id,
                                                 );
@@ -383,16 +375,15 @@ impl Server {
                                             "submit" => {
                                                 // XXX TODO: Error checking
                                                 // Debug print this method
-                                                trace!(LOGGER, "IN rpc method: {}", res.method.as_str());
+                                                trace!("IN rpc method: {}", res.method.as_str());
                                                 match res.result {
                                                     Some(response) => {
                                                         // The share was accepted
                                                         debug!(
-                                                            LOGGER,
                                                             "setting stats for worker id {:?}", res.id
                                                         );
                                                         self.status.accepted += 1;
-                                                        trace!(LOGGER, "Upstream Server accepted our share");
+                                                        trace!("Upstream Server accepted our share");
                                                     }
                                                     None => {
                                                         // The share was not accepted, check RpcError.code for reason
@@ -406,14 +397,12 @@ impl Server {
                                                             -32503 => {
                                                                 self.status.stale += 1;
                                                                 debug!(
-                                                                    LOGGER,
                                                                     "Server rejected share as stale"
                                                                 );
                                                             }
                                                             _ => {
                                                                 self.status.rejected += 1;
                                                                 debug!(
-                                                                    LOGGER,
                                                                     "Server rejected share as invalid"
                                                                 );
                                                             }
@@ -425,7 +414,6 @@ impl Server {
                                             _ => {
                                                 // XXX TODO: Response to unknown request type from the upstream stratum server - log it and continue
                                                 error!(
-                                                    LOGGER,
                                                     "{} - Pool server got unknown response type: {}",
                                                     self.id,
                                                     res.method.as_str()

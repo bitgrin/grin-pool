@@ -83,6 +83,12 @@ def get_logger(program):
             LOGGER = l
         return LOGGER
 
+def get_debug():
+    try:
+        debug = os.environ["DEBUG"]
+        return True
+    except:
+        return False
 
 def get_db_constraints():
     config = get_config()
@@ -115,15 +121,11 @@ def teardown_db():
     database.db.destroySession()
 
 def get_redis_db():
-    global REDIS 
-    rlock = threading.RLock()
-    with rlock:
-        if REDIS is None:
-            print("INIT REDIS")
-            REDIS = redis.Redis(
-                    host='redis-master',
-            )
-    return REDIS
+    print("INIT REDIS")
+    r = redis.Redis(
+            host='redis-master',
+    )
+    return r
 
 def get_grin_api_url():
     config = get_config()
@@ -142,6 +144,7 @@ def get_current_height():
     return latest
 
 # Worker graph rate
+# Calculate GPS from N shares submitted over time range
 def calculate_graph_rate(ts1, ts2, n):
     timedelta = (ts2 - ts1).total_seconds()
     print("Calculate gps: timedelta: {}, num_shares {}".format(timedelta, n))
@@ -150,6 +153,10 @@ def calculate_graph_rate(ts1, ts2, n):
     gps = (42.0 * float(MINIMUM_DIFFICULTY) * float(n)) / float(timedelta)
     return gps
 
+# Workers shares rate
+# Calcualte Shares per Second from GPS
+def calculate_shares_from_gps(gps):
+    return gps/42
 
 # API 'fields' string to python list
 def fields_to_list(fields):

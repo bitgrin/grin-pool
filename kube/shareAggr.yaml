@@ -17,6 +17,11 @@ spec:
         env:
         - name: DEBUG_HOLD
           value: 
+        - name: RMQ
+          valueFrom:
+            configMapKeyRef:
+              name: environment
+              key: rmq
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
