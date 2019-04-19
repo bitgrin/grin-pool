@@ -14,6 +14,8 @@ spec:
         image: bitgrinmining/services:latest
         args: ["/usr/local/bin/paymentEstimator.py"]
         env:
+        - name: PPLNG_WINDOW_SIZE
+          value: "60"
         - name: DEBUG_HOLD
           value: 
         - name: GRIN_POOL_ADMIN_USER

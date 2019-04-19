@@ -11,9 +11,10 @@ spec:
           containers:
           - name: paymentmaker
             image: bitgrinmining/services:latest
-#            command: ["sleep", "9999999"]
             command: ["/usr/local/bin/paymentMaker.py"]
             env:
+            - name: PPLNG_WINDOW_SIZE
+              value: "60"
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -21,5 +22,5 @@ spec:
                   key: password
           restartPolicy: Never
   concurrencyPolicy: Replace
-  successfulJobsHistoryLimit: 0
+  successfulJobsHistoryLimit: 2
   failedJobsHistoryLimit: 1

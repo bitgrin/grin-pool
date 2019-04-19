@@ -16,6 +16,7 @@
 # Add a pool stats record ~per block
 
 
+import os
 import sys
 import requests
 import json
@@ -44,13 +45,20 @@ def main():
     CONFIG = lib.get_config()
     LOGGER = lib.get_logger(PROCESS)
     LOGGER.warn("=== Starting {}".format(PROCESS))
+
+    # Number of blocks of share data used to calculate rewards
+    PPLNG_WINDOW_SIZE = 60
+    try:
+        PPLNG_WINDOW_SIZE = int(os.environ["PPLNG_WINDOW_SIZE"])
+    except Exception as e:
+        LOGGER.error("Failed to get PPLNG_WINDOW_SIZE from the environment: {}.  Using default size of {}".format(e, PPLNG_WINDOW_SIZE))
+
     # Connect to DB
     database = lib.get_db()
     esitmated = []  # Blocks we know have already been estimated - XXX TODO: Clean paid blocks out of this list
 
     # Get Config settings
     pool_fee = float(CONFIG[PROCESS]["pool_fee"])
-    pplns_window = float(CONFIG[PROCESS]["pplns_window"])
 
     while True:
         # Generate pool block reward estimates for all new and unlocked blocks
@@ -71,7 +79,7 @@ def main():
                 # Generate Estimate
                 for height in need_estimates:
                     LOGGER.warn("Ensure estimate for block: {}".format(height))
-                    payout_map = pool.calculate_block_payout_map(height, pplns_window, pool_fee, LOGGER, True)
+                    payout_map = pool.calculate_block_payout_map(height, PPLNG_WINDOW_SIZE, pool_fee, LOGGER, True)
                     # Double check the total paid is correct
                     esitmated.append(height)
                     LOGGER.warn("Completed estimate for block: {}".format(height))
