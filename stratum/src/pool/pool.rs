@@ -254,13 +254,13 @@ impl Pool {
     fn accept_new_job(&mut self) {
         // Use the new job
         if self.job.pre_pow != self.server.job.pre_pow {
-            debug!("accept_new_job: {} vs {}", self.job.pre_pow.clone(), self.server.job.pre_pow.clone());
+            trace!("accept_new_job for height {}, job_id {}", self.server.job.height, self.server.job.job_id);
             let new_height: bool = self.job.height != self.server.job.height;
             let mut new_job = self.server.job.clone();
             // Update the new jobs job_id (bminer wants this)
             new_job.job_id = new_job.height * 1000 + new_job.job_id;
             self.job = new_job;
-            debug!("accept_new_job broadcasting: {}", self.job.pre_pow.clone());
+            // debug!("accept_new_job broadcasting: {}", self.job.pre_pow.clone());
             // broadcast it to the workers
             let _ = self.broadcast_job();
             if new_height {

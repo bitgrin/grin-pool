@@ -208,7 +208,7 @@ impl StratumProtocol {
         };
         let req_str = serde_json::to_string(&req).unwrap();
         trace!(
-            "{} for {} - Requesting: {}",
+            "{} for request id {} - Requesting: {}",
             self.id,
             request_id,
             req_str
@@ -247,9 +247,10 @@ impl StratumProtocol {
         stream: &mut BufStream<TcpStream>,
         method: String,
         error: RpcError,
+        id: Option<String>,
     ) -> Result<(), String> {
         let res = RpcResponse {
-            id: self.id.clone(),
+            id: id.clone().unwrap(),
             jsonrpc: "2.0".to_string(),
             method: method,
             result: None,

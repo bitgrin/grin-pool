@@ -218,6 +218,29 @@ impl Worker {
             );
     }
 
+    /// Send an ERROR response
+    pub fn send_error_response(&mut self,
+                         method: String,
+                         e: RpcError,
+                 ) -> Result<(), String> {
+        // Get the request_id for this response
+        // XXX TODO: Better matching of method?
+        let req_id = self.request_ids.remove().unwrap(); // XXX TODO: verify unwrap
+        trace!(
+            "XXX SENDING ERROR RESPONSE: method: {}, error: {:?}, id: {}",
+            method.clone(),
+            e.clone(),
+            req_id.clone(),
+        );
+        return self.protocol.send_error_response(
+                &mut self.stream,
+                method,
+                e,
+                Some(req_id),
+            );
+    }
+
+
 
     // This handles both a get_job_template response, and a job request
     /// Send a job to the worker
@@ -279,8 +302,7 @@ impl Worker {
             code: code,
             message: message.to_string(),
         };
-        return self.protocol.send_error_response(
-            &mut self.stream,
+        return self.send_error_response(
             method.to_string(),
             e,
         );
@@ -374,7 +396,6 @@ impl Worker {
         }
         // Didnt find user in the redis, try the database
         debug!("Calling pool api to get userid");
-        thread::sleep(time::Duration::from_secs(5));
         // Call the pool API server to Try to get the users ID based on login
         let client = reqwest::Client::new(); // api request client
         let mut response = client
@@ -574,8 +595,7 @@ impl Worker {
                                         //return Err("Invalid Login request".to_string());
                                     }
                                 };
-                                let login_params: LoginParams = match serde_json::from_value(params)
-                                {
+                                let login_params: LoginParams = match serde_json::from_value(params) {
                                     Ok(p) => p,
                                     Err(e) => {
                                         self.error = true;
