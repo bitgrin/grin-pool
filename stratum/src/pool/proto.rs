@@ -183,7 +183,6 @@ impl StratumProtocol {
         stream: &mut BufStream<TcpStream>,
         buffer: &mut String,
     ) -> Result<Option<String>, String> {
-        // XXX TODO: Verify this is a valid message before returning it
         return self.read_message(stream, buffer);
     }
 
@@ -208,9 +207,8 @@ impl StratumProtocol {
         };
         let req_str = serde_json::to_string(&req).unwrap();
         trace!(
-            "{} for request id {} - Requesting: {}",
+            "{} - Requesting: {}",
             self.id,
-            request_id,
             req_str
         );
         return self.write_message(req_str, stream);
@@ -233,9 +231,8 @@ impl StratumProtocol {
         };
         let res_str = serde_json::to_string(&res).unwrap();
         trace!(
-            "{} for {} - Responding: {}",
+            "{} - Responding: {}",
             self.id,
-            id.unwrap(),
             res_str
         );
         return self.write_message(res_str, stream);
@@ -257,7 +254,10 @@ impl StratumProtocol {
             error: Some(serde_json::to_value(error).unwrap()),
         };
         let res_str = serde_json::to_string(&res).unwrap();
-        trace!("{} - Responding with Error: {}", self.id, res_str);
+        trace!(
+            "{} - Responding with Error: {}",
+            self.id,
+            res_str);
         return self.write_message(res_str, stream);
     }
 }

@@ -25,6 +25,7 @@ pub struct Config {
     pub grin_pool: PoolConfig,
     pub grin_node: NodeConfig,
     pub workers: WorkerConfig,
+    pub redis: RedisConfig,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -53,6 +54,13 @@ pub struct NodeConfig {
     pub password: String,
 }
 
+#[derive(Debug, Deserialize, Clone)]
+pub struct RedisConfig {
+    pub address: String,
+    pub port: u64,
+}
+
+
 pub fn read_config() -> Config {
     let mut config_file = File::open(CONFIG_FILE_NAME).expect("Config file not found");
     let mut toml_str = String::new();
@@ -75,6 +83,14 @@ pub fn read_config() -> Config {
         Ok(address) => {
             config.grin_node.address = address;
             println!("env address: {:?}", config);
+        }
+        Err(e) => {}
+    }
+
+    match env::var("REDIS_PORT") {
+        Ok(port) => {
+            config.redis.port = port.parse::<u64>().unwrap();
+            println!("env redis: {:?}", config.redis);
         }
         Err(e) => {}
     }

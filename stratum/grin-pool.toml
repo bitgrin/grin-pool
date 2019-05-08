@@ -18,6 +18,9 @@ log_dir = "/stratum"
 listen_address = "0.0.0.0"
 port_difficulty = [3333, 8]
 
+[redis]
+address = "redis-master"
+port = 6379
 
 #
 # Configuration for access to upstream grin node

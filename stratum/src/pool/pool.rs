@@ -65,10 +65,9 @@ fn accept_workers(
                         stream
                             .set_nonblocking(true)
                             .expect("set_nonblocking call failed");
-                        let mut worker = Worker::new(config.clone(), 0, BufStream::new(stream));
+                        let mut worker = Worker::new(config.clone(), BufStream::new(stream));
                         worker.set_difficulty(difficulty);
-                        let initial_id = rng.gen::<u32>();
-                        workers.lock().unwrap().insert(initial_id.to_string(), worker);
+                        workers.lock().unwrap().insert(worker.uuid(), worker);
                         // The new worker is now added to the workers list
                     }
                     Err(e) => {
@@ -212,12 +211,12 @@ impl Pool {
     fn process_worker_messages(&mut self) {
         let mut id_changed: Vec<String> = vec![];
         let mut w_m = self.workers.lock().unwrap();
-        for (worker_id, worker) in w_m.iter_mut() {
+        for (worker_uuid, worker) in w_m.iter_mut() {
             let res = worker.process_messages();
-            if worker_id != &*worker.connection_id() {
+            if worker_uuid != &*worker.uuid() {
                 // User id changed - probably because they logged in
-                id_changed.push(worker_id.clone());
-                debug!("id changed:  connection_id {} - {:?}", worker.connection_id().clone(), res );
+                id_changed.push(worker_uuid.clone());
+                debug!("id changed:  uuid {} - {:?}", worker.uuid().clone(), res );
                 worker.reset_worker_shares(self.job.height, self.difficulty);
             }
         }
@@ -227,7 +226,7 @@ impl Pool {
             match worker_o {
                 None => {},
                 Some(worker) => {
-                    w_m.insert(worker.connection_id(), worker);
+                    w_m.insert(worker.uuid(), worker);
                 }
             }
         }
@@ -235,9 +234,9 @@ impl Pool {
 
     fn send_jobs(&mut self) {
         let mut w_m = self.workers.lock().unwrap();
-        for (worker_id, worker) in w_m.iter_mut() {
+        for (worker_uuid, worker) in w_m.iter_mut() {
             if worker.needs_job && worker.authenticated {
-                warn!("job to: {} - needs_job: {}, requested_job: {}, authenticated: {}", worker_id, worker.needs_job, worker.requested_job, worker.authenticated );
+                warn!("job to: {} - needs_job: {}, requested_job: {}, authenticated: {}", worker_uuid, worker.needs_job, worker.requested_job, worker.authenticated );
                 // Randomize the nonce
                 // XXX TODO (We do have the deserialized block header code so we can do this now)
                 worker.set_difficulty(self.difficulty);
@@ -278,19 +277,17 @@ impl Pool {
     // Process shares returned by each workers
     fn process_shares(&mut self) {
         let mut w_m = self.workers.lock().unwrap();
-        for (worker_id, worker) in w_m.iter_mut() {
+        for (worker_uuid, worker) in w_m.iter_mut() {
             match worker.get_shares().unwrap() {
                 None => {}
                 Some(shares) => {
                     for mut share in shares {
-                        // Get the workers id-rigname
-                        let full_worker_id: String = format!("{}-{}", worker.id(), worker.connection_id());
                         //  Check for duplicate or add to duplicate map
                         if self.duplicates.contains_key(&share.pow) {
                             debug!(
                                 "{} - Rejected duplicate share from worker {} with login {}",
                                 self.id,
-                                worker.id(),
+                                worker.uuid(),
                                 worker.login(),
                             );
                             worker.status.rejected += 1;
@@ -298,7 +295,7 @@ impl Pool {
                             worker.send_err("submit".to_string(), "Failed to validate solution".to_string(), -32502);
                             continue; // Dont process this share anymore
                         } else {
-                            self.duplicates.insert(share.pow.clone(), worker.id());
+                            self.duplicates.insert(share.pow.clone(), worker.user_id());
                         }
                         // Check that its a valid pow size
                         if share.edge_bits < 29 || share.edge_bits == 30 {
@@ -386,13 +383,13 @@ impl Pool {
                         if difficulty >= self.job.difficulty { // XXX TODO <---- this compares scaled to unscaled difficulty values - no good XXX TODO
                             // remove the block height prefix from the job_id
                             share.job_id = share.job_id % share.height;
-                            self.server.submit_share(&share.clone(), full_worker_id.clone());
+                            self.server.submit_share(&share.clone(), worker.uuid());
                             warn!("{} - Submitted share at height {} with nonce {} with difficulty {} from worker {}",
                                 self.id,
                                 share.height,
                                 share.nonce,
                                 worker.status.difficulty,
-                                full_worker_id,
+                                worker.uuid(),
                             );
                         }
                         warn!("{} - Got share at height {} with nonce {} with difficulty {} from worker {}",
@@ -400,7 +397,7 @@ impl Pool {
                                 share.height,
                                 share.nonce,
                                 worker.status.difficulty,
-                                full_worker_id,
+                                worker.uuid(),
                         );
                     }
                 }
@@ -418,7 +415,7 @@ impl Pool {
         // XXX TODO: To do this I need to deserialize the block header
         // XXX TODO: need to randomize the nonce (just in case a miner forgets)
         // XXX TODO: need to set a unique timestamp and record it in the worker struct
-        for (worker_id, worker) in w_m.iter_mut() {
+        for (worker_uuid, worker) in w_m.iter_mut() {
             if worker.authenticated {
                 worker.set_difficulty(self.config.workers.port_difficulty.difficulty);
                 worker.set_height(self.job.height);
@@ -435,20 +432,19 @@ impl Pool {
     fn clean_workers(&mut self) -> usize {
         let mut dead_workers: Vec<String> = vec![];
         let mut w_m = self.workers.lock().unwrap();
-        for (worker_id, worker) in w_m.iter_mut() {
+        for (worker_uuid, worker) in w_m.iter_mut() {
             if worker.error() == true {
                 warn!(
-                    "{} - Dropping worker: {}-{}",
+                    "{} - Dropping worker: {}",
                     self.id,
-                    worker.id(),
-                    worker.connection_id(),
+                    worker.uuid(),
                 );
-                dead_workers.push(worker_id.clone());
+                dead_workers.push(worker_uuid.clone());
             }
         }
         // Remove the dead workers
-        for worker_id in dead_workers {
-            let _ = w_m.remove(&worker_id);
+        for worker_uuid in dead_workers {
+            let _ = w_m.remove(&worker_uuid);
         }
         return w_m.len();
     }

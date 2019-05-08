@@ -27,7 +27,7 @@ COPY src/. /stratum/src/
 COPY grin-pool.toml Cargo.toml /stratum/
 
 # Building grin-pool
-RUN cargo build
+RUN cargo build --release
 
 # runtime stage
 FROM debian:9.4
