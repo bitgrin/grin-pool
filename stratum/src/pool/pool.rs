@@ -31,6 +31,7 @@ use pool::proto::{JobTemplate, RpcError, SubmitParams, WorkerStatus};
 use pool::server::Server;
 use pool::worker::Worker;
 use pool::consensus::Proof as MinerProof;
+use pool::consensus::PROOF_SIZE;
 
 // ----------------------------------------
 // Worker Connection Thread Function
@@ -303,6 +304,13 @@ impl Pool {
                             worker.status.rejected += 1;
                             // worker.add_shares(share.edge_bits, 0, 1, 0); // Accepted, Rejected, Stale
                             worker.send_err("submit".to_string(), "Invalid POW size".to_string(), -32502);
+                            continue; // Dont process this share anymore
+                        }
+                        // Check solution length (proofsize check in pow verify (#2805))
+                        if share.pow.len() != PROOF_SIZE {
+                            warn!("Share has invalid PROOF_SIZE");
+                            worker.status.rejected += 1;
+                            worker.send_err("submit".to_string(), "Invalid PROOF_SIZE".to_string(), -32502);
                             continue; // Dont process this share anymore
                         }
                         // Check the height to see if its stale
