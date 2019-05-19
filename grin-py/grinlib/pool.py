@@ -186,16 +186,15 @@ def get_block_payout_map_estimate(height, logger):
 def calculate_block_payout_map(height, window_size, pool_fee, logger, estimate=False):
     block_payout_map = {}
     # Get the grinpool admin user ID for pool fee
-    pool_admin_user_id = None
+    pool_admin_user_id = 1
     # Total the payments for sanity check
     total_payments_this_block = 0
     try:
         admin_user = os.environ["GRIN_POOL_ADMIN_USER"]
-        admin_user_record = User.get_id_by_username(admin_user)
-        pool_admin_user_id = admin_user_record.id
-    except:
-        pool_admin_user_id = 1
-        logger.warn("We dont have Admin account info, using default id=1")
+        pool_admin_user_id = Users.get_id_by_username(admin_user)
+        logger.warn("Pool Fee goes to admin account with id={}".format(pool_admin_user_id))
+    except Exception as e:
+        logger.warn("We dont have Admin account info, using default id={}: {}".format(pool_admin_user_id, e))
     # Create the payout map
     try:
         if estimate == True:
@@ -248,7 +247,6 @@ def calculate_block_payout_map(height, window_size, pool_fee, logger, estimate=F
         total_value = calculate_total_share_value(shares_count_map, scale)
         print("total share value in payment window: {}".format(total_value))
         sys.stdout.flush()
-        block_payout_map = {}
         # For each user with shares in the window, calculate payout and add to block_payout_map
         for user_id, worker_shares_count in shares_count_map.items():
             print("xxx: {} {}".format(user_id, worker_shares_count))
@@ -259,12 +257,12 @@ def calculate_block_payout_map(height, window_size, pool_fee, logger, estimate=F
             total_payments_this_block += worker_payment
             print("worker_payment: {}".format(worker_payment/1000000000))
             sys.stdout.flush()
-            if user_id in block_payout_map:
+            if user_id in block_payout_map.keys():
                 block_payout_map[user_id] += worker_payment
             else:
                 block_payout_map[user_id] = worker_payment
-        logger.warn("Total Grin Paid Out this block: {}".format(total_payments_this_block))
-        #print("block_payout_map = {}".format(block_payout_map))
+        logger.warn("Total Grin Paid Out this block: {} + the_pools_fee: {} ".format(total_payments_this_block, the_pools_fee))
+        print("block_payout_map = {}".format(block_payout_map))
         #sys.stdout.flush()
         if estimate == True:
             payout_estimate_map_key = "payout-estimate-for-block-" + str(height)
