@@ -18,7 +18,7 @@ class Worker_shares(Base):
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     height = Column(BigInteger, primary_key=True, )
     timestamp = Column(DateTime, index=True)
-    shares = relationship("Shares")
+    shares = relationship("Shares", lazy="joined")
     user_id = Column(Integer, ForeignKey('users.id'))
 
     def __repr__(self):

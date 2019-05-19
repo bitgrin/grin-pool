@@ -16,6 +16,8 @@ spec:
         env:
         - name: PPLNG_WINDOW_SIZE
           value: "60"
+        - name: BLOCK_REWARD
+          value: "4.5"
         - name: DEBUG_HOLD
           value: 
         - name: GRIN_POOL_ADMIN_USER

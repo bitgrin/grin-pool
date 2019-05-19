@@ -35,25 +35,8 @@ from grinbase.model.pool_blocks import Pool_blocks
 from grinbase.model.worker_shares import Worker_shares
 
 
-# XXX TODO: MOVE THIS TO CONFIG
-MINIMUM_DIFFICULTY = 1
-
-# XXX TODO: Get this from blockchain
-BLOCK_REWARD = 4.5 # bitgrin - this is valid for the first 4 years
-
 # Globals
 NANOGRIN = 1000000000 # 1 and 9 zeros
-
-# Share graph rate
-def calculate_graph_rate(difficulty, ts1, ts2, n):
-    # gps = 42 * (diff/scale) / 60
-    # XXX TODO:  Assumes cuckoo 30 for all blocks - Fixes for cuckatoos?
-    scale = 29.0
-    timedelta = (ts2 - ts1).total_seconds()
-    if n == 0 or timedelta == 0:
-      return 0
-    gps = (42.0 * float(MINIMUM_DIFFICULTY) * float(n)) / float(timedelta)
-    return gps
 
 # Verify / Update / Create Special Users
 # (if we have the special users info in our environemnt)
@@ -114,35 +97,42 @@ def init_pool_users(CONFIG, LOGGER, database):
         database.db.getSession().add(user)
         database.db.getSession().commit()
 
+def get_block_reward():
+    BLOCK_REWARD = float(os.environ["BLOCK_REWARD"])
+    return BLOCK_REWARD
+
+def get_block_reward_nanogrin():
+    BLOCK_REWARD_NANOGRIN = get_block_reward() * NANOGRIN
+    return BLOCK_REWARD_NANOGRIN
+
 def get_reward_by_block(height):
     # Get the block and determine how much its worth to the winner
-    database = lib.get_db()
     theblock = Blocks.get_by_height(height)
     #print("The block {}".format(theblock.to_json()))
     if theblock is None:
         return 0;
-    return BLOCK_REWARD * 1000000000 + theblock.fee
+    return get_block_reward_nanogrin() + theblock.fee
 
 def get_scale_by_block(height):
     # Get the block and determine its secondary_scale value
-    database = lib.get_db()
     theblock = Blocks.get_by_height(height)
     return theblock.secondary_scaling
 
 # Create a dictionary of user_id -> share size and count
-def get_share_counts(shares):
-    if len(shares) > 0:
-        # Sum up the number of each size share submitted by each user
-        shares_count_map = {}
-        for worker_shares_rec in shares:
-            if not worker_shares_rec.user_id in shares_count_map:
-                shares_count_map[worker_shares_rec.user_id] = {}
-            for pow_size in worker_shares_rec.sizes():
-                #print("pow_size = {}".format(pow_size))
-                if not pow_size in shares_count_map[worker_shares_rec.user_id]:
-                    shares_count_map[worker_shares_rec.user_id][pow_size] = 0
-                shares_count_map[worker_shares_rec.user_id][pow_size] += worker_shares_rec.num_valid(pow_size)
-        return shares_count_map
+def get_share_counts(height, window_size):
+    shares = Worker_shares.get_by_height(height, window_size)
+    # Sum up the number of each size share submitted by each user
+    shares_count_map = {}
+    for worker_shares_rec in shares:
+        if not worker_shares_rec.user_id in shares_count_map:
+            shares_count_map[worker_shares_rec.user_id] = {}
+        for pow_size in worker_shares_rec.sizes():
+            #print("pow_size = {}".format(pow_size))
+            if not pow_size in shares_count_map[worker_shares_rec.user_id]:
+                shares_count_map[worker_shares_rec.user_id][pow_size] = 0
+            num_valid = worker_shares_rec.num_valid(pow_size)
+            shares_count_map[worker_shares_rec.user_id][pow_size] += num_valid
+    return shares_count_map
 
 # XXX TODO: Move to grin lib
 def get_share_scale(size, secondary_scaling):
@@ -226,10 +216,6 @@ def calculate_block_payout_map(height, window_size, pool_fee, logger, estimate=F
         else:
             if poolblock.state != "unlocked":
                 return {}
-        # Get an array with share counts for each block in the window
-        shares = Worker_shares.get_by_height(height, window_size)
-        print("share data in window = {}".format(shares))
-        sys.stdout.flush()
         # Get total value of this block: reward + tx fees
         reward = get_reward_by_block(height)
         print("Reward for block {} = {}".format(height, reward))
@@ -244,7 +230,7 @@ def calculate_block_payout_map(height, window_size, pool_fee, logger, estimate=F
         print("Secondary Scaling value for block = {}".format(scale))
         sys.stdout.flush()
         # build a map of total shares of each size for each user
-        shares_count_map = get_share_counts(shares)
+        shares_count_map = get_share_counts(height, window_size)
         # DUMMY DATA
     #    scale = 529
     #    shares_count_map = {
@@ -262,6 +248,7 @@ def calculate_block_payout_map(height, window_size, pool_fee, logger, estimate=F
         total_value = calculate_total_share_value(shares_count_map, scale)
         print("total share value in payment window: {}".format(total_value))
         sys.stdout.flush()
+        block_payout_map = {}
         # For each user with shares in the window, calculate payout and add to block_payout_map
         for user_id, worker_shares_count in shares_count_map.items():
             print("xxx: {} {}".format(user_id, worker_shares_count))
@@ -289,7 +276,8 @@ def calculate_block_payout_map(height, window_size, pool_fee, logger, estimate=F
             except Exception as e:
                 logger.warn("block_payout_map cache insert failed: {} - {}".format(payout_estimate_map_key, repr(e)))
     except Exception as e:
-        logger.error("Estimate went wrong: {} - {}".format(e, traceback.print_stack()))
+        logger.error("Estimate went wrong: {} - {}".format(e, traceback.print_exc(e)))
+        raise e
     #logger.warn("calculate_map: {}".format(block_payout_map))
     return block_payout_map
 

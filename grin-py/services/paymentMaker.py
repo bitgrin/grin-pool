@@ -54,7 +54,7 @@ def main():
     try:
         PPLNG_WINDOW_SIZE = int(os.environ["PPLNG_WINDOW_SIZE"])
     except Exception as e:
-        LOGGER.error("Failed to get PPLNG_WINDOW_SIZE from the environment.  Using default size of {}".format(PPLNG_WINDOW_SIZE))
+        LOGGER.error("Failed to get PPLNG_WINDOW_SIZE from the environment: {}  Using default size of {}".format(e, PPLNG_WINDOW_SIZE))
 
     # Connect to DB
     database = lib.get_db()
