@@ -29,6 +29,7 @@ use std::{cmp, thread};
 use crate::chain;
 use crate::common::stats::{StratumStats, WorkerStats};
 use crate::common::types::{StratumServerConfig, SyncState};
+use crate::core::core::hash::Hashed;
 use crate::core::core::verifier_cache::VerifierCache;
 use crate::core::core::Block;
 use crate::core::{pow, ser};
@@ -645,29 +646,53 @@ impl StratumServer {
 	// Broadcast a jobtemplate RpcRequest to all connected workers - no response
 	// expected
 	fn broadcast_job(&mut self) {
-		// Package new block into RpcRequest
-		let job_template = self.build_block_template();
-		let job_template_json = serde_json::to_string(&job_template).unwrap();
-		// Issue #1159 - use a serde_json Value type to avoid extra quoting
-		let job_template_value: Value = serde_json::from_str(&job_template_json).unwrap();
-		let job_request = RpcRequest {
-			id: String::from("Stratum"),
-			jsonrpc: String::from("2.0"),
-			method: String::from("job"),
-			params: Some(job_template_value),
-		};
-		let job_request_json = serde_json::to_string(&job_request).unwrap();
-		debug!(
-			"(Server ID: {}) sending block {} with id {} to stratum clients",
-			self.id, job_template.height, job_template.job_id,
-		);
-		// Push the new block to all connected clients
-		// NOTE: We do not give a unique nonce (should we?) so miners need
-		//       to choose one for themselves
 		let mut workers_l = self.workers.lock();
+               	// For each connected worker, build a block, create a job, send to worker
 		for num in 0..workers_l.len() {
+//
+			// New block for this worker
+			let head = self.chain.head().unwrap();
+			let mut wallet_listener_url: Option<String> = None;
+			if !self.config.burn_reward {
+				wallet_listener_url = Some(self.config.wallet_listener_url.clone());
+			}
+			// Build the new block (version)
+			let (new_block, block_fees) = mine_block::get_block(
+				&self.chain,
+				&self.tx_pool,
+				self.verifier_cache.clone(),
+				self.current_key_id.clone(),
+				wallet_listener_url,
+			);
+			self.current_difficulty =
+				(new_block.header.total_difficulty() - head.total_difficulty).to_num();
+			self.current_key_id = block_fees.key_id();
+			// set the minimum acceptable share difficulty for this block
+			self.minimum_share_difficulty = cmp::min(
+				self.config.minimum_share_difficulty,
+				self.current_difficulty,
+			);
+			self.current_block_versions.push(new_block);
+//
+			// Package new block into RpcRequest
+			let job_template = self.build_block_template();
+			let job_template_json = serde_json::to_string(&job_template).unwrap();
+			// Issue #1159 - use a serde_json Value type to avoid extra quoting
+			let job_template_value: Value = serde_json::from_str(&job_template_json).unwrap();
+			let job_request = RpcRequest {
+				id: String::from("Stratum"),
+				jsonrpc: String::from("2.0"),
+				method: String::from("job"),
+				params: Some(job_template_value),
+			};
+			let job_request_json = serde_json::to_string(&job_request).unwrap();
+			debug!(
+				"(Server ID: {}) sending block {} with id {} to stratum clients",
+				self.id, job_template.height, job_template.job_id,
+			);
+			// Push the job to this worker
 			workers_l[num].write_message(job_request_json.clone());
-		}
+		} // End of locked workers
 	}
 
 	/// "main()" - Starts the stratum-server.  Creates a thread to Listens for
@@ -749,43 +774,21 @@ impl StratumServer {
 			if (current_hash != latest_hash || Utc::now().timestamp() >= deadline)
 				&& num_workers > 0
 			{
-				let mut wallet_listener_url: Option<String> = None;
-				if !self.config.burn_reward {
-					wallet_listener_url = Some(self.config.wallet_listener_url.clone());
-				}
 				// If this is a new block, clear the current_block version history
 				if current_hash != latest_hash {
 					self.current_block_versions.clear();
 				}
-				// Build the new block (version)
-				let (new_block, block_fees) = mine_block::get_block(
-					&self.chain,
-					&self.tx_pool,
-					self.verifier_cache.clone(),
-					self.current_key_id.clone(),
-					wallet_listener_url,
-				);
-				self.current_difficulty =
-					(new_block.header.total_difficulty() - head.total_difficulty).to_num();
-				self.current_key_id = block_fees.key_id();
-				current_hash = latest_hash;
-				// set the minimum acceptable share difficulty for this block
-				self.minimum_share_difficulty = cmp::min(
-					self.config.minimum_share_difficulty,
-					self.current_difficulty,
-				);
+				// Send a job to all connected workers
+				self.broadcast_job();
 				// set a new deadline for rebuilding with fresh transactions
 				deadline = Utc::now().timestamp() + attempt_time_per_block as i64;
-
 				{
 					let mut stratum_stats = stratum_stats.write();
-					stratum_stats.block_height = new_block.header.height;
+					stratum_stats.block_height = self.current_block_versions.last().unwrap().header.height;
 					stratum_stats.network_difficulty = self.current_difficulty;
 				}
-				// Add this new block version to our current block map
-				self.current_block_versions.push(new_block);
-				// Send this job to all connected workers
-				self.broadcast_job();
+                                // We are up to date with the latest block
+				current_hash = latest_hash;
 			}
 
 			// Handle any messages from the workers
@@ -813,4 +816,3 @@ where
 			serde_json::to_value(e).unwrap()
 		})
 }
-

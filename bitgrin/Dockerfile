@@ -25,13 +25,14 @@ RUN git clone https://github.com/bitgrin/bitgrin.git .; git checkout master; git
 RUN cargo build --release
 
 # Update and build grin
-RUN touch asxxyyzzzzqyxxxy
+RUN touch asxxyyzz
 RUN git fetch && \
     git pull && \
-    git checkout 1.0.0
+    git checkout v1.0.6
 
 # Monkey Patch
 RUN sed -i -e 's/127\.0\.0\.1:13420/0.0.0.0:13420/g' wallet/src/command.rs
+RUN sed -i -e 's/let sleep_time =.*/let sleep_time = time::Duration::from_millis(5);/' p2p/src/conn.rs
 COPY stratumserver.rs servers/src/mining/stratumserver.rs
 
 RUN cargo build --release
