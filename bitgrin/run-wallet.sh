@@ -26,13 +26,15 @@ if [ $MODE == "private" ]; then
     echo ${WALLET_OWNER_API_PASSWORD} > /root/.grin/.api_secret
     chmod 600 /root/.grin/.api_secret
     echo "Waiting for public wallet to start"
-    sleep 30 # Let the public wallet start first
+    sleep 120 # Let the public wallet start first
     keybase login
     echo "Starting wallet owner_api"
     bitgrin ${NET_FLAG} wallet -p ${WALLET_PASSWORD} owner_api
 else
     echo "Backup Wallet DB"
     tar czf wallet_db.backup.$(date "+%F-%T" |tr : '_').tgz wallet_data
+    echo "Running wallet check"
+    bitgrin ${NET_FLAG} wallet -p ${WALLET_PASSWORD} check
     echo "Starting public wallet listener"
     bitgrin ${NET_FLAG} wallet -p ${WALLET_PASSWORD} listen
 fi

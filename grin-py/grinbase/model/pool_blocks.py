@@ -99,6 +99,11 @@ class Pool_blocks(Base):
     def get_all_unlocked(cls):
         return list(database.db.getSession().query(Pool_blocks).filter(Pool_blocks.state == "unlocked"))
 
+    # Get all paid pool blocks
+    @classmethod
+    def get_all_paid(cls):
+        return list(database.db.getSession().query(Pool_blocks).filter(Pool_blocks.state == "paid"))
+
     # Get the latest pool block record
     @classmethod
     def get_latest(cls, n=None, id=None):

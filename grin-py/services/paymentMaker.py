@@ -70,7 +70,7 @@ def main():
             #print("payout_map = {}".format(payout_map))
             # Make payments based on the workers total share_value
             Pool_blocks.setState(height, "paid")
-            database.db.getSession().commit() # XXX Why commit here?
+            #database.db.getSession().commit() # XXX Why commit here?
             for user_id, payment_amount in payout_map.items():
                     # Add worker rewards to pool account balance
                     LOGGER.warn("Credit to user: {} = {}".format(user_id, payment_amount))

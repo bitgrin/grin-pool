@@ -31,8 +31,9 @@ RUN git fetch && \
     git checkout v1.0.6
 
 # Monkey Patch
-RUN sed -i -e 's/127\.0\.0\.1:13420/0.0.0.0:13420/g' wallet/src/command.rs
-RUN sed -i -e 's/let sleep_time =.*/let sleep_time = time::Duration::from_millis(5);/' p2p/src/conn.rs
+RUN sed -i -e 's/127\.0\.0\.1/0.0.0.0/g' wallet/src/types.rs
+RUN sed -i -e 's/8520/13420/g' wallet/src/types.rs
+#RUN sed -i -e 's/let sleep_time =.*/let sleep_time = time::Duration::from_millis(5);/' p2p/src/conn.rs
 COPY stratumserver.rs servers/src/mining/stratumserver.rs
 
 RUN cargo build --release

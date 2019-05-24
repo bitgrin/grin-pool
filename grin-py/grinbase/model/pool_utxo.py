@@ -61,26 +61,39 @@ class Pool_utxo(Base):
     def getAll(cls):
         return list(database.db.getSession().query(Pool_utxo))
 
+    # WARNING - Not Locked
+    # WARNING - Not Refreshed
     # Get a list of all payable records
     @classmethod
     def getPayable(cls, minPayout):
         return list(database.db.getSession().query(Pool_utxo).filter(and_(Pool_utxo.amount >= minPayout,Pool_utxo.locked == False,Pool_utxo.address != None,Pool_utxo.method != None)))
 
+    # WARNING - Not Locked
     # Get by address
     @classmethod
     def get_by_address(cls, address):
         full_addr = "http://" + address
-        return database.db.getSession().query(Pool_utxo).filter(Pool_utxo.address==full_addr).first()
+        utxo = database.db.getSession().query(Pool_utxo).filter(Pool_utxo.address==full_addr).first()
+        if utxo is not None:
+            database.db.getSession().refresh(utxo) # Get latest value
+        return utxo
 
+    # WARNING - Not Locked
     # Get by user_id
     @classmethod
     def get_by_userid(cls, user_id):
-        return database.db.getSession().query(Pool_utxo).filter(Pool_utxo.user_id==user_id).first()
+        utxo = database.db.getSession().query(Pool_utxo).filter(Pool_utxo.user_id==user_id).first()
+        if utxo is not None:
+            database.db.getSession().refresh(utxo) # Get latest value
+        return utxo
 
     # Get a single record by user_id locked for update
     @classmethod
     def get_locked_by_userid(cls, user_id):
-        return database.db.getSession().query(Pool_utxo).with_for_update().filter(Pool_utxo.user_id==user_id).first()
+        locked_utxo =  database.db.getSession().query(Pool_utxo).with_for_update().filter(Pool_utxo.user_id==user_id).first()
+        if locked_utxo is not None:
+            database.db.getSession().refresh(locked_utxo) # Get latest value
+        return locked_utxo
 
     # Add creadit to a worker, create a new record if none exists
     @classmethod
@@ -95,7 +108,7 @@ class Pool_utxo(Base):
     # Update fields in the record
     @classmethod
     def update_field(cls, user_id, field, value):
-        worker_utxo = Pool_utxo.get_by_userid(int(user_id))
+        worker_utxo = Pool_utxo.get_locked_by_userid(int(user_id))
         if worker_utxo is None:
             return False
         try:

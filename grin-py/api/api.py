@@ -107,6 +107,7 @@ r = redis.Redis(
     host='redis-master',
     port=6379)
 
+
 @app.before_request
 def pre_request():
     global database
@@ -118,8 +119,6 @@ def after_request(response):
     global LOGGER
     timediff = time.time() - g.start
     debug and LOGGER.warn("Exec time: {}".format(str(timediff)))
-#    if (response.response):
-#        response.response[0] = response.response[0].replace('__EXECUTION_TIME__'.encode(), str(timediff).encode())
     return response
 
 @app.teardown_request
@@ -850,6 +849,12 @@ class PoolAPI_paymentrequest(Resource):
         # Get the users balance then call the internal payment request api to
         # generate a payment tx slate.  Return that slate to the caller
         if function == "get_tx_slate":
+            # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+            #LOGGER.warn("SLATE payment requests are disabled")
+            #response = jsonify({ 'message': 'File-Based payouts are temporarily disabled' })
+            #response.status_code = 400
+            #return response
+            # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             ##
             # Offline Phase 1) issue_send_tx
             # Generate the send transaction slate
