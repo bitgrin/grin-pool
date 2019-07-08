@@ -52,11 +52,11 @@ export class MinerPaymentDataComponent extends Component {
         <Table size='sm'>
           <tbody>
             <tr>
-              <td>Available Balance</td>
+              <td>Available for withdrawal</td>
               <td>{nanoGrinToGrin(readableAmount)} XBG</td>
             </tr>
             <tr>
-              <td>Immature Balance</td>
+              <td>Estimate unmatured earnings <div className="Thetooltip">(?)<span className="tooltiptext">On the Bitgrin network freshly mined coins mature after being mined for 24 hours. This is a ballpark figure, its notoriously hard to estimate on a completely private and opaque blockchain.</span></div></td>
               <td id={faderStyleId}>{minerImmatureBalanceSyntax} XBG</td>
             </tr>
             <tr>
