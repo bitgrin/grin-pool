@@ -91,3 +91,32 @@ color: #212529;
     margin-bottom: 14px;
   }
 }
+$color_1: #fff;
+$background_color_1: black;
+
+.Thetooltip {
+	position: relative;
+	display: inline-block;
+	border-bottom: 0.5px dotted white;
+	font-size: 12px;
+	vertical-align: super;
+	.tooltiptext {
+		visibility: hidden;
+		width: 220px;
+		background-color: $background_color_1;
+		color: $color_1;
+		text-align: center;
+		border-radius: 6px;
+		padding: 5px 0;
+		position: absolute;
+		font-size: 14px;
+		z-index: 1;
+		top: -5px;
+		left: 105%;
+	}
+	&:hover {
+		.tooltiptext {
+			visibility: visible;
+		}
+	}
+}
